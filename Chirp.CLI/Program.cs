@@ -2,10 +2,13 @@
 // used for time converter: https://www.educba.com/timestamp-to-date-c-sharp/
 
 
+using System.Globalization;
 using System.Text.RegularExpressions;
+using CsvHelper;
+
 
 if (args[0].Equals("read"))
-    showData();
+    show();
 else if (args[0].Equals("cheep"))
     postCheep(args[1]);
 else
@@ -31,7 +34,9 @@ void showData()
             {
                 Console.WriteLine(m.Groups[1].Value + " @ " + timeConverter(Double.Parse(m.Groups[3].Value)) + ": " + $"\"{m.Groups[2].Value}\"");
 
-            } else {
+            }
+            else
+            {
 
                 Console.WriteLine("fejl");
             }
@@ -44,6 +49,30 @@ void showData()
         Console.WriteLine(e.Message);
     }
 }
+
+
+void show()
+{
+    try
+    {
+        using (var reader = new StreamReader("chirp_cli_db.csv"))
+        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+        {
+            var records = csv.GetRecords<Cheep>();
+            foreach (Cheep r in records)
+            {
+                Console.WriteLine(records);
+            }
+        }
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e.Message);
+    }
+
+}
+
+
 
 string timeConverter(double timeStamp)
 {
@@ -60,3 +89,5 @@ void postCheep(string cheep)
     string csv = string.Format("{0},{1},{2}\n", name, "\"" + cheep + "\"", time);
     File.AppendAllText("chirp_cli_db.csv", csv);
 }
+
+public record Cheep(string Author, string Message, long Timestamp);
