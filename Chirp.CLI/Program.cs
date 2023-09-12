@@ -1,93 +1,109 @@
 ﻿// See https://aka.ms/new-console-template for more information
 // used for time converter: https://www.educba.com/timestamp-to-date-c-sharp/
+// used for CSV formatting https://www.csharptutorial.net/csharp-file/csharp-read-csv-file/
 
+/*
+* CSV helper coded. co-authored-by co-author: Adam - aaab@itu.dk
+* co-author: Karl - kagl@itu.dk
+* co-author: Sebastian - segb@itu.dk
+* co-author: Silas - siwo@itu.dk 
+*/
 
-using System.Globalization;
 using System.Text.RegularExpressions;
 using CsvHelper;
-
-
-if (args[0].Equals("read"))
-    show();
-else if (args[0].Equals("cheep"))
-    postCheep(args[1]);
-else
-    Console.WriteLine("n");
-
-
-void showData()
+using System.Globalization;
+class Cheep
 {
-    string[] line;
-    string regex = """([a-zA-Z0-9_-]+),"([a-zA-Z0-9_, -:.]+)",([0-9]+)""";
-    try
+    public string? Author { get; set; }
+    public string? Message { get; set; }
+    public string? Timestamp { get; set; }
+}
+
+class Program
+{
+    static void Main(string[] args)
     {
-        StreamReader sr = new StreamReader("chirp_cli_db.csv");
-        //line = sr.ReadLine().Split(",");
-        string next = sr.ReadLine();
-        next = sr.ReadLine();
+        if (args[0].Equals("read"))
+            //showData();
+            readCheeps();
+        else if (args[0].Equals("cheep"))
+            postCheep(args[1]);
+        else
+            Console.WriteLine("n");
+    }
 
+    static void readCheeps()
+    {
+        using var reader = new StreamReader("chirp_cli_db.csv");
+        using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
 
-        while (next != null)
+        // read CSV file
+        var records = csv.GetRecords<Cheep>();
+
+        // output
+        foreach (var r in records)
         {
-            Match m = Regex.Match(next, regex);
-            if (m.Success)
-            {
-                Console.WriteLine(m.Groups[1].Value + " @ " + timeConverter(Double.Parse(m.Groups[3].Value)) + ": " + $"\"{m.Groups[2].Value}\"");
+            Console.WriteLine($"{r.Author}" + " @ " + $"{timeConverter(Double.Parse(r.Timestamp))}" + ": " + $"{r.Message}");
+        }
+    }
 
-            }
-            else
-            {
-
-                Console.WriteLine("fejl");
-            }
+//TODO Remove showData()
+    static void showData()
+    {
+        string[] line;
+        string regex = """([a-zA-Z0-9_-]+),"([a-zA-Z0-9_, -:.]+)",([0-9]+)""";
+        try
+        {
+            StreamReader sr = new StreamReader("chirp_cli_db.csv");
+            //line = sr.ReadLine().Split(",");
+            string next = sr.ReadLine();
             next = sr.ReadLine();
-        }
-
-    }
-    catch (Exception e)
-    {
-        Console.WriteLine(e.Message);
-    }
-}
 
 
-void show()
-{
-    try
-    {
-        using (var reader = new StreamReader("chirp_cli_db.csv"))
-        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-        {
-            var records = csv.GetRecords<Cheep>();
-            foreach (Cheep r in records)
+            while (next != null)
             {
-                Console.WriteLine(records);
+                Match m = Regex.Match(next, regex);
+                if (m.Success)
+                {
+                    Console.WriteLine(m.Groups[1].Value + " @ " + timeConverter(Double.Parse(m.Groups[3].Value)) + ": " + $"\"{m.Groups[2].Value}\"");
+
+                }
+                else
+                {
+
+                    Console.WriteLine("fejl");
+                }
+                next = sr.ReadLine();
             }
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
         }
     }
-    catch (Exception e)
+
+    static string timeConverter(double timeStamp)
     {
-        Console.WriteLine(e.Message);
+        DateTime sd = new(1970, 1, 1, 2, 0, 0, 0);
+        sd = sd.AddSeconds(timeStamp);
+        string w = sd.ToString("MM/dd/yy HH:mm:ss");
+        return w;
     }
 
+    static string getUNIXTime(){
+        return Convert.ToString(DateTimeOffset.UtcNow.ToUnixTimeSeconds());;
+    }
+
+    static string getUsername(){
+        return Environment.UserName;
+    }
+
+    static void postCheep(string cheep)
+    {
+        string name = getUsername();
+        string time = getUNIXTime();
+        string csv = string.Format("{0},{1},{2}\n", name, "\"" + cheep + "\"", time);
+        File.AppendAllText("chirp_cli_db.csv", csv);
+    }
 }
-
-
-
-string timeConverter(double timeStamp)
-{
-    DateTime sd = new(1970, 1, 1, 2, 0, 0, 0);
-    sd = sd.AddSeconds(timeStamp);
-    string w = sd.ToString("MM/dd/yy HH:mm:ss");
-    return w;
-}
-
-void postCheep(string cheep)
-{
-    string name = Environment.UserName;
-    string time = Convert.ToString(DateTimeOffset.UtcNow.ToUnixTimeSeconds());
-    string csv = string.Format("{0},{1},{2}\n", name, "\"" + cheep + "\"", time);
-    File.AppendAllText("chirp_cli_db.csv", csv);
-}
-
-public record Cheep(string Author, string Message, long Timestamp);
