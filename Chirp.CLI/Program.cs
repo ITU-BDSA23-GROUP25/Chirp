@@ -24,17 +24,16 @@ class Program
     static void Main(string[] args)
     {
         if (args[0].Equals("read"))
-            //showData();
-            readCheeps();
+            Read();
         else if (args[0].Equals("cheep"))
-            postCheep(args[1]);
+            Store(args[1]);
         else
-            Console.WriteLine("n");
+            Console.WriteLine("Insert dotnet run followed by either read or cheep☠️");
     }
 
-    static void readCheeps()
+    static void Read(int? limit = null)
     {
-        using var reader = new StreamReader("chirp_cli_db.csv");
+        using var reader = new StreamReader("../SimpleDB/chirp_cli_db.csv");
         using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
 
         // read CSV file
@@ -43,45 +42,10 @@ class Program
         // output
         foreach (var r in records)
         {
-            Console.WriteLine($"{r.Author}" + " @ " + $"{timeConverter(Double.Parse(r.Timestamp))}" + ": " + $"{r.Message}");
+            Console.WriteLine($"{r.Author}" + " @ " + $"{timeConverter(Double.Parse(r.Timestamp!))}" + ": " + $"{r.Message}");
         }
     }
-
-//TODO Remove showData()
-    static void showData()
-    {
-        string[] line;
-        string regex = """([a-zA-Z0-9_-]+),"([a-zA-Z0-9_, -:.]+)",([0-9]+)""";
-        try
-        {
-            StreamReader sr = new StreamReader("chirp_cli_db.csv");
-            //line = sr.ReadLine().Split(",");
-            string next = sr.ReadLine();
-            next = sr.ReadLine();
-
-
-            while (next != null)
-            {
-                Match m = Regex.Match(next, regex);
-                if (m.Success)
-                {
-                    Console.WriteLine(m.Groups[1].Value + " @ " + timeConverter(Double.Parse(m.Groups[3].Value)) + ": " + $"\"{m.Groups[2].Value}\"");
-
-                }
-                else
-                {
-
-                    Console.WriteLine("fejl");
-                }
-                next = sr.ReadLine();
-            }
-
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-    }
+    
 
     static string timeConverter(double timeStamp)
     {
@@ -99,11 +63,11 @@ class Program
         return Environment.UserName;
     }
 
-    static void postCheep(string cheep)
+    static void Store(string record)
     {
         string name = getUsername();
         string time = getUNIXTime();
-        string csv = string.Format("{0},{1},{2}\n", name, "\"" + cheep + "\"", time);
-        File.AppendAllText("chirp_cli_db.csv", csv);
+        string csv = string.Format("{0},{1},{2}\n", name, "\"" + record + "\"", time);
+        File.AppendAllText("../SimpleDB/chirp_cli_db.csv", csv);
     }
 }
