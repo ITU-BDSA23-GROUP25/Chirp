@@ -12,62 +12,27 @@
 using System.Text.RegularExpressions;
 using CsvHelper;
 using System.Globalization;
-class Cheep
-{
-    public string? Author { get; set; }
-    public string? Message { get; set; }
-    public string? Timestamp { get; set; }
-}
+using static SimpleDB.Class1;
+using SimpleDB;
 
 class Program
 {
     static void Main(string[] args)
     {
+        Class1 x = new();
         if (args[0].Equals("read"))
-            Read();
-        else if (args[0].Equals("cheep"))
-            Store(args[1]);
+            x.displayCheeps(x.Read());
+        else if (args[0].Equals("cheep"));
+            //x.Store(args[1]);
+            
         else
             Console.WriteLine("Insert dotnet run followed by either read or cheep☠️");
     }
 
-    static void Read(int? limit = null)
-    {
-        using var reader = new StreamReader("../SimpleDB/chirp_cli_db.csv");
-        using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
-
-        // read CSV file
-        var records = csv.GetRecords<Cheep>();
-
-        // output
-        foreach (var r in records)
-        {
-            Console.WriteLine($"{r.Author}" + " @ " + $"{timeConverter(Double.Parse(r.Timestamp!))}" + ": " + $"{r.Message}");
-        }
-    }
+   
     
 
-    static string timeConverter(double timeStamp)
-    {
-        DateTime sd = new(1970, 1, 1, 2, 0, 0, 0);
-        sd = sd.AddSeconds(timeStamp);
-        string w = sd.ToString("MM/dd/yy HH:mm:ss");
-        return w;
-    }
 
-    static string getUNIXTime(){
-        return Convert.ToString(DateTimeOffset.UtcNow.ToUnixTimeSeconds());;
-    }
 
-    static string getUsername(){
-        return Environment.UserName;
-    }
-
-    static void Store(string record)
-    {
-        string name = getUsername();
-        string time = getUNIXTime();
-        string csv = string.Format("{0},{1},{2}\n", name, "\"" + record + "\"", time);
-        File.AppendAllText("../SimpleDB/chirp_cli_db.csv", csv);
-    }
+   
 }
