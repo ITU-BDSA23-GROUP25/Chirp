@@ -12,16 +12,15 @@ public class Class1 : IDatabaseRepository<Cheep>
         using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
 
         // read CSV file
-        var records = csv.GetRecords<Cheep>();
-
-        
+        var records = csv.GetRecords<Cheep>().ToList<Cheep>();
+        Console.WriteLine(records);
         return records;
     }
 
     public void displayCheeps(IEnumerable<Cheep> records)
     {
         // output
-        foreach (var r in records)
+        foreach (var r in records.ToList())
         {
             Console.WriteLine($"{r.Author}" + " @ " + $"{timeConverter(Double.Parse(r.Timestamp!))}" + ": " + $"{r.Message}");
         }
