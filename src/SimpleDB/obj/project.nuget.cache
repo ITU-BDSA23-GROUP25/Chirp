@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "+EcLbh6gMSE6pSmyaGT0aIeGtQTu4Ula2SovJv8ZfoprKSBmLwr/k0D+bpakjkuv0d76sEYQHqAqxkcOeEEEEw==",
+  "success": true,
+  "projectFilePath": "/mnt/c/Users/adam/GitHub/Chirp/SimpleDB/SimpleDB.csproj",
+  "expectedPackageFiles": [
+    "/home/bdamunix123/.nuget/packages/csvhelper/30.0.1/csvhelper.30.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}
