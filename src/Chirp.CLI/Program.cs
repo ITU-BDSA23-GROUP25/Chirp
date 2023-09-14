@@ -15,14 +15,16 @@ using CsvHelper;
 using System.Globalization;
 using static SimpleDB.Class1;
 using SimpleDB;
+using UI;
 
 class Program
 {
     static void Main(string[] args)
     {
         Class1 x = new();
+        UserInterface y = new();
         if (args[0].Equals("read"))
-            x.displayCheeps(x.Read());
+            y.PrintCheeps(x.Read());
         else if (args[0].Equals("cheep"));
             //x.Store(args[1]);
             
