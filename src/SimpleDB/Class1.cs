@@ -17,29 +17,19 @@ public class Class1 : IDatabaseRepository<Cheep>
         return records;
     }
 
-    public void displayCheeps(IEnumerable<Cheep> records)
+    public Cheep GetCheep(string messsage)
     {
-        // output
-        foreach (var r in records.ToList())
-        {
-            Console.WriteLine($"{r.Author}" + " @ " + $"{timeConverter(Double.Parse(r.Timestamp!))}" + ": " + $"{r.Message}");
-        }
+        Cheep c = new();
+        c.Author= getUsername();
+        c.Timestamp = getUNIXTime();
+        c.Message = messsage;
+        return c;
     }
 
-     public void Store(Cheep record)
+    public void Store(Cheep record)
     {
-        string name = getUsername();
-        string time = getUNIXTime();
-        string csv = string.Format("{0},{1},{2}\n", name, "\"" + record + "\"", time);
+        string csv = string.Format("{0},{1},{2}\n", record.Author, "\"" + record.Message + "\"", record.Timestamp);
         File.AppendAllText("../SimpleDB/chirp_cli_db.csv", csv);
-    }
-
-        static string timeConverter(double timeStamp)
-    {
-        DateTime sd = new(1970, 1, 1, 2, 0, 0, 0);
-        sd = sd.AddSeconds(timeStamp);
-        string w = sd.ToString("MM/dd/yy HH:mm:ss");
-        return w;
     }
 
     static string getUNIXTime(){

@@ -16,21 +16,45 @@ using System.Globalization;
 using static SimpleDB.Class1;
 using SimpleDB;
 using UI;
+using CommandLine;
 
 class Program
 {
+    public class Options
+{
+    [Value(index: 0, Required = true, HelpText = "Use <read> or <cheep>")]
+    public string Command {get; set;}
+
+    [Value(index: 1, Required = false, HelpText = "Write your Cheep!")]
+    public string Cheep {get; set;}
+}
     static void Main(string[] args)
     {
         Class1 x = new();
-        UserInterface y = new();
-        if (args[0].Equals("read"))
-            y.PrintCheeps(x.Read());
-        else if (args[0].Equals("cheep"));
+        UserInterface ui = new();
+        Parser.Default.ParseArguments<Options>(args)
+                   .WithParsed<Options>(o =>
+                   {
+                       if (o.Command == "read")
+                       {
+                           ui.PrintCheeps(x.Read());
+                       }
+                       else if (o.Command == "cheep")
+                       {
+                           x.Store(x.GetCheep(o.Cheep));
+                       }
+                   });
+        /*Class1 x = new();
+        UserInterface ui = new();
+        if (input.Equals("read"))
+        {
+            ui.PrintCheeps(x.Read());
+        } else if (input.Equals("cheep"))
+        {
             //x.Store(args[1]);
-            
-        else
-            Console.WriteLine("Insert dotnet run followed by either read or cheep☠️");
+        } else
+        {
+            Console.WriteLine("Enter <dotnet run> followed by either <read> or <cheap>");
+        }*/
     }
-
-   
 }
