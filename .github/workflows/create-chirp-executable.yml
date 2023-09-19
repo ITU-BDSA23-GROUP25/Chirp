@@ -77,11 +77,10 @@ jobs:
         dotnet UnitTest1 --no-restore --verbosity normal
         
     - name: Publish
-          uses: softprops/action-gh-release@v1
-          with:
-            files: "src/Chirp.CLI/Program.cs"
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: softprops/action-gh-release@v1
+      with:
+        files: "src/Chirp.CLI/Program.cs"
+        token: ${{ secrets.GITHUB_TOKEN }}
 
 
     - uses: azure/webapps-deploy@v2
