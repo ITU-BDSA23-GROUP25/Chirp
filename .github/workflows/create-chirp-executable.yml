@@ -26,8 +26,11 @@ jobs:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
     - name: Install dependencies
-      run: dotnet restore
-      
+      run: |
+        cd src/Chirp.CLI/Chirp.CLI.csproj
+        dotnet restore
+        cd src/SimpleDB/SimpleDB.csproj
+        dotnet restore
 
     - name: Build
       shell: bash
