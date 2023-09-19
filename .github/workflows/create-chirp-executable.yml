@@ -44,10 +44,10 @@ jobs:
 
     - name: Build
       run: |
-        release_linux="Chirp-${{ github.ref }}-linux-64"
-        release_windows="Chirp-${{ github.ref }}-windows-64"
-        release_macos="Chirp-${{ github.ref }}-macos-64"
-        release_macos-arm="Chirp-${{ github.ref }}-macos-arm64"
+        release_linux="Chirp-${{ github.ref }}-linux"
+        release_windows="Chirp-${{ github.ref }}-windows"
+        release_macos="Chirp-${{ github.ref }}-macos"
+        release_macos-arm="Chirp-${{ github.ref }}-macos-arm"
 
         cd src/Chirp.CLI
         dotnet build  --configuration Release --no-restore
