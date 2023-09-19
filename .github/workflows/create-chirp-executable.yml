@@ -38,35 +38,40 @@ jobs:
         cd test/Chirp.CSVDB.Tests
         dotnet test --no-restore --verbosity normal
 
-
-    - name: Build
-      run: |
-        cd src/Chirp.CLI
-        dotnet build  --configuration Release --no-restore
-        cd ../..
-        dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "linux-x64" -c Release -o "linux-64"
-        dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "win-x64" -c Release -o "windows-64"
-        dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "osx-x64" -c Release -o "macos-64"
-        dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "osx-arm64" -c Release -o "macos-arm64"
-
-        7z a -tzip "linux-64.zip" "./linux-64/*"
-        7z a -tzip "windows-64.zip" "./windows-64/*"
-        7z a -tzip "macos-64.zip" "./macos-64/*"
-        7z a -tzip "macos-arm64.zip" "./macos-arm64/*"
-
-        
     - name: Get current tag name
       id: tag
       run: echo ::set-output name=TAG::$(git describe --tags --abbrev=0)
+
+    - name: Build
+      run: |
+        release_linux="Chirp-${{ github.ref }}-linux-64"
+        release_windows="Chirp-${{ github.ref }}-windows-64"
+        release_macos="Chirp-${{ github.ref }}-macos-64"
+        release_macos-arm="Chirp-${{ github.ref }}-macos-arm64"
+
+        cd src/Chirp.CLI
+        dotnet build  --configuration Release --no-restore
+        cd ../..
+        dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "linux-x64" -c Release -o "$release_linux"
+        dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "win-x64" -c Release -o "$release_windows"
+        dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "osx-x64" -c Release -o "$release_macos"
+        dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "osx-arm64" -c Release -o "$release_macos-arm"
+
+        7z a -tzip "Chirp-linux-64.zip" "./${release_linux}/*"
+        7z a -tzip "Chirp-windows-64.zip" "./${release_windows}/*"
+        7z a -tzip "Chirp-macos-64.zip" "./${release_macos}/*"
+        7z a -tzip "Chirp-macos-arm64.zip" "./${release_macos-arm}/*"
+
+        rm -r "$release_linux"
+        rm -r "$release_windows"
+        rm -r "$release_macos"
+        rm -r "$release_macos-arm"
+
         
     - name: Publish
       uses: softprops/action-gh-release@v1
       with:
-        files: |
-          "linux-64.zip"
-          "windows-64.zip"
-          "macos-64.zip"
-          "macos-arm64.zip"
+        files: "Chirp*"
         tag_name: ${{ github.ref }}
         token: ${{ secrets.GITHUB_TOKEN }}
 
