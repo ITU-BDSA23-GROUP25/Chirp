@@ -41,11 +41,17 @@ jobs:
         cd ../..
         cd test/Chirp.CSVDB.Tests
         dotnet test --no-restore --verbosity normal
+
+        
+    - name: Get current tag name
+      id: tag
+      run: echo ::set-output name=TAG::$(git describe --tags --abbrev=0)
         
     - name: Publish
       uses: softprops/action-gh-release@v1
       with:
         files: "src/Chirp.CLI/Program.cs"
+        tag_name: ${{ steps.tag.outputs.TAG }}
         token: ${{ secrets.GITHUB_TOKEN }}
 
 
