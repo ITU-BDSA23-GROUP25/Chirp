@@ -18,6 +18,6 @@ jobs:
     steps:
       - uses: alex-page/github-project-automation-plus@7ffb872c64bd809d23563a130a0a97d01dfa8f43
         with:
-          project: ITU-BDSA23-GROUP25 Chirp
-          column: In progress
-          repo-token: ${{ secrets.MOVING_ASSIGNED_ISSUES_SECRET_KEY }}
+          project: WORKFLOW_AUTOMATION_TEST_BOARD
+          column: In Progress
+          repo-token: ${{ secrets.CLASSIC_MOVING_ASSIGNED_ISSUES_KEY }}
