@@ -35,14 +35,9 @@ jobs:
     runs-on: ${{ matrix.os }}
 
 
-
-
-
-
-
     build:
 
-    runs-on: [ubuntu-latest, windows-latest, macOS-latest]
+    runs-on: [ubuntu-latest]
 
     steps:
     - uses: actions/checkout@v3
@@ -76,13 +71,15 @@ jobs:
 
     - name: Test
       run: |
-        cd DotNet.WebApp.Tests
-        dotnet test --no-restore --verbosity normal
-      
+        cd test/Chirp.CLI.Client.Tests/UnitTest1.cs
+        dotnet UnitTest1 --no-restore --verbosity normal
+        cd test/Chirp.CSVDB.Tests/UnitTest1.cs
+        dotnet UnitTest1 --no-restore --verbosity normal
+        
     - name: Publish
-          uses: softprops/action-gh-release@v3
+          uses: softprops/action-gh-release@v1
           with:
-            files: "App*"
+            files: "src/Chirp.CLI/Program.cs"
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
