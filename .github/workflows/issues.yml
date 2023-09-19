@@ -20,4 +20,4 @@ jobs:
         with:
           project: WORKFLOW_AUTOMATION_TEST_BOARD
           column: In Progress
-          repo-token: ${{ secrets.MOVING_ASSIGNED_ISSUES_SECRET_KEY }}
+          repo-token: ${{ secrets.CLASSIC_MOVING_ASSIGNED_ISSUES_KEY }}
