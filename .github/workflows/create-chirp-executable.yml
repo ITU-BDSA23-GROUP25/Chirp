@@ -35,12 +35,12 @@ jobs:
         dotnet build  --configuration Release --no-restore
         cd ../..
         dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "linux-x64" -c Release -o "release linux-64"
-        dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "win-x64" -c Release -o "release Windows-64"
+        dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "win-x64" -c Release -o "release windows-64"
         dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "osx-x64" -c Release -o "release macos-64"
         dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "osx-arm64" -c Release -o "release macos-arm64"
 
-        7z a -tzip "Linux-64.zip" "./Linux-64/*"
-        7z a -tzip "Windows-64.zip" "./Windows-64/*"
+        7z a -tzip "linux-64.zip" "./linux-64/*"
+        7z a -tzip "windows-64.zip" "./windows-64/*"
         7z a -tzip "macos-64.zip" "./macos-64/*"
         7z a -tzip "macos-arm64.zip" "./macos-arm64/*"
 
@@ -61,8 +61,8 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: |
-          "Linux-64*"
-          "Windows-64*"
+          "linux-64*"
+          "windows-64*"
           "macos-64*"
           "macos-arm64*"
         tag_name: ${{ github.ref }}
