@@ -34,10 +34,10 @@ jobs:
         cd src/Chirp.CLI
         dotnet build  --configuration Release --no-restore
         cd ../..
-        dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework netcoreapp3.1 --runtime "linux-x64" -c Release -o "release linux-64"
-        dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework netcoreapp3.1 --runtime "win-x64" -c Release -o "release Windows-64"
-        dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework netcoreapp3.1 --runtime "osx-x64" -c Release -o "release macos-64"
-        dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework netcoreapp3.1 --runtime "osx-arm64" -c Release -o "release macos-arm64"
+        dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework netcoreapp7.0 --runtime "linux-x64" -c Release -o "release linux-64"
+        dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework netcoreapp7.0 --runtime "win-x64" -c Release -o "release Windows-64"
+        dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework netcoreapp7.0 --runtime "osx-x64" -c Release -o "release macos-64"
+        dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework netcoreapp7.0 --runtime "osx-arm64" -c Release -o "release macos-arm64"
 
         7z a -tzip "Linux-64.zip" "./Linux-64/*"
         7z a -tzip "Windows-64.zip" "./Windows-64/*"
@@ -63,8 +63,8 @@ jobs:
         files: |
           "Linux-64*"
           "Windows-64*"
-          "macos-64"
-          "macos-arm64"
+          "macos-64*"
+          "macos-arm64*"
         tag_name: ${{ github.ref }}
         token: ${{ secrets.GITHUB_TOKEN }}
 
