@@ -25,6 +25,7 @@ jobs:
       run: |
         cd src/Chirp.CLI/Chirp.CLI.csproj
         dotnet restore
+        cd
         cd src/SimpleDB/SimpleDB.csproj
         dotnet restore
 
@@ -51,6 +52,7 @@ jobs:
       run: |
         cd test/Chirp.CLI.Client.Tests/UnitTest1.cs
         dotnet UnitTest1 --no-restore --verbosity normal
+        cd
         cd test/Chirp.CSVDB.Tests/UnitTest1.cs
         dotnet UnitTest1 --no-restore --verbosity normal
         
