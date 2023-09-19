@@ -23,10 +23,10 @@ jobs:
 
     - name: Install dependencies
       run: |
-        cd src/Chirp.CLI/Chirp.CLI.csproj
+        cd src/Chirp.CLI
         dotnet restore
-        cd
-        cd src/SimpleDB/SimpleDB.csproj
+        cd ..
+        cd src/SimpleDB
         dotnet restore
 
     - name: Build
@@ -50,10 +50,10 @@ jobs:
 
     - name: Test
       run: |
-        cd test/Chirp.CLI.Client.Tests/UnitTest1.cs
+        cd test/Chirp.CLI.Client.Tests
         dotnet UnitTest1 --no-restore --verbosity normal
-        cd
-        cd test/Chirp.CSVDB.Tests/UnitTest1.cs
+        cd ..
+        cd test/Chirp.CSVDB.Tests
         dotnet UnitTest1 --no-restore --verbosity normal
         
     - name: Publish
