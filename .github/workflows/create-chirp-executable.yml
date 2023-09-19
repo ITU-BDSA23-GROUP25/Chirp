@@ -8,10 +8,6 @@ on:
         - main 
   workflow_dispatch:
 
-env:
-  AZURE_WEBAPP_NAME: DotNetWeb
-  AZURE_WEBAPP_PACKAGE_PATH: '.' # Set this to the path to your web app project, defaults to the repository root:
-  DOTNET_VERSION: '7.0.401' # The .NET SDK version to use
 
 jobs:
   publish: 
@@ -65,9 +61,4 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
 
 
-    - uses: azure/webapps-deploy@v2
-      name: Deploy
-      with:
-        app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
-        package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/dotnet-webapp'
+   
