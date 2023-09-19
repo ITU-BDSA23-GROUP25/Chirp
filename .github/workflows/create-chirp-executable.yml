@@ -33,6 +33,17 @@ jobs:
       run: |
         cd src/Chirp.CLI
         dotnet build  --configuration Release --no-restore
+        cd ../..
+        dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework netcoreapp3.1 --runtime "linux-x64" -c Release -o "release linux-64"
+        dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework netcoreapp3.1 --runtime "win-x64" -c Release -o "release Windows-64"
+        dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework netcoreapp3.1 --runtime "osx-x64" -c Release -o "release macos-64"
+        dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework netcoreapp3.1 --runtime "osx-arm64" -c Release -o "release macos-arm64"
+
+        7z a -tzip "Linux-64.zip" "./Linux-64/*"
+        7z a -tzip "Windows-64.zip" "./Windows-64/*"
+        7z a -tzip "macos-64.zip" "./macos-64/*"
+        7z a -tzip "macos-arm64.zip" "./macos-arm64/*"
+
 
     - name: Test
       run: |
@@ -41,7 +52,6 @@ jobs:
         cd ../..
         cd test/Chirp.CSVDB.Tests
         dotnet test --no-restore --verbosity normal
-
         
     - name: Get current tag name
       id: tag
@@ -50,8 +60,12 @@ jobs:
     - name: Publish
       uses: softprops/action-gh-release@v1
       with:
-        files: "src/Chirp.CLI/Program.cs"
-        tag_name: 1.0.1
+        files: |
+          "Linux-64*"
+          "Windows-64*"
+          "macos-64"
+          "macos-arm64"
+        tag_name: ${{ github.ref }}
         token: ${{ secrets.GITHUB_TOKEN }}
 
 
