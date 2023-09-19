@@ -39,10 +39,10 @@ jobs:
         dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "osx-x64" -c Release -o "release macos-64"
         dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "osx-arm64" -c Release -o "release macos-arm64"
 
-        7z a -tzip "linux-64.zip" "./linux-64/*"
-        7z a -tzip "windows-64.zip" "./windows-64/*"
-        7z a -tzip "macos-64.zip" "./macos-64/*"
-        7z a -tzip "macos-arm64.zip" "./macos-arm64/*"
+        7z a -tzip "linux-64.zip" "./${linux-64}/*"
+        7z a -tzip "windows-64.zip" "./${windows-64}/*"
+        7z a -tzip "macos-64.zip" "./${macos-64}/*"
+        7z a -tzip "macos-arm64.zip" "./${macos-arm64}/*"
 
 
     - name: Test
