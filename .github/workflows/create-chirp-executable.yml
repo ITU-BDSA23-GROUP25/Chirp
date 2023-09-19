@@ -14,28 +14,7 @@ env:
   DOTNET_VERSION: '7.0.401' # The .NET SDK version to use
 
 jobs:
-  release:
-    name: Release
-    strategy:
-      matrix:
-        kind: ['linux', 'windows', 'macOS']
-        include:
-          - kind: linux
-            os: ubuntu-latest
-            target: linux-x64
-          - kind: windows
-            os: windows-latest
-            target: win-x64
-          - kind: macOS
-            os: macos-latest
-            target: osx-x64
-          - kind: macOS
-            os: macos-latest
-            target: osx-arm64
-    runs-on: ${{ matrix.os }}
-
-
-    build:
+  publish: 
 
     runs-on: [ubuntu-latest]
 
