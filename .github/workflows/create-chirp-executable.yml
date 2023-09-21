@@ -44,8 +44,6 @@ jobs:
       - name: Build
         run: |
 
-          release_name="Release {{ github_ref_name }}"
-
           release_linux="Chirp-${{ github.ref_name }}-linux"
           release_windows="Chirp-${{ github.ref_name }}-windows"
           release_macos="Chirp-${{ github.ref_name }}-macos"
@@ -70,11 +68,11 @@ jobs:
           rm -r "$release_macos_arm"
 
       - name: Publish
+        run: |
+          release_name="Release {{ github_ref_name }}"
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run:
-          release_name="Release {{ github_ref_name }}"
         with:
           tag_name: ${{ release_name }}
           files: "Chirp*"
