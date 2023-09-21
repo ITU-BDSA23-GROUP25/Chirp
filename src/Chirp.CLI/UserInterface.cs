@@ -2,7 +2,8 @@ using SimpleDB;
 
 namespace UI;
 
-class UserInterface{
+public class UserInterface
+{
 
 
     public void PrintCheeps(IEnumerable<Cheep> cheeps)
@@ -10,11 +11,20 @@ class UserInterface{
         // output
         foreach (var r in cheeps.ToList())
         {
-            Console.WriteLine($"{r.Author}" + " @ " + $"{timeConverter(Double.Parse(r.Timestamp!))}" + ": " + $"{r.Message}");
+            Console.WriteLine(convert_toString(r));
         }
     }
 
-    static string timeConverter(double timeStamp)
+    public String convert_toString(Cheep r)
+    {
+
+        UserInterface _UI = new UserInterface();
+        String convert = $"{r.Author}" + " @ " + $"{_UI.timeConverter(Double.Parse(r.Timestamp!))}" + ": " + $"{r.Message}";
+
+        return convert;
+    }
+
+    public string timeConverter(double timeStamp)
     {
         DateTime sd = new(1970, 1, 1, 2, 0, 0, 0);
         sd = sd.AddSeconds(timeStamp);
