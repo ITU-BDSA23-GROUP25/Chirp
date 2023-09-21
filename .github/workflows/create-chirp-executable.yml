@@ -70,9 +70,9 @@ jobs:
       - name: Publish
         uses: |
           softprops/action-gh-release@v1
-          release_name="Release {{ github_ref_name }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ release_name }}
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
           files: "Chirp*"
