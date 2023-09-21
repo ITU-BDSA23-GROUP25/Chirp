@@ -6,8 +6,23 @@ namespace SimpleDB;
 
 public class Class1 : IDatabaseRepository<Cheep>
 {
+
+    private static Class1 instance = null!;
+
+    public static Class1 Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = new Class1();
+            }
+            return instance;
+        }
+    }
     public IEnumerable<Cheep> Read(int? limit = null)
     {
+        //Path to csv from CLI: "../SimpleDB/chirp_cli_db.csv"
         using var reader = new StreamReader("../SimpleDB/chirp_cli_db.csv");
         using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
 
@@ -32,11 +47,11 @@ public class Class1 : IDatabaseRepository<Cheep>
         File.AppendAllText("../SimpleDB/chirp_cli_db.csv", csv);
     }
 
-    static string getUNIXTime(){
+    public static string getUNIXTime(){
         return Convert.ToString(DateTimeOffset.UtcNow.ToUnixTimeSeconds());;
     }
 
-    static string getUsername(){
+    public static string getUsername(){
         return Environment.UserName;
     }
 }

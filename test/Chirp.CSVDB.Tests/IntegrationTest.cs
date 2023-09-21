@@ -6,7 +6,7 @@ public class IntegrationTest1{
 public void IsDataInDbAsExpectedTest()
 {
     //Arrange
-        Class1 x = new();
+        Class1 x = new("test_db.csv");
         Cheep c = new()
         {
             Author = Class1.getUsername(),
@@ -20,7 +20,8 @@ public void IsDataInDbAsExpectedTest()
 
         var Inumerable = x.Read();
         string? expected = Inumerable.Last().ToString();
-
+        Console.WriteLine($"actual: {actual}");
+        Console.WriteLine($"actual: {expected}");
         //Assert
 
         Assert.Equal(expected, actual);
