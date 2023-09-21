@@ -38,7 +38,7 @@ jobs:
 
       - name: Set Release Name
         id: release_name
-        run: echo "::set-output name=RELEASE_NAME::${{ github.ref }}"
+        run: echo "::set-output name=RELEASE_NAME::$(echo ${{ github.ref }} | sed 's/^refs\///')"
 
       - name: Build
         run: |
