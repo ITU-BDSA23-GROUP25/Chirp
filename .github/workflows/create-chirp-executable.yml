@@ -43,6 +43,9 @@ jobs:
 
       - name: Build
         run: |
+          tag: ${{ github.ref_name }}
+          release_name: $tag
+
           release_linux="Chirp-${{ github.ref }}-linux"
           release_windows="Chirp-${{ github.ref }}-windows"
           release_macos="Chirp-${{ github.ref }}-macos"
