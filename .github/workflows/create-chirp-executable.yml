@@ -44,6 +44,8 @@ jobs:
       - name: Build
         run: |
 
+          release_name="Release {{ github_ref_name }}"
+
           release_linux="Chirp-${{ github.ref_name }}-linux"
           release_windows="Chirp-${{ github.ref_name }}-windows"
           release_macos="Chirp-${{ github.ref_name }}-macos"
@@ -72,5 +74,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref_name }}
+          tag_name: release_name
           files: "Chirp*"
