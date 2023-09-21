@@ -1,4 +1,4 @@
-name: create-chirp-executables
+name: create-chirp-executable
 
 on:
   push:
@@ -66,9 +66,9 @@ jobs:
           rm -r "$release_macos"
           rm -r "$release_macos_arm"
 
-      - name: Publish 
+      - name: Publish
         uses: softprops/action-gh-release@v1
         with:
           files: "Chirp*"
-          tag_name: ${{ git describe --tags --abbrev=0 }}
+          tag_name: $tag
           token: ${{ secrets.GITHUB_TOKEN }}
