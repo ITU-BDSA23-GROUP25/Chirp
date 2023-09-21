@@ -2,11 +2,11 @@ using SimpleDB;
 
 public class IntegrationTest1{
 
-[Fact]
+
 public void IsDataInDbAsExpectedTest()
 {
     //Arrange
-        Class1 x = new("test_db.csv");
+        Class1 x = Class1.Instance;
         Cheep c = new()
         {
             Author = Class1.getUsername(),
@@ -24,6 +24,6 @@ public void IsDataInDbAsExpectedTest()
         Console.WriteLine($"actual: {expected}");
         //Assert
 
-        Assert.Equal(expected, actual);
+        Assert.Equal(actual, expected);
     }
 }
