@@ -2,77 +2,75 @@ name: create-chirp-executable
 
 on:
   push:
-      tags:
-        - 'v[0-9]+,[0-9]+,[0-9]+'
-      branches:  
-        - main 
+    tags:
+      - 'v[0-9]+,[0-9]+,[0-9]+'
+    branches:
+      - main
   workflow_dispatch:
 
-
 jobs:
-  publish: 
-
+  publish:
     runs-on: [ubuntu-latest]
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: ${{ env.DOTNET_VERSION }}
+      - uses: actions/checkout@v3
 
-    - name: Install dependencies
-      run: |
-        cd src/Chirp.CLI
-        dotnet restore
-        cd ../..
-        cd src/SimpleDB
-        dotnet restore
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
 
+      - name: Install dependencies
+        run: |
+          cd src/Chirp.CLI
+          dotnet restore
+          cd ../..
+          cd src/SimpleDB
+          dotnet restore
 
-    - name: Test
-      run: |
-        cd test/Chirp.CLI.Client.Tests
-        dotnet test --no-restore --verbosity normal
-        cd ../..
-        cd test/Chirp.CSVDB.Tests
-        dotnet test --no-restore --verbosity normal
+      - name: Test
+        run: |
+          cd test/Chirp.CLI.Client.Tests
+          dotnet test --no-restore --verbosity normal
+          cd ../..
+          cd test/Chirp.CSVDB.Tests
+          dotnet test --no-restore --verbosity normal
 
-    - name: Get current tag name
-      id: tag
-      run: echo ::set-output name=TAG::$(git describe --tags --abbrev=0)
+      - name: Set Release Name
+        id: release_name
+        run: echo "::set-output name=RELEASE_NAME::$(echo ${{ github.ref }} | sed 's#^refs/##')"
 
-    - name: Build
-      run: |
-        release_linux="Chirp-${{ github.ref }}-linux"
-        release_windows="Chirp-${{ github.ref }}-windows"
-        release_macos="Chirp-${{ github.ref }}-macos"
-        release_macos_arm="Chirp-${{ github.ref }}-macos_arm"
+      - name: Build
+        run: |
 
-        cd src/Chirp.CLI
-        dotnet build  --configuration Release --no-restore
-        cd ../..
-        dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "linux-x64" -c Release -o "$release_linux"
-        dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "win-x64" -c Release -o "$release_windows"
-        dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "osx-x64" -c Release -o "$release_macos"
-        dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "osx-arm64" -c Release -o "$release_macos_arm"
+          release_linux="Chirp-${{ github.ref_name }}-linux"
+          release_windows="Chirp-${{ github.ref_name }}-windows"
+          release_macos="Chirp-${{ github.ref_name }}-macos"
+          release_macos_arm="Chirp-${{ github.ref_name }}-macos_arm"
 
-        7z a -tzip "Chirp-linux-64.zip" "./${release_linux}/*"
-        7z a -tzip "Chirp-windows-64.zip" "./${release_windows}/*"
-        7z a -tzip "Chirp-macos-64.zip" "./${release_macos}/*"
-        7z a -tzip "Chirp-macos-arm64.zip" "./${release_macos_arm}/*"
+          cd src/Chirp.CLI
+          dotnet build --configuration Release --no-restore
+          cd ../..
+          dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "linux-x64" -c Release -o "$release_linux"
+          dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "win-x64" -c Release -o "$release_windows"
+          dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "osx-x64" -c Release -o "$release_macos"
+          dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "osx-arm64" -c Release -o "$release_macos_arm"
 
-        rm -r "$release_linux"
-        rm -r "$release_windows"
-        rm -r "$release_macos"
-        rm -r "$release_macos_arm"
+          7z a -tzip "Chirp-linux-64.zip" "./${release_linux}/*"
+          7z a -tzip "Chirp-windows-64.zip" "./${release_windows}/*"
+          7z a -tzip "Chirp-macos-64.zip" "./${release_macos}/*"
+          7z a -tzip "Chirp-macos-arm64.zip" "./${release_macos_arm}/*"
 
-    - name: Publish
-      uses: softprops/action-gh-release@v1
-      with:
-        files: "Chirp*"
-        tag_name: 1.0.2
-        token: ${{ secrets.GITHUB_TOKEN }}
+          rm -r "$release_linux"
+          rm -r "$release_windows"
+          rm -r "$release_macos"
+          rm -r "$release_macos_arm"
 
-
-   
+      - name: Publish
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          name: ${{ steps.release_name.outputs.RELEASE_NAME }}
+          files: "Chirp*"
