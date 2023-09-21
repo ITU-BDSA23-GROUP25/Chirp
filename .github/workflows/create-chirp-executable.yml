@@ -44,10 +44,10 @@ jobs:
       - name: Build
         run: |
 
-          release_linux="Chirp-${{ github.ref }}-linux"
-          release_windows="Chirp-${{ github.ref }}-windows"
-          release_macos="Chirp-${{ github.ref }}-macos"
-          release_macos_arm="Chirp-${{ github.ref }}-macos_arm"
+          release_linux="Chirp-${{ github.ref_name }}-linux"
+          release_windows="Chirp-${{ github.ref_name }}-windows"
+          release_macos="Chirp-${{ github.ref_name }}-macos"
+          release_macos_arm="Chirp-${{ github.ref_name }}-macos_arm"
 
           cd src/Chirp.CLI
           dotnet build --configuration Release --no-restore
@@ -72,5 +72,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
+          tag_name: ${{ github.ref_name }}
           files: "Chirp*"
