@@ -36,6 +36,10 @@ jobs:
           cd test/Chirp.CSVDB.Tests
           dotnet test --no-restore --verbosity normal
 
+      - name: Set Release Name
+        id: release_name
+        run: echo "::set-output name=RELEASE_NAME::${{ github.ref }}"
+
       - name: Build
         run: |
 
@@ -67,6 +71,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: "${{ github.ref }}"
-          name: "${{ github.ref }}"
+          tag_name: ${{ github.ref }}
+          name: ${{ steps.release_name.outputs.RELEASE_NAME }}
           files: "Chirp*"
