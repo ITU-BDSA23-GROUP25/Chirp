@@ -68,9 +68,9 @@ jobs:
           rm -r "$release_macos_arm"
 
       - name: Publish
-        run: |
+        uses: |
+          softprops/action-gh-release@v1
           release_name="Release {{ github_ref_name }}"
-        uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
