@@ -70,5 +70,5 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: "Chirp*"
-          tag_name: $tag
+          tag_name: ${{ github.ref_name }}
           token: ${{ secrets.GITHUB_TOKEN }}
