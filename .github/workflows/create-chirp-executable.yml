@@ -3,7 +3,7 @@ name: create-chirp-executable
 on:
   push:
     tags:
-      - 'v[0-9]+,[0-9]+,[0-9]+'
+      - 'v[0-9]+.[0-9]+.[0-9]+'
     branches:
       - main
   workflow_dispatch:
@@ -34,7 +34,7 @@ jobs:
       
       - name: Get Latest Tag
         id: get_latest_tag
-        run: echo "::set-output name=TAG::$(git describe --tags $(git rev-list --tags --max-count=1))"
+        run: echo "::set-output name=TAG::$(git describe --tags --abbrev=0)"
 
       - name: Build
         run: |
