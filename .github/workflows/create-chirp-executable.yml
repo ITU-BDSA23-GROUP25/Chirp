@@ -28,13 +28,15 @@ jobs:
           cd src/SimpleDB
           dotnet restore
 
-      - name: Set Release Name
-        id: release_name
-        run: echo "::set-output name=RELEASE_NAME::$(echo ${{ github.ref }} | sed 's#^refs/##')"
-      
       - name: Get Latest Tag
         id: get_latest_tag
-        run: echo "::set-output name=TAG::$(git describe --tags --abbrev=0)"
+        run: |
+          latest_tag=$(git describe --tags --abbrev=0)
+          echo "TAG=$latest_tag" >> $GITHUB_ENV
+
+      - name: Set Release Name
+        id: release_name
+        run: echo "RELEASE_NAME=${{ env.TAG }}" >> $GITHUB_ENV
 
       - name: Build
         run: |
@@ -63,11 +65,11 @@ jobs:
           rm -r "$release_macos"
           rm -r "$release_macos_arm"
 
-      - name: Make release
+      - name: Publish
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.get_latest_tag.outputs.TAG }}
-          name: ${{ steps.get_latest_tag.outputs.TAG }}
+          tag_name: ${{ env.TAG }}
+          name: ${{ env.RELEASE_NAME }}
           files: "Chirp*"
