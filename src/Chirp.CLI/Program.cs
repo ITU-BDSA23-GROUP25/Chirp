@@ -30,7 +30,7 @@ class Program
 }
     static void Main(string[] args)
     {
-        Class1 x = new();
+        Class1 x = Class1.Instance;
         UserInterface ui = new();
         Parser.Default.ParseArguments<Options>(args)
                    .WithParsed<Options>(o =>
@@ -44,17 +44,5 @@ class Program
                            x.Store(x.GetCheep(o.Cheep));
                        }
                    });
-        /*Class1 x = new();
-        UserInterface ui = new();
-        if (input.Equals("read"))
-        {
-            ui.PrintCheeps(x.Read());
-        } else if (input.Equals("cheep"))
-        {
-            //x.Store(args[1]);
-        } else
-        {
-            Console.WriteLine("Enter <dotnet run> followed by either <read> or <cheap>");
-        }*/
     }
 }

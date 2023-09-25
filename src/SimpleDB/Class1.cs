@@ -4,11 +4,26 @@ using CsvHelper;
 namespace SimpleDB;
 
 
-public class Class1 : IDatabaseRepository<Cheep>
+public sealed class Class1 : IDatabaseRepository<Cheep>
 {
+
+    private static Class1 instance = null!;
+
+    public static Class1 Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = new Class1();
+            }
+            return instance;
+        }
+    }
     public IEnumerable<Cheep> Read(int? limit = null)
     {
-        using var reader = new StreamReader("../SimpleDB/chirp_cli_db.csv");
+        //Path to csv from CLI: "../SimpleDB/chirp_cli_db.csv"
+        using var reader = new StreamReader("./test/Chirp.CSVDB.Tests/test_db.csv");
         using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
 
         // read CSV file
@@ -29,14 +44,14 @@ public class Class1 : IDatabaseRepository<Cheep>
     public void Store(Cheep record)
     {
         string csv = string.Format("{0},{1},{2}\n", record.Author, "\"" + record.Message + "\"", record.Timestamp);
-        File.AppendAllText("../SimpleDB/chirp_cli_db.csv", csv);
+        File.AppendAllText("./test/Chirp.CSVDB.Tests/test_db.csv", csv);
     }
 
-    static string getUNIXTime(){
+    public static string getUNIXTime(){
         return Convert.ToString(DateTimeOffset.UtcNow.ToUnixTimeSeconds());;
     }
 
-    static string getUsername(){
+    public static string getUsername(){
         return Environment.UserName;
     }
 }
