@@ -22,7 +22,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          dotnet tool install -g ilink.tool
           cd src/Chirp.CLI
           dotnet restore
           cd ../..
@@ -50,13 +49,6 @@ jobs:
           dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "osx-x64" -c Release -o "$release_macos" -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:PublishTrimmed=true
           dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "osx-arm64" -c Release -o "$release_macos_arm" -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:PublishTrimmed=true
 
-
-          iltrim "$release_linux"
-          iltrim "$release_windows"
-          iltrim "$release_macos"
-          iltrim "$release_macos_arm"
-
-
           7z a -tzip "Chirp-linux-64.zip" "./${release_linux}/*"
           7z a -tzip "Chirp-windows-64.zip" "./${release_windows}/*"
           7z a -tzip "Chirp-macos-64.zip" "./${release_macos}/*"
@@ -72,6 +64,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: 1.0.0
-          name: 1.0.0
+          tag_name: ${{ steps.get_latest_tag.outputs.TAG }}
+          name: ${{ steps.get_latest_tag.outputs.TAG }}
           files: "Chirp*"
