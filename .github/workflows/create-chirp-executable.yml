@@ -59,7 +59,7 @@ jobs:
           rm -r "$release_macos"
           rm -r "$release_macos_arm"
 
-      - name: Publish
+      - name: Make release
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
