@@ -51,10 +51,11 @@ jobs:
           cd src/Chirp.CLI
           dotnet build --configuration Release --no-restore
           cd ../..
-          dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "linux-x64" -c Release -o "$release_linux"
-          dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "win-x64" -c Release -o "$release_windows"
-          dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "osx-x64" -c Release -o "$release_macos"
-          dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "osx-arm64" -c Release -o "$release_macos_arm"
+
+          dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "linux-x64" -c Release -o "$release_linux" -p:PublishSingleFile=true
+          dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "win-x64" -c Release -o "$release_windows" -p:PublishSingleFile=true
+          dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "osx-x64" -c Release -o "$release_macos" -p:PublishSingleFile=true
+          dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "osx-arm64" -c Release -o "$release_macos_arm" -p:PublishSingleFile=true
 
           7z a -tzip "Chirp-linux-64.zip" "./${release_linux}/*"
           7z a -tzip "Chirp-windows-64.zip" "./${release_windows}/*"
@@ -72,5 +73,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          name: ${{ steps.release_name.outputs.RELEASE_NAME }}
+          name: tags/TAG_NAME
           files: "Chirp*"
