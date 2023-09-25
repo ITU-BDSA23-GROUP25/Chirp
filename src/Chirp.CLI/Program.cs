@@ -17,6 +17,7 @@ using static SimpleDB.Class1;
 using SimpleDB;
 using UI;
 using CommandLine;
+using System.Diagnostics.CodeAnalysis;
 
 class Program
 {
@@ -30,6 +31,7 @@ class Program
 }
     static void Main(string[] args)
     {
+        string dir = "../SimpleDB/chirp_cli_db.csv";
         Class1 x = Class1.Instance;
         UserInterface ui = new();
         Parser.Default.ParseArguments<Options>(args)
@@ -37,11 +39,11 @@ class Program
                    {
                        if (o.Command == "read")
                        {
-                           ui.PrintCheeps(x.Read());
+                           ui.PrintCheeps(x.Read(dir));
                        }
                        else if (o.Command == "cheep")
                        {
-                           x.Store(x.GetCheep(o.Cheep));
+                           x.Store(dir, x.GetCheep(o.Cheep));
                        }
                    });
     }

@@ -20,10 +20,11 @@ public sealed class Class1 : IDatabaseRepository<Cheep>
             return instance;
         }
     }
-    public IEnumerable<Cheep> Read(int? limit = null)
+
+    public IEnumerable<Cheep> Read(string dir, int? limit = null)
     {
         //Path to csv from CLI: "../SimpleDB/chirp_cli_db.csv"
-        using var reader = new StreamReader("./test/Chirp.CSVDB.Tests/test_db.csv");
+        using var reader = new StreamReader(dir);
         using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
 
         // read CSV file
@@ -41,10 +42,10 @@ public sealed class Class1 : IDatabaseRepository<Cheep>
         return c;
     }
 
-    public void Store(Cheep record)
+    public void Store(string dir, Cheep record)
     {
         string csv = string.Format("{0},{1},{2}\n", record.Author, "\"" + record.Message + "\"", record.Timestamp);
-        File.AppendAllText("./test/Chirp.CSVDB.Tests/test_db.csv", csv);
+        File.AppendAllText(dir, csv);
     }
 
     public static string getUNIXTime(){
