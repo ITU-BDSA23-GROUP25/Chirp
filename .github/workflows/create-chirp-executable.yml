@@ -31,6 +31,10 @@ jobs:
       - name: Set Release Name
         id: release_name
         run: echo "::set-output name=RELEASE_NAME::$(echo ${{ github.ref }} | sed 's#^refs/##')"
+      
+      - name: Get Latest Tag
+        id: get_latest_tag
+        run: echo "::set-output name=TAG::$(git describe --tags $(git rev-list --tags --max-count=1))"
 
       - name: Build
         run: |
