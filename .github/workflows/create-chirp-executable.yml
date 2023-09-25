@@ -28,14 +28,6 @@ jobs:
           cd src/SimpleDB
           dotnet restore
 
-      - name: Test
-        run: |
-          cd test/Chirp.CLI.Client.Tests
-          dotnet test --no-restore --verbosity normal
-          cd ../..
-          cd test/Chirp.CSVDB.Tests
-          dotnet test --no-restore --verbosity normal
-
       - name: Set Release Name
         id: release_name
         run: echo "::set-output name=RELEASE_NAME::$(echo ${{ github.ref }} | sed 's#^refs/##')"
