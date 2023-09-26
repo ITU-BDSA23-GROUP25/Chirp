@@ -2,7 +2,7 @@ using SimpleDB;
 
 public class IntegrationTest1{
 
-
+[Fact]
 public void IsDataInDbAsExpectedTest()
 {
     //Arrange
@@ -16,9 +16,9 @@ public void IsDataInDbAsExpectedTest()
 
         //Act
         string actual = c.ToString();
-        x.Store(c);
+        x.Store("../../../../Chirp.CSVDB.Tests/test_db.csv", c);
 
-        var Inumerable = x.Read();
+        var Inumerable = x.Read("../../../../Chirp.CSVDB.Tests/test_db.csv");
         string? expected = Inumerable.Last().ToString();
         Console.WriteLine($"actual: {actual}");
         Console.WriteLine($"actual: {expected}");
