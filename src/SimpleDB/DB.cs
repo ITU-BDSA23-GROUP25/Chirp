@@ -4,18 +4,18 @@ using CsvHelper;
 namespace SimpleDB;
 
 
-public sealed class Class1 : IDatabaseRepository<Cheep>
+public sealed class DB : IDatabaseRepository<Cheep>
 {
 
-    private static Class1 instance = null!;
+    private static DB instance = null!;
 
-    public static Class1 Instance
+    public static DB Instance
     {
         get
         {
             if (instance == null)
             {
-                instance = new Class1();
+                instance = new DB();
             }
             return instance;
         }

@@ -9,12 +9,12 @@ public class UnitTest
 {
 
     private readonly UserInterface _userinterface;
-    private readonly Class1 _class1;
+    private readonly DB _DB;
 
     public UnitTest()
     {
         _userinterface = new UserInterface();
-        _class1 = Class1.Instance;
+        _DB = DB.Instance;
     }
 
 

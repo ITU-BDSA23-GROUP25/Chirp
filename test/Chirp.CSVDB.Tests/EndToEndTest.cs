@@ -8,14 +8,14 @@ public class EndToEndTest
     {
         // Arrange
 
-        Class1 x = Class1.Instance;
+        DB x = DB.Instance;
 
         // Act
         string output = "";
         using (var process = new Process())
         {
             process.StartInfo.FileName = "/usr/bin/dotnet";
-            process.StartInfo.Arguments = "./src/Chirp.CLI.Client/bin/Debug/net7.0/chirp.dll read 10";
+            process.StartInfo.Arguments = "read 10";
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.WorkingDirectory = "../../../../../";
             process.StartInfo.RedirectStandardOutput = true;

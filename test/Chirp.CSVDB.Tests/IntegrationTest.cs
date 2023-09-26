@@ -6,12 +6,12 @@ public class IntegrationTest1{
 public void IsDataInDbAsExpectedTest()
 {
     //Arrange
-        Class1 x = Class1.Instance;
+        DB x = DB.Instance;
         Cheep c = new()
         {
-            Author = Class1.getUsername(),
+            Author = DB.getUsername(),
             Message = "Hello World!",
-            Timestamp = Class1.getUNIXTime()
+            Timestamp = DB.getUNIXTime()
         };
 
         //Act

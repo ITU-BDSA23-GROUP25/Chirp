@@ -13,7 +13,7 @@
 using System.Text.RegularExpressions;
 using CsvHelper;
 using System.Globalization;
-using static SimpleDB.Class1;
+using static SimpleDB.DB;
 using SimpleDB;
 using UI;
 using CommandLine;
@@ -32,7 +32,7 @@ class Program
     static void Main(string[] args)
     {
         string dir = "../SimpleDB/chirp_cli_db.csv";
-        Class1 x = Class1.Instance;
+        DB x = DB.Instance;
         UserInterface ui = new();
         Parser.Default.ParseArguments<Options>(args)
                    .WithParsed<Options>(o =>
