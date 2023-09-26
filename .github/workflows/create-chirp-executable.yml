@@ -27,6 +27,14 @@ jobs:
           cd ../..
           cd src/SimpleDB
           dotnet restore
+      
+      - name: Test
+        run: |
+          cd test/Chirp.CLI.Client.Tests
+          dotnet test --no-restore --verbosity normal
+          cd ../..
+          cd test/Chirp.CSVDB.Tests
+          dotnet test --no-restore --verbosity normal
 
       - name: Get Latest Tag
         id: get_latest_tag
