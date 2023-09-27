@@ -6,6 +6,7 @@ namespace SimpleDB;
 
 public sealed class DB : IDatabaseRepository<Cheep>
 {
+    private DB () {}
 
     private static DB instance = null!;
 
