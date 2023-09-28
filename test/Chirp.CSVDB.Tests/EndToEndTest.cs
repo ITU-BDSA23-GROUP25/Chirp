@@ -8,14 +8,14 @@ public class EndToEndTest
     {
         // Arrange
 
-        DB x = DB.Instance;
+        DB x = DB.Instance("test_db.csv");
 
         // Act
         string output = "";
         using (var process = new Process())
         {
             process.StartInfo.FileName = "/usr/bin/dotnet";
-            process.StartInfo.Arguments = "read 10";
+            process.StartInfo.Arguments = "run read 10";
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.WorkingDirectory = "../../../../../";
             process.StartInfo.RedirectStandardOutput = true;

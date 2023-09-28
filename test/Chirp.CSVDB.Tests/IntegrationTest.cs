@@ -6,7 +6,7 @@ public class IntegrationTest1{
 public void IsDataInDbAsExpectedTest()
 {
     //Arrange
-        DB x = DB.Instance;
+        DB x = DB.Instance("../../../../Chirp.CSVDB.Tests/test_db.csv");
         Cheep c = new()
         {
             Author = DB.getUsername(),
@@ -16,9 +16,9 @@ public void IsDataInDbAsExpectedTest()
 
         //Act
         string actual = c.ToString();
-        x.Store("../../../../Chirp.CSVDB.Tests/test_db.csv", c);
+        x.Store(c);
 
-        var Inumerable = x.Read("../../../../Chirp.CSVDB.Tests/test_db.csv");
+        var Inumerable = x.Read();
         string? expected = Inumerable.Last().ToString();
         Console.WriteLine($"actual: {actual}");
         Console.WriteLine($"actual: {expected}");
