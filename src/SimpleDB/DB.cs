@@ -6,26 +6,31 @@ namespace SimpleDB;
 
 public sealed class DB : IDatabaseRepository<Cheep>
 {
-    private DB () {}
 
-    private static DB instance = null!;
+    private string dbPath;
 
-    public static DB Instance
+    private static DB _instance = null!;
+
+    private DB(string dbPath)
     {
-        get
-        {
-            if (instance == null)
-            {
-                instance = new DB();
-            }
-            return instance;
-        }
+        this.dbPath = dbPath;
     }
 
-    public IEnumerable<Cheep> Read(string dir, int? limit = null)
+    public static DB Instance (string dbPath)
+    {
+        
+            if (_instance == null)
+            {
+                _instance = new DB(dbPath);
+            }
+            return _instance;
+        
+    }
+
+    public IEnumerable<Cheep> Read(int? limit = null)
     {
         //Path to csv from CLI: "../SimpleDB/chirp_cli_db.csv"
-        using var reader = new StreamReader(dir);
+        using var reader = new StreamReader(dbPath);
         using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
 
         // read CSV file
@@ -43,10 +48,10 @@ public sealed class DB : IDatabaseRepository<Cheep>
         return c;
     }
 
-    public void Store(string dir, Cheep record)
+    public void Store(Cheep record)
     {
         string csv = string.Format("{0},{1},{2}\n", record.Author, "\"" + record.Message + "\"", record.Timestamp);
-        File.AppendAllText(dir, csv);
+        File.AppendAllText(dbPath, csv);
     }
 
     public static string getUNIXTime(){
