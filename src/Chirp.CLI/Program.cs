@@ -24,26 +24,26 @@ class Program
     public class Options
 {
     [Value(index: 0, Required = true, HelpText = "Use <read> or <cheep>")]
-    public string Command {get; set;}
+    public string? Command {get; set;}
 
     [Value(index: 1, Required = false, HelpText = "Write your Cheep!")]
-    public string Cheep {get; set;}
+    public string? Cheep {get; set;}
 }
     static void Main(string[] args)
     {
-        string dir = "../SimpleDB/chirp_cli_db.csv";
-        DB x = DB.Instance;
+        string dbPath = "../SimpleDB/chirp_cli_db.csv";
+        DB x = DB.Instance(dbPath);
         UserInterface ui = new();
         Parser.Default.ParseArguments<Options>(args)
                    .WithParsed<Options>(o =>
                    {
                        if (o.Command == "read")
                        {
-                           ui.PrintCheeps(x.Read(dir));
+                           ui.PrintCheeps(x.Read());
                        }
                        else if (o.Command == "cheep")
                        {
-                           x.Store(dir, x.GetCheep(o.Cheep));
+                           x.Store(x.GetCheep(o.Cheep));
                        }
                    });
     }
