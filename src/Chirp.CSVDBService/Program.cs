@@ -5,7 +5,7 @@ using System.Globalization;
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
-var DB = "src/Chirp.CSVDBService/SimpleDB/chirp_cli_db.csv";
+var DB = "../../src/SimpleDB/chirp_cli_db.csv";
 
 app.MapGet("/cheeps", () => {
     //Path to csv from CLI: "../SimpleDB/chirp_cli_db.csv"
