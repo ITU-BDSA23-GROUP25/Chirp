@@ -49,19 +49,19 @@
     ]
   },
   "packageFolders": {
-    "/home/bdamunix123/.nuget/packages/": {}
+    "/Users/atilaarianpour/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/mnt/c/Users/adam/ITU/bdsa/Chirp/src/SimpleDB/SimpleDB.csproj",
+      "projectUniqueName": "/Users/atilaarianpour/Documents/GitHub/Chirp/src/SimpleDB/SimpleDB.csproj",
       "projectName": "SimpleDB",
-      "projectPath": "/mnt/c/Users/adam/ITU/bdsa/Chirp/src/SimpleDB/SimpleDB.csproj",
-      "packagesPath": "/home/bdamunix123/.nuget/packages/",
-      "outputPath": "/mnt/c/Users/adam/ITU/bdsa/Chirp/src/SimpleDB/obj/",
+      "projectPath": "/Users/atilaarianpour/Documents/GitHub/Chirp/src/SimpleDB/SimpleDB.csproj",
+      "packagesPath": "/Users/atilaarianpour/.nuget/packages/",
+      "outputPath": "/Users/atilaarianpour/Documents/GitHub/Chirp/src/SimpleDB/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/bdamunix123/.nuget/NuGet/NuGet.Config"
+        "/Users/atilaarianpour/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
@@ -106,7 +106,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.111/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.400/RuntimeIdentifierGraph.json"
       }
     }
   }

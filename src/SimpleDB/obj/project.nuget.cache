@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "/brxoL09wetNQPz7gw2fi1yLAek2DvfRls4pniHKYU6XlQrJLNPVEyFPBCDst0OBcPTryQSdht9LYi4mw8Bs9w==",
+  "dgSpecHash": "eTSPVOKuy7EhL3/NwxXJCdEJF6k+3fK7cN+V64RfEqHFGrTtZtXgf7d6mq4YGo2/+mAvLwk+V1M5eQe5otfm5g==",
   "success": true,
-  "projectFilePath": "/mnt/c/Users/adam/ITU/bdsa/Chirp/src/SimpleDB/SimpleDB.csproj",
+  "projectFilePath": "/Users/atilaarianpour/Documents/GitHub/Chirp/src/SimpleDB/SimpleDB.csproj",
   "expectedPackageFiles": [
-    "/home/bdamunix123/.nuget/packages/csvhelper/30.0.1/csvhelper.30.0.1.nupkg.sha512"
+    "/Users/atilaarianpour/.nuget/packages/csvhelper/30.0.1/csvhelper.30.0.1.nupkg.sha512"
   ],
   "logs": []
 }
