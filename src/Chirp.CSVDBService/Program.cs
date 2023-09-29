@@ -1,6 +1,5 @@
 using CsvHelper;
-using JsonSerializer;
-
+using System.Globalization;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,14 +13,8 @@ app.MapGet("/cheeps", () => {
     using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
 
     var records = csv.GetRecords<Cheep>().ToList<Cheep>();
-    
-    // Serialize the records to JSON
-    var json = JsonSerializer.Serialize(records);
 
-    // Create an HttpResponse with JSON content
-    var response = Results.Json(json);
-
-    return response;
+    return records;
 });
 
 app.MapPost("/cheep", (Cheep cheep) => {
