@@ -49,19 +49,19 @@
     ]
   },
   "packageFolders": {
-    "/Users/atilaarianpour/.nuget/packages/": {}
+    "/Users/KarlGustavLoehr/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/atilaarianpour/Documents/GitHub/Chirp/src/SimpleDB/SimpleDB.csproj",
+      "projectUniqueName": "/Users/KarlGustavLoehr/Desktop/Softwareudvikling/3. Semester/bdsa2023/Chirp/src/SimpleDB/SimpleDB.csproj",
       "projectName": "SimpleDB",
-      "projectPath": "/Users/atilaarianpour/Documents/GitHub/Chirp/src/SimpleDB/SimpleDB.csproj",
-      "packagesPath": "/Users/atilaarianpour/.nuget/packages/",
-      "outputPath": "/Users/atilaarianpour/Documents/GitHub/Chirp/src/SimpleDB/obj/",
+      "projectPath": "/Users/KarlGustavLoehr/Desktop/Softwareudvikling/3. Semester/bdsa2023/Chirp/src/SimpleDB/SimpleDB.csproj",
+      "packagesPath": "/Users/KarlGustavLoehr/.nuget/packages/",
+      "outputPath": "/Users/KarlGustavLoehr/Desktop/Softwareudvikling/3. Semester/bdsa2023/Chirp/src/SimpleDB/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/atilaarianpour/.nuget/NuGet/NuGet.Config"
+        "/Users/KarlGustavLoehr/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
