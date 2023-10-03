@@ -4,7 +4,7 @@ public record CheepViewModel(string Author, string Message, string Timestamp);
 
 public interface ICheepService
 {
-    public List<CheepViewModel> GetCheeps();
+    public List<CheepViewModel> GetCheeps(int pageNumber);
     public List<CheepViewModel> GetCheepsFromAuthor(string author);
 }
 
@@ -13,12 +13,14 @@ public class CheepService : ICheepService
     // These would normally be loaded from a database for example
     private readonly List<CheepViewModel> _cheeps = new();
 
-    public List<CheepViewModel> GetCheeps()
+    public List<CheepViewModel> GetCheeps(int pageNumber)
     {
+        _cheeps.Clear();
         var sqlDBFilePath = "db.db";
         var sqlQuery = @"SELECT u.username, m.text, m.pub_date
                          FROM message m
                          JOIN user u ON u.user_id = m.author_id
+                         WHERE m.message_id > $lowerBound AND m.message_id < $upperBound 
                          ORDER by m.pub_date asc";
         using (var connection = new SqliteConnection($"Data Source={sqlDBFilePath}"))
         {
@@ -26,6 +28,8 @@ public class CheepService : ICheepService
 
             var command = connection.CreateCommand();
             command.CommandText = sqlQuery;
+            command.Parameters.AddWithValue("$lowerBound", 1+pageNumber*32);
+            command.Parameters.AddWithValue("$upperBound", 32+pageNumber*32);
 
             using var reader = command.ExecuteReader();
     
