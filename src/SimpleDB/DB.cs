@@ -30,16 +30,18 @@ namespace SimpleDB
             using var reader = new StreamReader(dbPath);
             using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
 
-            var records = csv.GetRecords<T>();
+            var records = csv.GetRecords<T>().ToList<T>();
             return limit.HasValue ? records.Take(limit.Value) : records;
         }
 
         public void Store(T record)
         {
-            using var writer = new StreamWriter(dbPath, true);
-            using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
-
-            csv.WriteRecord(record);
+            using (var writer = new StreamWriter(dbPath, true))
+            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            {
+                csv.WriteRecord(record);
+                writer.WriteLine(); // Add a newline character after writing the record
+            }
         }
 
         public static string GetUNIXTime()
@@ -47,7 +49,7 @@ namespace SimpleDB
             return DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
         }
 
-        public T GetCheep(string message)
+        /*public T GetCheep(string message)
         {
             var record = Activator.CreateInstance<T>();
 
@@ -66,7 +68,7 @@ namespace SimpleDB
             messageProperty?.SetValue(record, message);
 
             return record;
-        }
+        }*/
 
         public static string GetUsername()
         {

@@ -14,10 +14,11 @@ using System.Text.RegularExpressions;
 using CsvHelper;
 using System.Globalization;
 using SimpleDB;
-using ;
 using CommandLine;
 using System.Diagnostics.CodeAnalysis;
 using UI;
+
+namespace client;
 
 class Program
 {
@@ -43,7 +44,7 @@ class Program
                        }
                        else if (o.Command == "cheep")
                        {
-                           x.Store(x.GetCheep(o.Cheep));
+                           //x.Store(x.GetCheep(o.Cheep));
                        }
                    });
     }

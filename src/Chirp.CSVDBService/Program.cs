@@ -8,21 +8,18 @@ var app = builder.Build();
 string dbPath = "../../src/SimpleDB/chirp_cli_db.csv";
 DB<Cheep> x = DB<Cheep>.Instance(dbPath);
 
-app.MapGet("/cheeps", () => {
-    //Path to csv from CLI: "../SimpleDB/chirp_cli_db.csv"
-    /*using var reader = new StreamReader(dbPath);
-    using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
-    var records = csv.GetRecords<Cheep>().ToList<Cheep>();*/
-
-    x.Read();
-
-    //return records;
+app.MapGet("/cheeps", () =>
+{
+    var cheeps = x.Read();
+    Console.WriteLine("the csv file has been given to a client");
+    return Results.Ok(cheeps);
 });
 
-app.MapPost("/cheep", (Cheep cheep) => {
-    /*string csv = string.Format("{0},{1},{2}\n", cheep.Author, "\"" + cheep.Message + "\"", cheep.Timestamp);
-    File.AppendAllText(dbPath, csv);*/
+app.MapPost("/cheep", (Cheep cheep) =>
+{
     x.Store(cheep);
+    Console.WriteLine("a cheep has been stored");
+    return Results.Created($"/cheep", cheep);
 });
 
 
