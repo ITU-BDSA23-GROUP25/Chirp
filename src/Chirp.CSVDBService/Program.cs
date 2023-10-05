@@ -11,7 +11,7 @@ DB<Cheep> x = DB<Cheep>.Instance(dbPath);
 app.MapGet("/cheeps", () =>
 {
     var cheeps = x.Read();
-    Console.WriteLine("the csv file has been given to a client");
+    Console.WriteLine("the csv file has been given to client");
     return Results.Ok(cheeps);
 });
 
