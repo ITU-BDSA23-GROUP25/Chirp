@@ -22,7 +22,7 @@ namespace Client
     {
         static async Task Main(string[] args)
         {
-            string baseURL = "http://localhost:5165";
+            string baseURL = "https://bdsagroup25chirpremotedb.azurewebsites.net/";
             using HttpClient client = new();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -33,7 +33,7 @@ namespace Client
                 if (o.Command == "read")
                 {
                     var response = await client.GetFromJsonAsync<Cheep[]>($"{baseURL}/cheeps");
-                    Console.WriteLine("homo");
+                    
                     if (response != null)
                     {
                         Console.WriteLine("Cheep Data:");
