@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'bdsagroup25chirpremotedb'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9FFB0C20471D43BFA20423E4CBADF579 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7FC42317835E44D997D2171868E37BB7 }}
           package: .
