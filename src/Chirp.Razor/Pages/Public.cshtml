@@ -1,9 +1,9 @@
-﻿@page "/{page:int?}"
+﻿@page "/{pagen:int?}"
 @model Chirp.Razor.Pages.PublicModel
 @{
     ViewData["Title"] = "Chirp!";
     Layout = "Shared/_Layout";
-    var routeName = HttpContext.GetRouteValue("page");
+    var routeName = HttpContext.GetRouteValue("pagen");
 }
 
 <div>

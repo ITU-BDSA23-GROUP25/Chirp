@@ -1,3 +1,4 @@
+using System.ComponentModel.Design;
 using Microsoft.Data.Sqlite;
 
 public record CheepViewModel(string Author, string Message, string Timestamp);
@@ -5,7 +6,7 @@ public record CheepViewModel(string Author, string Message, string Timestamp);
 public interface ICheepService
 {
     public List<CheepViewModel> GetCheeps(int pageNumber);
-    public List<CheepViewModel> GetCheepsFromAuthor(string author);
+    public List<CheepViewModel> GetCheepsFromAuthor(int pageNumber, string author);
 }
 
 public class CheepService : ICheepService
@@ -20,16 +21,15 @@ public class CheepService : ICheepService
         var sqlQuery = @"SELECT u.username, m.text, m.pub_date
                          FROM message m
                          JOIN user u ON u.user_id = m.author_id
-                         WHERE m.message_id > $lowerBound AND m.message_id < $upperBound 
-                         ORDER by m.pub_date asc";
+                         ORDER by m.pub_date asc
+                         LIMIT 32 OFFSET $offset";
         using (var connection = new SqliteConnection($"Data Source={sqlDBFilePath}"))
         {
             connection.Open();
 
             var command = connection.CreateCommand();
             command.CommandText = sqlQuery;
-            command.Parameters.AddWithValue("$lowerBound", 1+pageNumber*32);
-            command.Parameters.AddWithValue("$upperBound", 32+pageNumber*32);
+            command.Parameters.AddWithValue("$offset", pageNumber*32);
 
             using var reader = command.ExecuteReader();
     
@@ -44,17 +44,20 @@ public class CheepService : ICheepService
         return _cheeps;  
     }
 
-    public List<CheepViewModel> GetCheepsFromAuthor(string author)
+    public List<CheepViewModel> GetCheepsFromAuthor(int pageNumber, string author)
     {
         _cheeps.Clear();
         // filter by the provided author name
-
         var sqlDBFilePath = "db.db";
-        var sqlQuery = @"SELECT u.username, m.text, m.pub_date
-                         FROM message m
-                         JOIN user u ON u.user_id = m.author_id
-                         WHERE u.username = $author 
-                         ORDER by m.pub_date asc";
+        var sqlQuery = @"Select * from (
+                        SELECT u.username, m.text, m.pub_date 
+                        FROM message m
+                        JOIN user u 
+                            ON u.user_id = m.author_id
+                        WHERE u.username = $author 
+                        ORDER by m.pub_date ASC) AS sub
+                        LIMIT 32 OFFSET $offset";
+
         using (var connection = new SqliteConnection($"Data Source={sqlDBFilePath}"))
         {
             connection.Open();
@@ -62,6 +65,7 @@ public class CheepService : ICheepService
             var command = connection.CreateCommand();
             command.CommandText = sqlQuery;
             command.Parameters.AddWithValue("$author", author);
+            command.Parameters.AddWithValue("$offset", pageNumber*32);
 
             using var reader = command.ExecuteReader();
     
