@@ -22,7 +22,7 @@ namespace Client
     {
         static async Task Main(string[] args)
         {
-            string baseURL = "https://bdsagroup25chirpremotedb.azurewebsites.net/";
+            string baseURL = "https://bdsagroup25chirpremotedb.azurewebsites.net";
             using HttpClient client = new();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
