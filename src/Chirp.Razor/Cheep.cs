@@ -1,0 +1,14 @@
+namespace Chirp.Razor;
+
+
+public class Cheep
+{
+    public int AuthorId { get; set; }
+    public string? Message { get; set; }
+    public DateTime Timestamp { get; set; }
+    
+    
+    override public string ToString(){
+        return string.Format("{0},{1},{2}\n", Author, "\"" + Message + "\"", Timestamp);;
+    }
+}
