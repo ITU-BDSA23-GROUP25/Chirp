@@ -65,7 +65,6 @@ namespace Client
                         try
                         {
                             var response = await client.PostAsync("/cheep", content);
-                            Console.WriteLine(response.StatusCode);
                             if (response.IsSuccessStatusCode)
                             {
                                 Console.WriteLine("Cheep added successfully.");
