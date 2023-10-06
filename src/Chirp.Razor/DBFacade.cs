@@ -1,33 +1,21 @@
 using System.Reflection.Metadata.Ecma335;
 using Microsoft.Data.Sqlite;
 
+//TODO ask TA if this is correct
 public class DBFacade {
 
-    List<String> messages = new();
-public void Connect(){
-    var sqlDBFilePath = "db.db";
-    var sqlQuery = @"SELECT * FROM message ORDER by message.pub_date desc";
-    using (var connection = new SqliteConnection($"Data Source={sqlDBFilePath}"))
-{
-    connection.Open();
+    private CheepService cs = new();
+    private List<CheepViewModel> cheeps = new();
 
-    var command = connection.CreateCommand();
-    command.CommandText = sqlQuery;
-
-    using var reader = command.ExecuteReader();
-    int i = 0;
-    
-    while (reader.Read())
+    public List<CheepViewModel> GetCheeps(int page)
     {
-        messages.Add(reader.GetString(0));
+        cheeps = cs.GetCheeps(page);
+        return cheeps;
     }
-    Console.WriteLine(messages.Count);
-}   
 
-    
-
-}
-public List<String> GetMessages(){
-        return messages;
+    public List<CheepViewModel> GetCheeps(int page, string author)
+    {
+        cheeps = cs.GetCheepsFromAuthor(page, author);
+        return cheeps;
     }
 }
