@@ -1,4 +1,4 @@
-namespace Chirp.Razor;
+namespace CheepRepository;
 
 
 public class Cheep
@@ -10,6 +10,13 @@ public class Cheep
 
     override public string ToString()
     {
-        return string.Format("{0},{1},{2}\n", AuthorId, "\"" + Message + "\"", Timestamp); ;
+        return string.Format("{0},{1},{2}\n", AuthorId, "\"" + Message + "\"", Timestamp);
+    }
+
+    public record CheepDTO
+    {
+        public required string Author {get; set;}
+        public required string Message { get; set;}
+        public required double TimeStamp { get; set;}
     }
 }

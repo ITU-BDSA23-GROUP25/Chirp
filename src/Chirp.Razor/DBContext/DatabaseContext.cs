@@ -1,4 +1,4 @@
-namespace Chirp.Razor;
+namespace CheepRepository;
 
 public class DatabaseContext : DbContext
 {
