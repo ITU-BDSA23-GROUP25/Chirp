@@ -1,16 +1,19 @@
-namespace DBContext;
+namespace Chirp.Razor;
 
 public class DatabaseContext : DbContext
 {
     public virtual DbSet<Cheep> Cheeps { get; set; }
     public virtual DbSet<Author> Authors { get; set; }
+    public string DbPath { get; set; }
 
-    public DataBaseContext() 
+    protected void OnConfiguring()
     {
         //var folder = Environment.SpecialFolder.LocalApplicationData;
-        var path = path.GetTempPath();
-        DbPath = System.IO.Path.Join(path, "ChirpDB.db");
+        var path = Path.GetTempPath();
+        DbPath = Path.Join(path, "ChirpDB.db");
     }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder options)
+     => options.UseSqlite($"Data Source={DbPath}");
 
 }
