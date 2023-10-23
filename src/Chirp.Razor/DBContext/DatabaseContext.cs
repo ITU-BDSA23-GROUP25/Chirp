@@ -1,16 +1,20 @@
-namespace CheepRepository;
+namespace Repository;
 
 public class DatabaseContext : DbContext
 {
     public virtual DbSet<Cheep> Cheeps { get; set; }
     public virtual DbSet<Author> Authors { get; set; }
-    public string DbPath { get; set; }
+    string DbPath = Path.Join(Path.GetTempPath(), "db.db");
 
-    protected void OnConfiguring()
-    {
-        //var folder = Environment.SpecialFolder.LocalApplicationData;
-        var path = Path.GetTempPath();
-        DbPath = Path.Join(path, "ChirpDB.db");
+    protected override void OnModelCreating(ModelBuilder modelBuilder) {
+        modelBuilder.Entity<Cheep>().Property(c => c.Text).HasMaxLength(160);
+        modelBuilder.Entity<Author>().Property(a => a.Name).HasMaxLength(32);
+        modelBuilder.Entity<Author>().HasIndex(a => a.Name).IsUnique();
+    }
+
+    public void InitializeDB(){
+        Database.EnsureCreated();
+        DbInitializer.SeedDatabase(this);
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)

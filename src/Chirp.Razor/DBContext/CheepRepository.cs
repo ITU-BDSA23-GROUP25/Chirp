@@ -1,19 +1,50 @@
-namespace CheepRepository;
+using Repository.DTO;
 
-public class CheepRepository : iCheepRepository
+namespace Repository;
+
+public class CheepRepository : ICheepRepository
 {
-    private CheepService cs = new();
-    private List<CheepViewModel> cheeps = new();
 
-    public List<CheepViewModel> GetCheeps(int page)
-    {
-        cheeps = cs.GetCheeps(page);
-        return cheeps;
+   private readonly DatabaseContext _databaseContext;
+   private const int CheepsPerPage = 32;
+   
+   public CheepRepository()
+   {
+        _databaseContext = new DatabaseContext();
+        _databaseContext.InitializeDB();
+   }
+
+
+    public  async Task<IEnumerable<CheepDTO>> GetCheeps(int pageNumber = 0) 
+        => await _databaseContext.Cheeps
+        .Include(c => c.Author)
+        .Skip(CheepsPerPage * pageNumber)
+        .Take(CheepsPerPage)
+        .Select(c => new CheepDTO(c.Author.Name, c.Text, c.TimeStamp.ToString("MM/dd/yy H:mm:ss")))
+        .ToListAsync();
+        
+
+    public async Task<IEnumerable<CheepDTO>> GetCheepsFromAuthor(int pageNumber, Author author_name) =>
+        await _databaseContext.Cheeps
+
+        .Include( c => c.Author)
+        .Where(c => c.Author.Name == author_name.Name)
+        .Skip(CheepsPerPage * (pageNumber - 1))
+        .Take(CheepsPerPage)
+        .Select(c =>
+            new CheepDTO(c.Author.Name, c.Text, c.TimeStamp.ToString("MM/dd/yy H:mm:ss")))
+        .ToListAsync();
+    
+   
+    public Author GetAuthorByName(String author_name){
+        var author = _databaseContext.Authors.Where(a => a.Name == author_name).Single();
+        return author;
     }
 
-    public List<CheepViewModel> GetCheepsFromAuthor(int page, string author)
-    {
-        cheeps = cs.GetCheepsFromAuthor(page, author);
-        return cheeps;
+      public Author GetAuthorByEmail(String Email){
+        var author = _databaseContext.Authors.Where(a => a.Email == Email).Single();
+        return author;
     }
+    
+    
 }

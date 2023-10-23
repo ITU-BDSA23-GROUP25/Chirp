@@ -1,22 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Repository.DTO;
+using Repository;
 
 namespace Chirp.Razor.Pages;
 
 public class PublicModel : PageModel
 {
-    private readonly CheepRepository _service;
-    public List<CheepViewModel> Cheeps { get; set; }
+    private readonly ICheepRepository _service;
 
-    public PublicModel(CheepRepository service)
+    public List<CheepDTO> Cheeps {get; set;}
+
+
+    public PublicModel(ICheepRepository service)
     {
+        Cheeps = new List<CheepDTO>();
         _service = service;
     }
 
-    public ActionResult OnGet(int pagen)
+    public ActionResult OnGet([FromQuery]int pageNumber)
     {   
-        if(pagen == null){pagen = 0;}
-        Cheeps = _service.GetCheeps(pagen);
+        if(pageNumber == null){pageNumber = 0;}
+        Cheeps = _service.GetCheeps(pageNumber).Result.ToList();
         return Page();
     }
 }
