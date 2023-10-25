@@ -1,41 +1,42 @@
 using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
-using Repository.DTO;
+using Core;
 
 namespace Repository;
 
 public class CheepRepository : ICheepRepository
 {
 
-   private readonly DatabaseContext _databaseContext;
-   private const int CheepsPerPage = 32;
-   
-   public CheepRepository()
-   {
+    private readonly DatabaseContext _databaseContext;
+    private const int CheepsPerPage = 32;
+
+    public CheepRepository()
+    {
         _databaseContext = new DatabaseContext();
         _databaseContext.InitializeDB();
-   }
+    }
 
 
-    public  async Task<IEnumerable<CheepDTO>> GetCheeps(int pageNumber = 0) 
+    public async Task<IEnumerable<CheepDTO>> GetCheeps(int pageNumber = 0)
         => await _databaseContext.Cheeps
         .Include(c => c.Author)
         .Skip(CheepsPerPage * pageNumber)
         .Take(CheepsPerPage)
         .Select(c => new CheepDTO(c.Author.Name, c.Text, c.TimeStamp.ToString("MM/dd/yy H:mm:ss")))
-        .ToListAsync();    
+        .ToListAsync();
 
-    public async Task<IEnumerable<CheepDTO>> GetCheepsFromAuthor(int pageNumber, Author author_name) =>
+    public async Task<IEnumerable<CheepDTO>> GetCheepsFromAuthor(int pageNumber, string author_name) =>
         await _databaseContext.Cheeps
 
-        .Include( c => c.Author)
-        .Where(c => c.Author.Name == author_name.Name)
+        .Include(c => c.Author)
+        .Where(c => c.Author.Name == (_databaseContext.Authors.Where(a => a.Name == author_name)))
         .Skip(CheepsPerPage * (pageNumber - 1))
         .Take(CheepsPerPage)
         .Select(c =>
             new CheepDTO(c.Author.Name, c.Text, c.TimeStamp.ToString("MM/dd/yy H:mm:ss")))
         .ToListAsync();
 
-    public void CreateAuthor(String name, String email){
+    public void CreateAuthor(String name, String email)
+    {
 
         var NameCheck = _databaseContext.Authors.Any(a => a.Name == name);
         var EmailCheck = _databaseContext.Authors.Any(a => a.Email == email);
@@ -60,9 +61,10 @@ public class CheepRepository : ICheepRepository
         _databaseContext.Authors.Add(author);
         _databaseContext.SaveChanges();
 
-        }
+    }
 
-    public void CreateCheep(string Message, Guid UserId ){
+    public void CreateCheep(string Message, Guid UserId)
+    {
 
         var author = _databaseContext.Authors.FirstOrDefault(a => a.AuthorId == UserId);
 
@@ -76,15 +78,21 @@ public class CheepRepository : ICheepRepository
         };
         _databaseContext.Authors.Add(author);
         _databaseContext.SaveChanges();
-        }
-        
-    public Author GetAuthorByName(String author_name){
-        var author = _databaseContext.Authors.Where(a => a.Name == author_name).Single();
-        return author;
     }
 
-    public Author GetAuthorByEmail(String Email){
-        var author = _databaseContext.Authors.Where(a => a.Email == Email).Single();
-        return author;
-        } 
+    public async Task<AuthorDTO> GetAuthorByName(string author_name) =>
+        await _databaseContext.Authors
+
+        .Where(a => a.Name == author_name)
+        .Select(c =>
+            new AuthorDTO(c.Name, c.Email, c.Cheeps));
+
+
+
+    public async Task<AuthorDTO> GetAuthorByEmail(string author_Email) =>
+        await _databaseContext.Authors
+
+        .Where(a => a.Email == author_Email)
+        .Select(c =>
+            new AuthorDTO(c.Name, c.Email, c.Cheeps));
 }

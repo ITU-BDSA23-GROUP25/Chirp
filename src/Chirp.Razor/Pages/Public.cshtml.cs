@@ -9,7 +9,7 @@ public class PublicModel : PageModel
 {
     private readonly ICheepRepository _service;
 
-    public List<CheepDTO> Cheeps {get; set;}
+    public List<CheepDTO> Cheeps { get; set; }
 
 
     public PublicModel(ICheepRepository service)
@@ -18,10 +18,10 @@ public class PublicModel : PageModel
         _service = service;
     }
 
-    public ActionResult OnGet([FromQuery]int pageNumber)
-    {   
-        if(pageNumber == null){pageNumber = 0;}
-        Cheeps = _service.GetCheeps(pageNumber).Result.ToList();
+    public ActionResult OnGet([FromQuery] int? pageNumber)
+    {
+        if (pageNumber == null) { pageNumber = 0; }
+        Cheeps = _service.GetCheeps((int)pageNumber).Result.ToList();
         return Page();
     }
 }
