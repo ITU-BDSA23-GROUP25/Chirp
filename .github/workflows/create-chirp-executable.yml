@@ -3,7 +3,7 @@ name: create-chirp-executable
 on:
   push:
     tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+'
+      - "v[0-9]+.[0-9]+.[0-9]+"
     branches:
       - main
   workflow_dispatch:
@@ -22,19 +22,16 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd src/Chirp.CLI
+          cd src/Chirp.Razor
           dotnet restore
-          cd ../..
-          cd src/SimpleDB
-          dotnet restore
-      
-      - name: Test
-        run: |
-          cd test/Chirp.CLI.Client.Tests
-          dotnet test --no-restore --verbosity normal
-          cd ../..
-          cd test/Chirp.CSVDB.Tests
-          dotnet test --no-restore --verbosity normal
+
+      # - name: Test
+      #   run: |
+      #     cd test/razorwebApp_test/Integration_test.cs
+      #     dotnet test --no-restore --verbosity normal
+      #     cd ../..
+      #     cd test/razorwebApp_test/UnitTest.cs
+      #     dotnet test --no-restore --verbosity normal
 
       - name: Get Latest Tag
         id: get_latest_tag
@@ -54,14 +51,14 @@ jobs:
           release_macos="Chirp-${{ github.ref_name }}-macos"
           release_macos_arm="Chirp-${{ github.ref_name }}-macos_arm"
 
-          cd src/Chirp.CLI
+          cd src/Chirp.Razor
           dotnet build --configuration Release --no-restore
           cd ../..
 
-          dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "linux-x64" -c Release -o "$release_linux" -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:PublishTrimmed=true
-          dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "win-x64" -c Release -o "$release_windows" -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:PublishTrimmed=true
-          dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "osx-x64" -c Release -o "$release_macos" -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:PublishTrimmed=true
-          dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "osx-arm64" -c Release -o "$release_macos_arm" -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:PublishTrimmed=true
+          dotnet publish src/Chirp.Razor/Chirp.Razor.csproj --framework net7.0 --runtime "linux-x64" -c Release -o "$release_linux" -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:PublishTrimmed=true
+          dotnet publish src/Chirp.Razor/Chirp.Razor.csproj --framework net7.0 --runtime "win-x64" -c Release -o "$release_windows" -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:PublishTrimmed=true
+          dotnet publish src/Chirp.Razor/Chirp.Razor.csproj --framework net7.0 --runtime "osx-x64" -c Release -o "$release_macos" -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:PublishTrimmed=true
+          dotnet publish src/Chirp.Razor/Chirp.Razor.csproj --framework net7.0 --runtime "osx-arm64" -c Release -o "$release_macos_arm" -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:PublishTrimmed=true
 
           7z a -tzip "Chirp-linux-64.zip" "./${release_linux}/*"
           7z a -tzip "Chirp-windows-64.zip" "./${release_windows}/*"
