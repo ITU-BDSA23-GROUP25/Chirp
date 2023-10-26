@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Repository.DTO;
-using Repository;
+using Core;
 
 namespace Chirp.Razor.Pages;
 
@@ -19,8 +18,7 @@ public class UserTimelineModel : PageModel
     public ActionResult OnGet([FromQuery] int? pageNumber, String author)
     {
         if (pageNumber == null) { pageNumber = 0; }
-        Author authorTemp = _service.GetAuthorByName(author);
-        Cheeps = Cheeps = _service.GetCheepsFromAuthor((int)pageNumber, authorTemp).Result.ToList();
+        Cheeps = Cheeps = _service.GetCheepsFromAuthor((int)pageNumber, author).Result.ToList();
         return Page();
     }
 }
