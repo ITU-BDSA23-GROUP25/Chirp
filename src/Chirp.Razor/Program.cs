@@ -2,11 +2,20 @@ using Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+builder.Services.AddDbContext<DatabaseContext>(options =>
+options.UseSqlite(builder.Configuration
+.GetConnectionString("DefaultConnection")!));
+
+builder.Services.AddDefaultIdentity<Author>(options =>
+options.SignIn.RequireConfirmedAccount = true)
+.AddEntityFrameworkStores<DatabaseContext>();
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<ICheepRepository, CheepRepository>();
 builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
-        
+
 
 
 var app = builder.Build();
