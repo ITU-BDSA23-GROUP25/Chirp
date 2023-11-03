@@ -7,10 +7,11 @@ public class AuthorRepository : IAuthorRepository
     private readonly DatabaseContext _databaseContext;
     private const int CheepsPerPage = 32;
 
-    public AuthorRepository()
+    public AuthorRepository(DatabaseContext databaseContext)
     {
-        _databaseContext = new DatabaseContext();
-        _databaseContext.InitializeDB();
+        _databaseContext = databaseContext;
+        //_databaseContext = new DatabaseContext();
+        //_databaseContext.InitializeDB();
     }
 
     public void CreateAuthor(String name, String email)
@@ -31,7 +32,7 @@ public class AuthorRepository : IAuthorRepository
 
         var author = new Author
         {
-            AuthorId = Guid.NewGuid(),
+
             Name = name,
             Email = email,
             Cheeps = new List<Cheep>()
@@ -40,7 +41,7 @@ public class AuthorRepository : IAuthorRepository
         _databaseContext.SaveChanges();
     }
 
-    public async Task<IEnumerable<AuthorDTO>>  GetAuthorByName(string author_name) =>
+    public async Task<IEnumerable<AuthorDTO>> GetAuthorByName(string author_name) =>
         await _databaseContext.Authors
 
         .Where(a => a.Name == author_name)

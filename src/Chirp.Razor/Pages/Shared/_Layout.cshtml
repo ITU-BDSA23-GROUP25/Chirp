@@ -1,41 +1,47 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>@ViewData["Title"]</title>
     <link href="/css/style.css" rel="stylesheet" type="text/css" />
     <link rel="icon" type="image/png" href="/favicon/favicon.ico">
 </head>
+
 <body>
-<div class=page>
-    <h1><img src="/images/icon1.png" alt="Icon1"/>Chirp!</h1>
+    <div class=page>
+        <h1><img src="/images/icon1.png" alt="Icon1" />Chirp!</h1>
 
-     <div class=navigation>
-        @if (User.Identity.IsAuthenticated)
-        {
-            <div>
-                <a href="/@(User.Identity.Name)">my timeline</a> |
-                <a href="/">public timeline</a> |
-                <a ... >logout [@(User.Identity.Name)]</a>
-            </div>
-        }
-        else
-        {
-            <div>
-                <a href="/">public timeline</a> |
-                <a href="https://chirpbdsa25.b2clogin.com/ChirpBDSA25.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_sisu&client_id=419c53f5-ac4e-4983-a3a0-1000cbc7d346&nonce=defaultNonce&redirect_uri=https%3A%2F%2Fbdsagroup25chirprazor.azurewebsites.net%2F&scope=openid&response_type=code&prompt=login" class="button">Register</a>
-                <a href="https://chirpbdsa25.b2clogin.com/ChirpBDSA25.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_sisu&client_id=419c53f5-ac4e-4983-a3a0-1000cbc7d346&nonce=defaultNonce&redirect_uri=https%3A%2F%2Fbdsagroup25chirprazor.azurewebsites.net%2F&scope=openid&response_type=code&prompt=login" class="button">Login</a>
-            </div>
-        }
-    </div>
+        <div class=navigation>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div>
+                    <a href="/@(User.Identity.Name)">my timeline</a> |
+                    <a href="/">public timeline</a> |
+                    <a ...>logout [@(User.Identity.Name)]</a>
+                </div>
+            }
+            else
+            {
+                <div>
+                    <a href="/">public timeline</a> |
+                    <a href="https://chirpbdsa25.b2clogin.com/ChirpBDSA25.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_sisu&client_id=419c53f5-ac4e-4983-a3a0-1000cbc7d346&nonce=defaultNonce&redirect_uri=https%3A%2F%2Fbdsagroup25chirprazor.azurewebsites.net%2F&scope=openid&response_type=code&prompt=login"
+                        class="button">Register</a>
+                    <a href="https://chirpbdsa25.b2clogin.com/ChirpBDSA25.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_sisu&client_id=419c53f5-ac4e-4983-a3a0-1000cbc7d346&nonce=defaultNonce&redirect_uri=https%3A%2F%2Fbdsagroup25chirprazor.azurewebsites.net%2F&scope=openid&response_type=code&prompt=login"
+                        class="button">Login</a>
+                    <partial name="_LoginPartial" />
+                </div>
+            }
+        </div>
 
 
-    <div class=body>
-        @RenderBody()
+        <div class=body>
+            @RenderBody()
+        </div>
+        <div class=footer>
+            Chirp &mdash; An ASP.NET Application
+        </div>
     </div>
-    <div class=footer>
-        Chirp &mdash; An ASP.NET Application
-    </div>
-</div>
 
 </body>
+
 </html>

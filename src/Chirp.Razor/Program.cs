@@ -17,7 +17,6 @@ builder.Services.AddScoped<ICheepRepository, CheepRepository>();
 builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 
 
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

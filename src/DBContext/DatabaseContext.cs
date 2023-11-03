@@ -1,9 +1,11 @@
-using Microsoft.AspNetCore.Identity;
-
 namespace Repository;
 
 public class DatabaseContext : IdentityDbContext<Author>
 {
+    public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
+    {
+    }
+
     public virtual DbSet<Cheep> Cheeps { get; set; }
     public virtual DbSet<Author> Authors { get; set; }
     string DbPath = Path.Join(Path.GetTempPath(), "db.db");
@@ -11,6 +13,7 @@ public class DatabaseContext : IdentityDbContext<Author>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Cheep>().Property(c => c.Text).HasMaxLength(160);
+        base.OnModelCreating(modelBuilder);
         //modelBuilder.Entity<Author>().Property(a => a.Name).HasMaxLength(32);
         //modelBuilder.Entity<Author>().HasIndex(a => a.Name).IsUnique();
     }
@@ -23,5 +26,4 @@ public class DatabaseContext : IdentityDbContext<Author>
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
      => options.UseSqlite($"Data Source={DbPath}");
-
 }
