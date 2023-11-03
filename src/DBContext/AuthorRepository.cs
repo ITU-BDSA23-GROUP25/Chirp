@@ -14,7 +14,7 @@ public class AuthorRepository : IAuthorRepository
         //_databaseContext.InitializeDB();
     }
 
-    public void CreateAuthor(String name, String email)
+    public void CreateAuthor(string name, string email)
     {
 
         var NameCheck = _databaseContext.Authors.Any(a => a.Name == name);
