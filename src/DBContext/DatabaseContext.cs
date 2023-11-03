@@ -2,6 +2,10 @@ namespace Repository;
 
 public class DatabaseContext : IdentityDbContext<Author>
 {
+
+    public DatabaseContext()
+    {
+    }
     public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
     {
     }

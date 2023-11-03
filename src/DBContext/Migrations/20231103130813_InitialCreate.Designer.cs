@@ -8,11 +8,11 @@ using Repository;
 
 #nullable disable
 
-namespace Chirp.Razor.Migrations
+namespace DBContext.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20231103091533_AddIdentitySchema")]
-    partial class AddIdentitySchema
+    [Migration("20231103130813_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -7,7 +7,7 @@ using Repository;
 
 #nullable disable
 
-namespace Chirp.Razor.Migrations
+namespace DBContext.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
     partial class DatabaseContextModelSnapshot : ModelSnapshot

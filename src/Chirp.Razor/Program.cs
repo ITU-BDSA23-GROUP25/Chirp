@@ -1,11 +1,14 @@
 using Core;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddDbContext<DatabaseContext>(options =>
 options.UseSqlite(builder.Configuration
-.GetConnectionString("DefaultConnection")!));
+.GetConnectionString("DatabaseContextConnection")!));
 
 builder.Services.AddDefaultIdentity<Author>(options =>
 options.SignIn.RequireConfirmedAccount = true)
