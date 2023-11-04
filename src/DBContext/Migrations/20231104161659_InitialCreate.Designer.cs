@@ -11,7 +11,7 @@ using Repository;
 namespace DBContext.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20231103130813_InitialCreate")]
+    [Migration("20231104161659_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -174,7 +174,7 @@ namespace DBContext.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
-                        .IsRequired()
+                        .HasMaxLength(256)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("NormalizedEmail")

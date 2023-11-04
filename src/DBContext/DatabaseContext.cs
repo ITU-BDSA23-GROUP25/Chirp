@@ -1,4 +1,7 @@
+using Microsoft.AspNetCore.Identity;
+
 namespace Repository;
+
 
 public class DatabaseContext : IdentityDbContext<Author>
 {
@@ -17,6 +20,7 @@ public class DatabaseContext : IdentityDbContext<Author>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Cheep>().Property(c => c.Text).HasMaxLength(160);
+        modelBuilder.Entity<Author>().Property(u => u.Name).HasMaxLength(256).IsRequired(false);
         base.OnModelCreating(modelBuilder);
         //modelBuilder.Entity<Author>().Property(a => a.Name).HasMaxLength(32);
         //modelBuilder.Entity<Author>().HasIndex(a => a.Name).IsUnique();

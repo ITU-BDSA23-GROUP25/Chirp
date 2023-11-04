@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Repository;
 
-
 public class Author : IdentityUser
 {
     //public Guid AuthorId { get; set; }
