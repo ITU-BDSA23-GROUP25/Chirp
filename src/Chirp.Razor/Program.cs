@@ -1,4 +1,5 @@
 using Core;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Repository;
@@ -16,9 +17,20 @@ options.SignIn.RequireConfirmedAccount = true)
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddSession();
 builder.Services.AddScoped<ICheepRepository, CheepRepository>();
 builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
-
+builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = "GitHub";
+    })
+    .AddCookie()
+    .AddGitHub(o =>
+    {
+        o.ClientId = builder.Configuration["authentication:github:clientId"];
+        o.ClientSecret = builder.Configuration["authentication:github:clientSecret"];
+    });
 
 var app = builder.Build();
 
@@ -33,7 +45,13 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseSession();
+
 app.UseRouting();
+app.UseAuthorization();
 
 app.MapRazorPages();
 
