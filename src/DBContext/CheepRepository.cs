@@ -6,10 +6,11 @@ public class CheepRepository : ICheepRepository
     private readonly DatabaseContext _databaseContext;
     private const int CheepsPerPage = 32;
 
-    public CheepRepository()
+    public CheepRepository(DatabaseContext databaseContext)
     {
-        _databaseContext = new DatabaseContext();
-        _databaseContext.InitializeDB();
+        _databaseContext = databaseContext;
+        //_databaseContext = new DatabaseContext();
+        //_databaseContext.InitializeDB();
     }
 
 
@@ -32,10 +33,10 @@ public class CheepRepository : ICheepRepository
             new CheepDTO(c.Author.Name, c.Text, c.TimeStamp.ToString("MM/dd/yy H:mm:ss")))
         .ToListAsync();
 
-    public void CreateCheep(string Message, Guid UserId)
+    public void CreateCheep(string Message, string UserId)
     {
 
-        var author = _databaseContext.Authors.FirstOrDefault(a => a.AuthorId == UserId);
+        var author = _databaseContext.Authors.FirstOrDefault(a => a.Id == UserId);
 
         var Cheep = new Cheep
         {
