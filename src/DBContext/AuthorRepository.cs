@@ -14,38 +14,38 @@ public class AuthorRepository : IAuthorRepository
         //_databaseContext.InitializeDB();
     }
 
-    public void CreateAuthor(string email)
+    public void CreateAuthor(string Name, string Email)
     {
 
-        var NameCheck = _databaseContext.Authors.Any(a => a.Email == email);
-        var EmailCheck = _databaseContext.Authors.Any(a => a.Email == email);
+        var NameCheck = _databaseContext.Authors.Any(a => a.Name == Name);
+        var EmailCheck = _databaseContext.Authors.Any(a => a.Email == Email);
 
         if (NameCheck)
         {
-            throw new ArgumentException($"Username {email} is already in use, please pick another username");
+            throw new ArgumentException($"Username {Name} is already in use, please pick another username");
         }
 
         if (EmailCheck)
         {
-            throw new ArgumentException($"{email} is already in use, please pick another email address");
+            throw new ArgumentException($"{Email} is already in use, please pick another email address");
         }
 
         var author = new Author
         {
-            Name = email,
-            Email = email,
+            Name = Name,
+            Email = Email,
             Cheeps = new List<Cheep>()
         };
         _databaseContext.Authors.Add(author);
         _databaseContext.SaveChanges();
     }
 
-    public async Task<IEnumerable<AuthorDTO>> GetAuthorByName(string author_name) =>
+    public async Task<IEnumerable<AuthorDTO>> GetAuthorByName(string author_Name) =>
         await _databaseContext.Authors
 
-        .Where(a => a.Email == author_name)
+        .Where(a => a.Name == author_Name)
         .Select(a =>
-            new AuthorDTO(a.Email))
+            new AuthorDTO(a.Name))
         .ToListAsync();
 
 
