@@ -23,14 +23,9 @@ builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 builder.Services.AddAuthentication(options =>
     {
         options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = "GitHub";
     })
     .AddCookie()
-    .AddGitHub(o =>
-    {
-        o.ClientId = builder.Configuration["GithubClientId"];
-        o.ClientSecret = builder.Configuration["GithubClientSecret"];
-    });
+   
 
 var app = builder.Build();
 
