@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddDbContext<DatabaseContext>(options =>
-options.UseSqlite(builder.Configuration
+options.UseSqlServer(builder.Configuration
 .GetConnectionString("DatabaseContextConnection")!));
 
 builder.Services.AddDefaultIdentity<Author>(options =>
@@ -25,7 +25,7 @@ builder.Services.AddAuthentication(options =>
         options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     })
     .AddCookie();
-   
+
 
 var app = builder.Build();
 
