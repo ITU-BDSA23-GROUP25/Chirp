@@ -6,6 +6,6 @@ public interface IAuthorRepository
     public Task<IEnumerable<AuthorDTO>> GetAuthorByEmail(string Email);
 
     // post
-    public void CreateAuthor(string name, string Email);
+    public void CreateAuthor(string Name, string Email);
 
 }

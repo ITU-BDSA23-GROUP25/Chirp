@@ -7,45 +7,45 @@ public class AuthorRepository : IAuthorRepository
     private readonly DatabaseContext _databaseContext;
     private const int CheepsPerPage = 32;
 
-    public AuthorRepository()
+    public AuthorRepository(DatabaseContext databaseContext)
     {
-        _databaseContext = new DatabaseContext();
-        _databaseContext.InitializeDB();
+        _databaseContext = databaseContext;
+        //_databaseContext = new DatabaseContext();
+        //_databaseContext.InitializeDB();
     }
 
-    public void CreateAuthor(String name, String email)
+    public void CreateAuthor(string Name, string Email)
     {
 
-        var NameCheck = _databaseContext.Authors.Any(a => a.Name == name);
-        var EmailCheck = _databaseContext.Authors.Any(a => a.Email == email);
+        var NameCheck = _databaseContext.Authors.Any(a => a.Name == Name);
+        var EmailCheck = _databaseContext.Authors.Any(a => a.Email == Email);
 
         if (NameCheck)
         {
-            throw new ArgumentException($"Username {name} is already in use, please pick another username");
+            throw new ArgumentException($"Username {Name} is already in use, please pick another username");
         }
 
         if (EmailCheck)
         {
-            throw new ArgumentException($"{email} is already in use, please pick another email address");
+            throw new ArgumentException($"{Email} is already in use, please pick another email address");
         }
 
         var author = new Author
         {
-            AuthorId = Guid.NewGuid(),
-            Name = name,
-            Email = email,
+            Name = Name,
+            Email = Email,
             Cheeps = new List<Cheep>()
         };
         _databaseContext.Authors.Add(author);
         _databaseContext.SaveChanges();
     }
 
-    public async Task<IEnumerable<AuthorDTO>>  GetAuthorByName(string author_name) =>
+    public async Task<IEnumerable<AuthorDTO>> GetAuthorByName(string author_Name) =>
         await _databaseContext.Authors
 
-        .Where(a => a.Name == author_name)
+        .Where(a => a.Name == author_Name)
         .Select(a =>
-            new AuthorDTO(a.Name, a.Email))
+            new AuthorDTO(a.Name))
         .ToListAsync();
 
 
@@ -54,6 +54,6 @@ public class AuthorRepository : IAuthorRepository
 
         .Where(a => a.Email == author_Email)
         .Select(c =>
-            new AuthorDTO(c.Name, c.Email))
+            new AuthorDTO(c.Email))
         .ToListAsync();
 }

@@ -6,10 +6,11 @@ public class CheepRepository : ICheepRepository
     private readonly DatabaseContext _databaseContext;
     private const int CheepsPerPage = 32;
 
-    public CheepRepository()
+    public CheepRepository(DatabaseContext databaseContext)
     {
-        _databaseContext = new DatabaseContext();
-        _databaseContext.InitializeDB();
+        _databaseContext = databaseContext;
+        //_databaseContext = new DatabaseContext();
+        //_databaseContext.InitializeDB();
     }
 
 
