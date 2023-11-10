@@ -24,7 +24,7 @@ builder.Services.AddAuthentication(options =>
     {
         options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     })
-    .AddCookie()
+    .AddCookie();
    
 
 var app = builder.Build();
