@@ -33,5 +33,5 @@ public class DatabaseContext : IdentityDbContext<Author>
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
-     => options.UseSqlServer($"Data Source={DbPath}");
+     => options.UseSqlite($"Data Source={DbPath}");
 }
