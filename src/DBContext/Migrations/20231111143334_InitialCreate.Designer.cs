@@ -8,17 +8,17 @@ using Repository;
 
 #nullable disable
 
-namespace Chirp.Razor.Migrations
+namespace DBContext.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20231024085144_InitialCreate")]
+    [Migration("20231111143334_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "7.0.12");
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.13");
 
             modelBuilder.Entity("Repository.Author", b =>
                 {
@@ -27,6 +27,7 @@ namespace Chirp.Razor.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
