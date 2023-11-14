@@ -15,10 +15,10 @@ public class UserTimelineModel : PageModel
         _service = service;
     }
 
-    public ActionResult OnGet([FromQuery] int? pageNumber, String author)
+    public ActionResult OnGet([FromQuery] int? page, String author)
     {
-        if (pageNumber == null) { pageNumber = 0; }
-        Cheeps = Cheeps = _service.GetCheepsFromAuthor((int)pageNumber, author).Result.ToList();
+        if (page == null) { page = 0; }
+        Cheeps = Cheeps = _service.GetCheepsFromAuthor((int)page, author).Result.ToList();
         return Page();
     }
 }

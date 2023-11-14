@@ -17,10 +17,10 @@ public class PublicModel : PageModel
         _service = service;
     }
 
-    public ActionResult OnGet([FromQuery] int? pageNumber)
+    public ActionResult OnGet([FromQuery] int? page)
     {
-        if (pageNumber == null) { pageNumber = 0; }
-        Cheeps = _service.GetCheeps((int)pageNumber).Result.ToList();
+        if (page == null) { page = 0; }
+        Cheeps = _service.GetCheeps((int)page).Result.ToList();
         return Page();
     }
 }
