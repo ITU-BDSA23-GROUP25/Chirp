@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F20D2378-6E94-4E64-ACD0-F6E3D4CF0A40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chirp.Razor", "src\Chirp.Razor\Chirp.Razor.csproj", "{6D38233E-C317-43FB-92BF-772374403BD2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chirp.Web", "src\Chirp.Web\Chirp.Web.csproj", "{6D38233E-C317-43FB-92BF-772374403BD2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{942CDE72-D1E7-4E19-AD81-C7465368CBB7}"
 EndProject
@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "razorwebApp_test", "test\ra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChirpRepository_test", "test\Infrastructure_Test\ChirpRepository_test\ChirpRepository_test.csproj", "{C7996A37-E3EB-49A1-893A-D0F1815B9486}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBContext", "src\DBContext\DBContext.csproj", "{BA87C6E6-C963-4B0C-A65A-CCD93DF483EA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chirp.Infrastructure", "src\Chirp.Infrastructure\Chirp.Infrastructure.csproj", "{BA87C6E6-C963-4B0C-A65A-CCD93DF483EA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chirp.Core", "src\Chirp.Core\Chirp.Core.csproj", "{F0BD7A6D-E8E1-4D02-9FFC-B170620B706B}"
 EndProject
