@@ -5,6 +5,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>Chirp.Razor</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,7 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Chirp.Core\Chirp.Core.csproj" />
-    <ProjectReference Include="..\DBContext\DBContext.csproj" />
+    <ProjectReference Include="..\Chirp.Infrastructure\Chirp.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
