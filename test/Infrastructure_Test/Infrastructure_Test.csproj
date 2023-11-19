@@ -20,7 +20,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <ProjectReference Include="..\..\src\Chirp.Core\Chirp.Core.csproj" />
-    <ProjectReference Include="..\..\src\DBContext\DBContext.csproj" />
+      <ProjectReference Include="..\..\src\Chirp.Core\Chirp.Core.csproj" />
+      <ProjectReference Include="..\..\src\Chirp.Infrastructure\Chirp.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\src\Chirp.Web\Chirp.Web.csproj" />
    </ItemGroup>
 </Project>
