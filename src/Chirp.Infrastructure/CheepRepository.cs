@@ -6,9 +6,9 @@ public class CheepRepository : ICheepRepository
     private readonly DatabaseContext _databaseContext;
     private const int CheepsPerPage = 32;
 
-    public CheepRepository()
+    public CheepRepository(DatabaseContext databaseContext)
     {
-        _databaseContext = new DatabaseContext();
+        _databaseContext = databaseContext;
         _databaseContext.InitializeDB();
     }
 
@@ -45,7 +45,7 @@ public class CheepRepository : ICheepRepository
             AuthorId = UserId,
             Author = author,
         };
-        _databaseContext.Authors.Add(author);
+        _databaseContext.Cheeps.Add(Cheep);
         _databaseContext.SaveChanges();
     }
 }
