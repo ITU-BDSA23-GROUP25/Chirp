@@ -19,6 +19,12 @@ public class UserTimelineModel : PageModel
 
     public ActionResult OnGet([FromQuery] int? page, String author)
     {
+
+        if (!page.HasValue || page < 1)
+            {
+                page = 1; // Set a default page value if it is null or negative
+            }
+            
         if (page == null) { page = 0; }
         Cheeps = _service.GetCheepsFromAuthor((int)page, author).Result.ToList();
 

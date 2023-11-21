@@ -1,6 +1,6 @@
 namespace Repository;
 
-public class DatabaseContext : DbContext
+public class DatabaseContext : IdentityDbContext<Author, IdentityRole<string>, string>
 {
 
     public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
@@ -8,7 +8,7 @@ public class DatabaseContext : DbContext
     }
 
     public virtual DbSet<Cheep> Cheeps { get; set; }
-    public virtual DbSet<Author> Authors { get; set; }
+    public virtual DbSet<Author> Authors => Users;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
