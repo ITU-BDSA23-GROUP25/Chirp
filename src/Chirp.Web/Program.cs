@@ -12,7 +12,7 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
         var connectionString = builder.Configuration.GetConnectionString("DatabaseContextConnection") ?? throw new InvalidOperationException("Connection string 'DatabaseContextConnection' not found.");
 
-        builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlite(connectionString));
+        builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString));
 
         // Add services to the container.
         builder.Services.AddRazorPages();

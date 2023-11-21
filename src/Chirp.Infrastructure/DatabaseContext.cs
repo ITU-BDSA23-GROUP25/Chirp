@@ -1,20 +1,14 @@
 namespace Repository;
 
-public class DatabaseContext : IdentityDbContext<Author>
+public class DatabaseContext : DbContext
 {
 
-public DatabaseContext()
+    public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
     {
     }
-    public DatabaseContext(DbContextOptions<DatabaseContext> options)
-            : base(options)
-    {
-    }
-
 
     public virtual DbSet<Cheep> Cheeps { get; set; }
     public virtual DbSet<Author> Authors { get; set; }
-    string DbPath = Path.Join(Path.GetTempPath(), "db.db");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -31,8 +25,4 @@ public DatabaseContext()
         Database.EnsureCreated();
         DbInitializer.SeedDatabase(this);
     }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder options)
-     => options.UseSqlite($"Data Source={DbPath}");
-
 }

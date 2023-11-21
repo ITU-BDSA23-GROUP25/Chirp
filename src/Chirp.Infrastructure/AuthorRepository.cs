@@ -7,9 +7,9 @@ public class AuthorRepository : IAuthorRepository
     private readonly DatabaseContext _databaseContext;
     private const int CheepsPerPage = 32;
 
-    public AuthorRepository()
+    public AuthorRepository(DatabaseContext databaseContext)
     {
-        _databaseContext = new DatabaseContext();
+        _databaseContext = databaseContext;
         _databaseContext.InitializeDB();
     }
 
