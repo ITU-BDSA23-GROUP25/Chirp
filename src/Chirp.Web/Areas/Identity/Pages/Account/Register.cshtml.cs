@@ -11,6 +11,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using Core;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -30,6 +31,8 @@ namespace Chirp.Razor.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<Author> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+
+        private readonly IAuthorRepository _authourRepo;
 
         public RegisterModel(
             UserManager<Author> userManager,
@@ -124,6 +127,8 @@ namespace Chirp.Razor.Areas.Identity.Pages.Account
                 var user = CreateUser();
                 user.Name = Input.Name;
                 user.Email = Input.Email;
+                user.SecurityStamp = Guid.NewGuid().ToString(); //added this to set security stamp
+                user.Id = Guid.NewGuid().ToString(); //added this to set id, dont know why it isnt set without
 
 
                 var claim = new Claim("Name", Input.Name);
@@ -136,6 +141,8 @@ namespace Chirp.Razor.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    //_authourRepo.CreateAuthor(user.Name, user.Email); //SEB KIG HER PLZ
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
