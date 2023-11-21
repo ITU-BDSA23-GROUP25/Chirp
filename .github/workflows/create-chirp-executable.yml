@@ -33,11 +33,11 @@ jobs:
       #     cd test/razorwebApp_test/UnitTest.cs
       #     dotnet test --no-restore --verbosity normal
 
-    # - name: Get Latest Tag
-    #   id: get_latest_tag
-    #   run: |
-    #     latest_tag=$(git describe --tags --abbrev=0)
-    #     echo "TAG=$latest_tag" >> $GITHUB_ENV
+      # - name: Get Latest Tag
+      #   id: get_latest_tag
+      #   run: |
+      #     latest_tag=$(git describe --tags --abbrev=0)
+      #     echo "TAG=$latest_tag" >> $GITHUB_ENV
 
       - name: Set Release Name
         id: release_name
