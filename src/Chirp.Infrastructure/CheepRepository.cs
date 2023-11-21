@@ -49,10 +49,14 @@ public class CheepRepository : ICheepRepository
         _databaseContext.SaveChanges();
     }
 
-    public async Task<int> cheepTotal()
-    {
-        var task = _databaseContext.Cheeps.CountAsync();
-        int result = await task;
-        return result;
-    }
+    public async Task<int> CheepTotal() =>
+        await _databaseContext.Cheeps
+        .CountAsync();
+
+    public async Task<int> AuthorsCheepTotal(string author_name) =>
+        await _databaseContext.Cheeps
+
+        .Include(c => c.Author)
+        .Where(c => c.Author.Name == author_name)
+        .CountAsync();
 }
