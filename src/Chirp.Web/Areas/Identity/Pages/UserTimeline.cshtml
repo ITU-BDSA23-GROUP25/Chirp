@@ -31,4 +31,7 @@
     {
         <em>There are no cheeps so far.</em>
     }
+    @{
+        await Html.RenderPartialAsync("PaginationModel", Model.PaginationModel);
+    }
 </div>

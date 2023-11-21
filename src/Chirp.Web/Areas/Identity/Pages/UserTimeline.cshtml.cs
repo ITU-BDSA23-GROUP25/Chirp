@@ -10,6 +10,8 @@ public class UserTimelineModel : PageModel
     private readonly ICheepRepository _service;
     public List<CheepDTO> Cheeps { get; set; }
 
+    public PaginationModel? PaginationModel { get; set; }
+
     public UserTimelineModel(ICheepRepository service)
     {
         _service = service;
@@ -18,7 +20,11 @@ public class UserTimelineModel : PageModel
     public ActionResult OnGet([FromQuery] int? page, String author)
     {
         if (page == null) { page = 0; }
-        Cheeps = Cheeps = _service.GetCheepsFromAuthor((int)page, author).Result.ToList();
+        Cheeps = _service.GetCheepsFromAuthor((int)page, author).Result.ToList();
+
+        var amountOfCheeps = _service.AuthorsCheepTotal(author).Result;
+        PaginationModel = new PaginationModel(amountOfCheeps, (int)page);
+
         return Page();
     }
 }

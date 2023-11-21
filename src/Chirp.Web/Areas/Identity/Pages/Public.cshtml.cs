@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Core;
+using System.Configuration;
 
 namespace Chirp.Razor.Areas.Identity.Pages;
-
 public class PublicModel : PageModel
 {
     private readonly ICheepRepository _service;
-
     public List<CheepDTO> Cheeps { get; set; }
+    public PaginationModel? PaginationModel { get; set; }
 
 
     public PublicModel(ICheepRepository service)
@@ -19,8 +19,12 @@ public class PublicModel : PageModel
 
     public ActionResult OnGet([FromQuery] int? page)
     {
-        if (page == null) { page = 0; }
-        Cheeps = _service.GetCheeps((int)page).Result.ToList();
+        if (page == null) { page = 1; }
+        Cheeps = _service.GetCheeps((int)page - 1).Result.ToList();
+
+        var amountOfCheeps = _service.cheepTotal().Result;
+        PaginationModel = new PaginationModel(amountOfCheeps, (int)page);
+
         return Page();
     }
 }
