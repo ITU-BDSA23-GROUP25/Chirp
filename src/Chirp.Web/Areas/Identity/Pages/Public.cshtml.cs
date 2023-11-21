@@ -22,7 +22,7 @@ public class PublicModel : PageModel
         if (page == null) { page = 1; }
         Cheeps = _service.GetCheeps((int)page - 1).Result.ToList();
 
-        var amountOfCheeps = _service.cheepTotal().Result;
+        var amountOfCheeps = _service.CheepTotal().Result;
         PaginationModel = new PaginationModel(amountOfCheeps, (int)page);
 
         return Page();
