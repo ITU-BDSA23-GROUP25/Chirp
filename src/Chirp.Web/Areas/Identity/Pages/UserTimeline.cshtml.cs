@@ -27,6 +27,12 @@ public class UserTimelineModel : PageModel
             
         if (page == null) { page = 0; }
         Cheeps = _service.GetCheepsFromAuthor((int)page, author).Result.ToList();
+   
+
+        foreach (var item in Cheeps)
+        {
+            Console.WriteLine(item.Message);
+        }
 
         var amountOfCheeps = _service.AuthorsCheepTotal(author).Result;
         PaginationModel = new PaginationModel(amountOfCheeps, (int)page);

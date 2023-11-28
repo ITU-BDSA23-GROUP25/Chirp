@@ -10,6 +10,8 @@ public class PublicModel : PageModel
     public List<CheepDTO> Cheeps { get; set; }
     public PaginationModel? PaginationModel { get; set; }
 
+    public string Text {get; set;}
+
 
     public PublicModel(ICheepRepository service)
     {
@@ -17,7 +19,7 @@ public class PublicModel : PageModel
         _service = service;
     }
 
-    public ActionResult OnGet([FromQuery] int? page)
+    public IActionResult OnGet([FromQuery] int? page)
     {
         if (page == null) { page = 1; }
         Cheeps = _service.GetCheeps((int)page - 1).Result.ToList();
@@ -26,5 +28,11 @@ public class PublicModel : PageModel
         PaginationModel = new PaginationModel(amountOfCheeps, (int)page);
 
         return Page();
+    }
+
+   public IActionResult OnPost()
+    {
+        _service.CreateCheep(Request.Form["Text"], User.Identity?.Name!);
+        return RedirectToPage("Public");
     }
 }
