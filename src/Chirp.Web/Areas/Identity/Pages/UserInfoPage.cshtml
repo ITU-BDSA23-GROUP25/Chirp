@@ -2,11 +2,42 @@
 @model userInfoModel
 @{
     Layout = "Shared/_Layout";
+    var username = User.Claims.FirstOrDefault(x => x.Type == "Name")?.Value;
 }
 
 <div>
-    <h2> Personal information </h2>
+    <h2> About me </h2>
 
-    <p></p>
+    <h4>Username: @User.Claims.FirstOrDefault(x => x.Type == "Name")?.Value</h4>
 
+    <h4>Email: @User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Name)?.Value</h4>
+    <br>
+
+    @if (Model.Cheeps.Any())
+    {
+        <ul id="messagelist" class="cheeps">
+            @foreach (var cheep in Model.Cheeps)
+            {
+                <li>
+                    <p>
+                        <strong>
+                            <a href="/@cheep.Author">@cheep.Author</a>
+                        </strong>
+                        @cheep.Message
+                        <small>&mdash; @cheep.Timestamp</small>
+                    </p>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <em>You have yet to post any cheeps.</em>
+    }
+
+    <div style="text-align: center">
+        <button style="Color:Red" href=""> Forget me! </button>
+        <p>⚠️ Warning! ⚠️</p>
+        <p>By Pressing "Forget me!", all your data will be deleted</p>
+    </div>
 </div>

@@ -19,7 +19,10 @@ public class PublicModel : PageModel
 
     public ActionResult OnGet([FromQuery] int? page)
     {
-        if (page == null) { page = 1; }
+        if (!page.HasValue || page < 1)
+        {
+            page = 1; //if page is null or negative, set page to 1
+        }
         Cheeps = _service.GetCheeps((int)page - 1).Result.ToList();
 
         var amountOfCheeps = _service.CheepTotal().Result;
