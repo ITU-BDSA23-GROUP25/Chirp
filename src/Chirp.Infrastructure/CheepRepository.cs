@@ -1,3 +1,5 @@
+using FluentValidation;
+
 namespace Repository;
 
 public class CheepRepository : ICheepRepository
@@ -11,7 +13,6 @@ public class CheepRepository : ICheepRepository
         _databaseContext = databaseContext;
         _databaseContext.InitializeDB();
     }
-
 
     public async Task<IEnumerable<CheepDTO>> GetCheeps(int pageNumber = 0)
         => await _databaseContext.Cheeps
@@ -32,21 +33,43 @@ public class CheepRepository : ICheepRepository
             new CheepDTO(c.Author.Name, c.Text, c.TimeStamp.ToString("MM/dd/yy H:mm:ss")))
         .ToListAsync();
 
-    public void CreateCheep(string Message, string UserId)
+    public void CreateCheep(string Message, string username)
     {
+       // var ValidateCheep = new ValidateCheep();
 
-        var author = _databaseContext.Authors.FirstOrDefault(a => a.Id == UserId);
+       // var cheepValidationResult = ValidateCheep.Validate(new NewCheep {Text = Message});
+        //if (!cheepValidationResult.IsValid)
+        //{
+           // throw new ValidationException(cheepValidationResult.Errors);
+        //}
 
-        var Cheep = new Cheep
+        Author author;
+
+        if (!_databaseContext.Authors.Any(a => a.Name == username))
+        {
+
+            author = new Author
+            {
+                Name = username,
+                Email =  Guid.NewGuid().ToString(),
+            };
+            _databaseContext.Authors.Add(author);
+        }
+        else
+        {
+            author = _databaseContext.Authors.SingleAsync(a => a.Name == username).Result;
+        }
+
+        var cheep = new Cheep
         {
             CheepId = Guid.NewGuid(),
             Text = Message,
-            TimeStamp = DateTime.Now,
-            AuthorId = UserId,
+            TimeStamp = DateTime.UtcNow,
             Author = author,
         };
-        _databaseContext.Cheeps.Add(Cheep);
+        _databaseContext.Cheeps.Add(cheep);
         _databaseContext.SaveChanges();
+
     }
 
     public async Task<int> CheepTotal() =>
@@ -59,4 +82,17 @@ public class CheepRepository : ICheepRepository
         .Include(c => c.Author)
         .Where(c => c.Author.Name == author_name)
         .CountAsync();
+}
+
+public class NewCheep
+{
+    public required string Text { get; set; }
+}
+
+public class ValidateCheep : AbstractValidator<NewCheep>
+{
+    public ValidateCheep()
+    {
+        RuleFor(c => c.Text).NotEmpty().MaximumLength(160);
+    }
 }

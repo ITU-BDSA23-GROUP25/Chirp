@@ -22,7 +22,7 @@ public class DatabaseContext : IdentityDbContext<Author, IdentityRole<string>, s
 
     public void InitializeDB()
     {
-        Database.EnsureCreated();
-        DbInitializer.SeedDatabase(this);
+        Database.Migrate();
+        //DbInitializer.SeedDatabase(this);
     }
 }

@@ -128,7 +128,7 @@ namespace Chirp.Razor.Areas.Identity.Pages.Account
                 user.Name = Input.Name;
                 user.Email = Input.Email;
                 user.SecurityStamp = Guid.NewGuid().ToString(); //added this to set security stamp
-                user.Id = Guid.NewGuid().ToString(); //added this to set id, dont know why it isnt set without
+                 //added this to set id, dont know why it isnt set without
 
 
                 var claim = new Claim("Name", Input.Name);
