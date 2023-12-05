@@ -1,6 +1,6 @@
 namespace Repository;
 
-public class Author : IdentityUser<string> //added <string>
+public class Author : IdentityUser //added <string>
 {
     //public Guid AuthorId { get; set; }
     public required string Name { get; set; }
