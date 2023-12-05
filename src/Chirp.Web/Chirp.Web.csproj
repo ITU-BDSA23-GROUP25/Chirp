@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,6 +6,7 @@
     <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>Chirp.Razor</RootNamespace>
+    <UserSecretsId>cc077984-606d-4e28-b9d9-8f47540a4e6d</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
