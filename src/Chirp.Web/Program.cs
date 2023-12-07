@@ -20,7 +20,7 @@ builder.Services.AddAuthentication()
     .AddGitHub("GitHub", o =>
     {
         o.ClientId = builder.Configuration["Github:ClientId"];
-        o.ClientSecret = "5829d1c2587afa42bc40254e6e958fb480b2553c";
+        o.ClientSecret = builder.Configuration["Github:ClientSecret"];
         o.CallbackPath = "/signin-github";
         o.Scope.Add("user:email"); // Add additional scopes if needed
         o.ClaimActions.MapJsonKey("user:email", "Email", "email");
