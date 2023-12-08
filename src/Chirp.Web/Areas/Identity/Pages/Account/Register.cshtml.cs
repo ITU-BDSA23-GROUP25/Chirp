@@ -128,7 +128,7 @@ namespace Chirp.Razor.Areas.Identity.Pages.Account
                 user.Name = Input.Name;
                 user.Email = Input.Email;
                 user.SecurityStamp = Guid.NewGuid().ToString(); //added this to set security stamp
-                user.Id = Guid.NewGuid().ToString(); //added this to set id, dont know why it isnt set without
+                 //added this to set id, dont know why it isnt set without
 
 
                 var claim = new Claim("Name", Input.Name);
@@ -184,8 +184,8 @@ namespace Chirp.Razor.Areas.Identity.Pages.Account
             }
             catch
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityUser)}'. " +
-                    $"Ensure that '{nameof(IdentityUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(Author)}'. " +
+                    $"Ensure that '{nameof(Author)}' is not an abstract class and has a parameterless constructor, or alternatively " +
                     $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
