@@ -18,10 +18,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using NuGet.Protocol;
+using Microsoft.AspNetCore.Authentication;
+
 
 namespace Chirp.Razor.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
+    [Authorize(AuthenticationSchemes = "GitHub")]
     public class ExternalLoginModel : PageModel
     {
         private readonly SignInManager<Author> _signInManager;
@@ -86,7 +89,7 @@ namespace Chirp.Razor.Areas.Identity.Pages.Account
             [EmailAddress]
             public string Email { get; set; }
         }
-        
+
         public IActionResult OnGet() => RedirectToPage("./Login");
 
         public IActionResult OnPost(string provider, string returnUrl = null)
@@ -125,16 +128,6 @@ namespace Chirp.Razor.Areas.Identity.Pages.Account
             }
             else
             {
-                // If the user does not have an account, then ask the user to create an account.
-                ReturnUrl = returnUrl;
-                ProviderDisplayName = info.ProviderDisplayName;
-                if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
-                {
-                    Input = new InputModel
-                    {
-                        Email = info.Principal.FindFirstValue(ClaimTypes.Email)
-                    };
-                }
                 return Page();
             }
         }
@@ -154,12 +147,33 @@ namespace Chirp.Razor.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
-                user.UserName = Input.Email;
-                user.Email = Input.Email;
-                user.Name = Input.Email;
+                var usernameClaim = User.FindFirstValue(ClaimTypes.Name);
 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                if (usernameClaim != null)
+                {
+                    string username = usernameClaim;
+                    user.UserName = username;
+                    user.Name = username;
+                }
+                else
+                {
+                    throw new Exception("Name isn't set");
+                }
+
+                var emailClaim = User.FindFirstValue(ClaimTypes.Email);
+
+                if (emailClaim != null)
+                {
+                    string email = emailClaim;
+                    user.Email = email;
+                }
+                else
+                {
+                    throw new Exception("Email isn't set");
+                }
+
+                await _userStore.SetUserNameAsync(user, user.Name, CancellationToken.None);
+                await _emailStore.SetEmailAsync(user, user.Email, CancellationToken.None);
 
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
@@ -178,13 +192,13 @@ namespace Chirp.Razor.Areas.Identity.Pages.Account
                             values: new { area = "Identity", userId = userId, code = code },
                             protocol: Request.Scheme);
 
-                        await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                        await _emailSender.SendEmailAsync(user.Email, "Confirm your email",
                             $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                         // If account confirmation is required, we need to show the link if we don't have a real email sender
                         if (_userManager.Options.SignIn.RequireConfirmedAccount)
                         {
-                            return RedirectToPage("./RegisterConfirmation", new { Email = Input.Email });
+                            return RedirectToPage("./RegisterConfirmation", new { Email = user.Email });
                         }
 
                         await _signInManager.SignInAsync(user, isPersistent: false, info.LoginProvider);

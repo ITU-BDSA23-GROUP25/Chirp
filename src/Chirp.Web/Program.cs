@@ -6,6 +6,7 @@ using Repository;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OAuth;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DatabaseContextConnection") ?? throw new InvalidOperationException("Connection string 'DatabaseContextConnection' not found.");
@@ -23,8 +24,33 @@ builder.Services.AddAuthentication()
         o.ClientSecret = builder.Configuration["Github:ClientSecret"];
         o.CallbackPath = "/signin-github";
         o.Scope.Add("user:email"); // Add additional scopes if needed
-        o.ClaimActions.MapJsonKey("user:email", "Email", "email");
+        o.Scope.Add("user:name");
+        o.Scope.Add("user:id");
+        //o.ClaimActions.MapJsonKey("user:email", "Email", "email");
+
+        o.AuthorizationEndpoint = "https://github.com/login/oauth/authorize";
+        o.TokenEndpoint = "https://github.com/login/oauth/access_token";
+        o.UserInformationEndpoint = "https://api.github.com/user";
+
+        o.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "id");
+        o.ClaimActions.MapJsonKey(ClaimTypes.Name, "name");
+        o.ClaimActions.MapJsonKey(ClaimTypes.Email, "email");
+        o.Events = new OAuthEvents
+        {
+            OnCreatingTicket = context =>
+            {
+                // Log claims during the authentication process
+                foreach (var claim in context.Principal.Claims)
+                {
+                    Console.WriteLine($"Type: {claim.Type}, Value: {claim.Value}");
+                }
+
+                return Task.CompletedTask;
+            }
+        };
     });
+
+
 
 builder.Services.AddDefaultIdentity<Author>(options =>
     options.SignIn.RequireConfirmedAccount = false)
