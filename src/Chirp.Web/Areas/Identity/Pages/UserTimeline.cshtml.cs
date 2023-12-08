@@ -21,11 +21,9 @@ public class UserTimelineModel : PageModel
     {
 
         if (!page.HasValue || page < 1)
-            {
-                page = 1; // Set a default page value if it is null or negative
-            }
-            
-        if (page == null) { page = 0; }
+        {
+            page = 1; //if page is null or negative, set page to 1
+        }
         Cheeps = _service.GetCheepsFromAuthor((int)page, author).Result.ToList();
    
 
