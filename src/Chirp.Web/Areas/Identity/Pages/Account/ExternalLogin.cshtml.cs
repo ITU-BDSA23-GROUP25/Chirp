@@ -1,6 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-#nullable disable
+// ExternalLogin.cshtml.cs
 
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -10,16 +8,11 @@ using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
-using NuGet.Protocol;
-using Microsoft.AspNetCore.Authentication;
-
 
 namespace Chirp.Razor.Areas.Identity.Pages.Account
 {
@@ -49,42 +42,17 @@ namespace Chirp.Razor.Areas.Identity.Pages.Account
             _emailSender = emailSender;
         }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public string ProviderDisplayName { get; set; }
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public string ReturnUrl { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [TempData]
         public string ErrorMessage { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public class InputModel
         {
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [Required]
             [EmailAddress]
             public string Email { get; set; }
@@ -94,7 +62,6 @@ namespace Chirp.Razor.Areas.Identity.Pages.Account
 
         public IActionResult OnPost(string provider, string returnUrl = null)
         {
-            // Request a redirect to the external login provider.
             var redirectUrl = Url.Page("./ExternalLogin", pageHandler: "Callback", values: new { returnUrl });
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             return new ChallengeResult(provider, properties);
@@ -108,6 +75,7 @@ namespace Chirp.Razor.Areas.Identity.Pages.Account
                 ErrorMessage = $"Error from external provider: {remoteError}";
                 return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
             }
+
             var info = await _signInManager.GetExternalLoginInfoAsync();
             if (info == null)
             {
@@ -115,27 +83,21 @@ namespace Chirp.Razor.Areas.Identity.Pages.Account
                 return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
             }
 
-            // Sign in the user with this external login provider if the user already has a login.
-            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
-            if (result.Succeeded)
+            // Create the user directly
+            var user = CreateUser(info);
+            if (user != null)
             {
+                await _signInManager.SignInAsync(user, isPersistent: false, info.LoginProvider);
                 _logger.LogInformation("{Name} logged in with {LoginProvider} provider.", info.Principal.Identity.Name, info.LoginProvider);
                 return LocalRedirect(returnUrl);
             }
-            if (result.IsLockedOut)
-            {
-                return RedirectToPage("./Lockout");
-            }
-            else
-            {
-                return Page();
-            }
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPostConfirmationAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
-            // Get the information about the user from the external login provider
             var info = await _signInManager.GetExternalLoginInfoAsync();
             if (info == null)
             {
@@ -145,27 +107,23 @@ namespace Chirp.Razor.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var user = CreateUser();
+                var user = CreateUser(info);
 
-                var usernameClaim = User.FindFirstValue(ClaimTypes.Name);
-
+                var usernameClaim = info.Principal.FindFirstValue(ClaimTypes.Name);
                 if (usernameClaim != null)
                 {
-                    string username = usernameClaim;
-                    user.UserName = username;
-                    user.Name = username;
+                    user.UserName = usernameClaim;
+                    user.Name = usernameClaim;
                 }
                 else
                 {
                     throw new Exception("Name isn't set");
                 }
 
-                var emailClaim = User.FindFirstValue(ClaimTypes.Email);
-
+                var emailClaim = info.Principal.FindFirstValue(ClaimTypes.Email);
                 if (emailClaim != null)
                 {
-                    string email = emailClaim;
-                    user.Email = email;
+                    user.Email = emailClaim;
                 }
                 else
                 {
@@ -195,7 +153,6 @@ namespace Chirp.Razor.Areas.Identity.Pages.Account
                         await _emailSender.SendEmailAsync(user.Email, "Confirm your email",
                             $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                        // If account confirmation is required, we need to show the link if we don't have a real email sender
                         if (_userManager.Options.SignIn.RequireConfirmedAccount)
                         {
                             return RedirectToPage("./RegisterConfirmation", new { Email = user.Email });
@@ -205,6 +162,7 @@ namespace Chirp.Razor.Areas.Identity.Pages.Account
                         return LocalRedirect(returnUrl);
                     }
                 }
+
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
@@ -216,19 +174,40 @@ namespace Chirp.Razor.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private Author CreateUser()
+
+
+private Author CreateUser(ExternalLoginInfo info)
+{
+    try
+    {
+        var user = Activator.CreateInstance<Author>();
+
+        // Extract claims from the external login provider and handle as needed
+        foreach (var claim in info.Principal.Claims)
         {
-            try
+            // Handle each claim as needed and store in the user object
+            if (claim.Type == ClaimTypes.Email)
             {
-                return Activator.CreateInstance<Author>();
+                user.Email = claim.Value;
             }
-            catch
+            else if (claim.Type == ClaimTypes.Name)
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(Author)}'. " +
-                    $"Ensure that '{nameof(Author)}' is not an abstract class and has a parameterless constructor, or alternatively " +
-                    $"override the external login page in /Areas/Identity/Pages/Account/ExternalLogin.cshtml");
+                user.UserName = claim.Value;
+                user.Name = claim.Value;
             }
+            // Add more conditions as needed based on your requirements
         }
+
+        return user;
+    }
+    catch
+    {
+        throw new InvalidOperationException($"Can't create an instance of '{nameof(Author)}'. " +
+            $"Ensure that '{nameof(Author)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+            $"override the external login page in /Areas/Identity/Pages/Account/ExternalLogin.cshtml");
+    }
+}
+
 
         private IUserEmailStore<Author> GetEmailStore()
         {
