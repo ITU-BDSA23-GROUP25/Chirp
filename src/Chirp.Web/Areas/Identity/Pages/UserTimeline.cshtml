@@ -17,6 +17,11 @@
             {
                 <li>
                     <p>
+                        @{
+                            var imageUrl = "https://github.com/" + @cheep.Author + ".png";
+                        }
+                        @* The 47 is hardcoded, can be done better using css *@
+                        <img src=@imageUrl width="47" height="47">
                         <strong>
                             <a href="/@cheep.Author">@cheep.Author</a>
                         </strong>

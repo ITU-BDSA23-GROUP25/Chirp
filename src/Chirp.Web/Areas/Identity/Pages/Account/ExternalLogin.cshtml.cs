@@ -191,7 +191,8 @@ private Author CreateUser(ExternalLoginInfo info)
                 user.Email = claim.Value;
             }
             else if (claim.Type == ClaimTypes.Name)
-            {
+            {   
+                
                 user.UserName = claim.Value;
                 user.Name = claim.Value;
             }
