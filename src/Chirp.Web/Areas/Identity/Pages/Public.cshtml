@@ -25,16 +25,22 @@
         <ul id="messagelist" class="cheeps">
             @foreach (var cheep in Model.Cheeps)
             {
-                <li>
-                    <p>
-                        <strong>
-                            <a href="/@cheep.Author">@cheep.Author</a>
-                        </strong>
+             <li>
+                <p>
+                     <strong>
+                        <a href="/@cheep.Author">@cheep.Author</a>
+                    </strong>
                         @cheep.Message
-                        <small>&mdash; @cheep.Timestamp</small>¨
-                    </p>
-                </li>
+                        <small>&mdash; @cheep.Timestamp</small>
+                        @if (cheep.Author == User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Name)?.Value)
+                        {
+                        <form method="post" asp-page-handler="Delete" asp-route-cheepId="@cheep.Id">
+                             <button type="submit">delete</button>
+                        </form>
             }
+        </p>
+    </li>
+}
         </ul>
     }
     else
