@@ -84,7 +84,9 @@ namespace Chirp.Razor.Areas.Identity.Pages.Account
             }
 
             // Create the user directly
-            var user = CreateUser(info);
+
+            var usernameClaim = info.Principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
+            var user = CreateUser(info, usernameClaim);
             if (user != null)
             {
                 await _signInManager.SignInAsync(user, isPersistent: false, info.LoginProvider);
@@ -95,7 +97,7 @@ namespace Chirp.Razor.Areas.Identity.Pages.Account
             return Page();
         }
 
-        public async Task<IActionResult> OnPostConfirmationAsync(string returnUrl = null)
+        /* public async Task<IActionResult> OnPostConfirmationAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
             var info = await _signInManager.GetExternalLoginInfoAsync();
@@ -107,9 +109,25 @@ namespace Chirp.Razor.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var user = CreateUser(info);
+                var usernameClaim = info.Principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
 
-                var usernameClaim = info.Principal.FindFirstValue(ClaimTypes.NameIdentifier);
+                // If http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name doesn't have the desired value, ignore urn:github:name
+                if (string.IsNullOrEmpty(usernameClaim))
+                {
+                    // Capture the value directly from http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name
+                    usernameClaim = info.Principal.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name")?.Value;
+                }
+
+                 var user = CreateUser(info, usernameClaim);
+
+                Console.WriteLine($"First Name: {usernameClaim}");
+
+                foreach (var claim in info.Principal.Claims)
+                {
+                    Console.WriteLine($"Claim Type: {claim.Type}, Claim Value: {claim.Value}");
+                }
+
+
                 if (usernameClaim != null)
                 {
                     user.UserName = usernameClaim;
@@ -173,41 +191,38 @@ namespace Chirp.Razor.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
             return Page();
         }
+ */
 
 
-
-private Author CreateUser(ExternalLoginInfo info)
-{
-    try
-    {
-        var user = Activator.CreateInstance<Author>();
-
-        // Extract claims from the external login provider and handle as needed
-        foreach (var claim in info.Principal.Claims)
+        private Author CreateUser(ExternalLoginInfo info, string username)
         {
-            // Handle each claim as needed and store in the user object
-            if (claim.Type == ClaimTypes.Email)
+            try
             {
-                user.Email = claim.Value;
-            }
-            else if (claim.Type == ClaimTypes.Name)
-            {   
-                
-                user.UserName = claim.Value;
-                user.Name = claim.Value;
-            }
-            // Add more conditions as needed based on your requirements
-        }
+                var user = Activator.CreateInstance<Author>();
 
-        return user;
-    }
-    catch
-    {
-        throw new InvalidOperationException($"Can't create an instance of '{nameof(Author)}'. " +
-            $"Ensure that '{nameof(Author)}' is not an abstract class and has a parameterless constructor, or alternatively " +
-            $"override the external login page in /Areas/Identity/Pages/Account/ExternalLogin.cshtml");
-    }
-}
+                // Extract claims from the external login provider and handle as needed
+                foreach (var claim in info.Principal.Claims)
+                {
+                    // Handle each claim as needed and store in the user object
+                    if (claim.Type == ClaimTypes.Email)
+                    {
+                        user.Email = claim.Value;
+                    }
+
+                        user.UserName = username;
+                        user.Name = username;
+                    // Add more conditions as needed based on your requirements
+                }
+
+                return user;
+            }
+            catch
+            {
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(Author)}'. " +
+                    $"Ensure that '{nameof(Author)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+                    $"override the external login page in /Areas/Identity/Pages/Account/ExternalLogin.cshtml");
+            }
+        }
 
 
         private IUserEmailStore<Author> GetEmailStore()
