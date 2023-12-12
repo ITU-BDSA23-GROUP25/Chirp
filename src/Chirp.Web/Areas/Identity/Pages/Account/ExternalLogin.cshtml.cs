@@ -109,7 +109,7 @@ namespace Chirp.Razor.Areas.Identity.Pages.Account
             {
                 var user = CreateUser(info);
 
-                var usernameClaim = info.Principal.FindFirstValue(ClaimTypes.Name);
+                var usernameClaim = info.Principal.FindFirstValue(ClaimTypes.NameIdentifier);
                 if (usernameClaim != null)
                 {
                     user.UserName = usernameClaim;

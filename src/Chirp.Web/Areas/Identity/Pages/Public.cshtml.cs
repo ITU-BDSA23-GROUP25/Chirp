@@ -40,8 +40,7 @@ public class PublicModel : PageModel
 {
     // Perform cheep deletion logic here
     var cheepToRemove = await _service.GetCheep(cheepId);
-    
-    Console.WriteLine(cheepId + "hejejeje");
+
     
     if (cheepToRemove != null)
     {
