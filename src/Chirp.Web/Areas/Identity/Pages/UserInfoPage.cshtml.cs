@@ -1,30 +1,43 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Core;
-using System.Configuration;
+using System.Linq;
 
-namespace Chirp.Razor.Areas.Identity.Pages;
-public class userInfoModel : PageModel
+namespace Chirp.Razor.Areas.Identity.Pages
 {
-    public List<CheepDTO> Cheeps { get; set; }
-    ICheepRepository _service;
-
-    public PaginationModel? PaginationModel { get; set; }
-
-    public userInfoModel(ICheepRepository service)
+    public class UserInfoModel : PageModel
     {
-        Cheeps = new List<CheepDTO>();
-        _service = service;
-    }
+        private readonly ICheepRepository _service;
 
-    public ActionResult OnGet(int? page, string username)
-    {
-        if (!page.HasValue || page < 1)
+        public List<CheepDTO> Cheeps { get; set; }
+        public PaginationModel? PaginationModel { get; set; }
+
+        public UserInfoModel(ICheepRepository service)
         {
-            page = 1; //if page is null or negative, set page to 1
+            _service = service;
         }
-        Cheeps = _service.GetCheepsFromAuthor((int)page, username).Result.ToList();
 
-        return Page();
+        public ActionResult OnGet([FromQuery] int? page)
+        {
+            // Retrieve the username from the user's claims
+            var username = User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Name)?.Value;
+
+            if (!page.HasValue || page < 1)
+            {
+                page = 1; //if page is null or negative, set page to 1
+            }
+
+            Cheeps = _service.GetCheepsFromAuthor((int)page, username).Result.ToList();
+
+            foreach (var item in Cheeps)
+            {
+                Console.WriteLine(item.Message);
+            }
+
+            var amountOfCheeps = _service.AuthorsCheepTotal(username).Result;
+            PaginationModel = new PaginationModel(amountOfCheeps, (int)page);
+
+            return Page();
+        }
     }
 }

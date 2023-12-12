@@ -1,16 +1,16 @@
 @page "/User-info"
-@model userInfoModel
+@model UserInfoModel
 @{
     Layout = "Shared/_Layout";
-    var username = User.Claims.FirstOrDefault(x => x.Type == "Name")?.Value;
+    var username = @User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Name)?.Value;
 }
 
 <div>
     <h2> About me </h2>
 
-    <h4>Username: @User.Claims.FirstOrDefault(x => x.Type == "Name")?.Value</h4>
+    <h4>Username: @User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Name)?.Value</h4>
 
-    <h4>Email: @User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Name)?.Value</h4>
+    <h4>Email: @User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Email)?.Value</h4>
     <br>
 
     @if (Model.Cheeps.Any())
