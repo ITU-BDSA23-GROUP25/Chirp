@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Core;
 using System.Configuration;
+using Microsoft.CodeAnalysis.Elfie.Extensions;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace Chirp.Razor.Areas.Identity.Pages;
 public class PublicModel : PageModel
@@ -27,11 +29,28 @@ public class PublicModel : PageModel
         }
         Cheeps = _service.GetCheeps((int)page - 1).Result.ToList();
 
+
         var amountOfCheeps = _service.CheepTotal().Result;
         PaginationModel = new PaginationModel(amountOfCheeps, (int)page);
 
         return Page();
     }
+
+    public async Task<IActionResult> OnPostDelete(Guid cheepId)
+{
+    // Perform cheep deletion logic here
+    var cheepToRemove = await _service.GetCheep(cheepId);
+    
+    Console.WriteLine(cheepId + "hejejeje");
+    
+    if (cheepToRemove != null)
+    {
+        _service.RemoveCheep(cheepToRemove);
+    }
+
+    // Redirect back to the public page after deletion
+    return RedirectToPage("Public");
+}
 
    public IActionResult OnPost()
     {

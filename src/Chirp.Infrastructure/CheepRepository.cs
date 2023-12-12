@@ -1,3 +1,4 @@
+using System.Linq;
 using FluentValidation;
 
 namespace Repository;
@@ -19,7 +20,7 @@ public class CheepRepository : ICheepRepository
         .Include(c => c.Author)
         .Skip(CheepsPerPage * pageNumber)
         .Take(CheepsPerPage)
-        .Select(c => new CheepDTO(c.Author.Name, c.Text, c.TimeStamp.ToString("MM/dd/yy H:mm:ss")))
+        .Select(c => new CheepDTO(c.CheepId, c.Author.Name, c.Text, c.TimeStamp.ToString("MM/dd/yy H:mm:ss")))
         .ToListAsync();
 
     public async Task<IEnumerable<CheepDTO>> GetCheepsFromAuthor(int pageNumber, string author_name) =>
@@ -30,17 +31,17 @@ public class CheepRepository : ICheepRepository
         .Skip(CheepsPerPage * (pageNumber - 1))
         .Take(CheepsPerPage)
         .Select(c =>
-            new CheepDTO(c.Author.Name, c.Text, c.TimeStamp.ToString("MM/dd/yy H:mm:ss")))
+            new CheepDTO(c.CheepId, c.Author.Name, c.Text, c.TimeStamp.ToString("MM/dd/yy H:mm:ss")))
         .ToListAsync();
 
     public void CreateCheep(string Message, string username)
     {
-       // var ValidateCheep = new ValidateCheep();
+        // var ValidateCheep = new ValidateCheep();
 
-       // var cheepValidationResult = ValidateCheep.Validate(new NewCheep {Text = Message});
+        // var cheepValidationResult = ValidateCheep.Validate(new NewCheep {Text = Message});
         //if (!cheepValidationResult.IsValid)
         //{
-           // throw new ValidationException(cheepValidationResult.Errors);
+        // throw new ValidationException(cheepValidationResult.Errors);
         //}
 
         Author author;
@@ -51,7 +52,7 @@ public class CheepRepository : ICheepRepository
             author = new Author
             {
                 Name = username,
-                Email =  Guid.NewGuid().ToString(),
+                Email = Guid.NewGuid().ToString(),
             };
             _databaseContext.Authors.Add(author);
         }
@@ -82,6 +83,30 @@ public class CheepRepository : ICheepRepository
         .Include(c => c.Author)
         .Where(c => c.Author.Name == author_name)
         .CountAsync();
+
+    public async Task<CheepDTO> GetCheep(Guid cheepId) =>
+        await _databaseContext.Cheeps
+        
+        .Include(c => c.Author)
+        .Where(c => c.CheepId == cheepId)
+        .Select(c => new CheepDTO(c.CheepId, c.Author.Name, c.Text, c.TimeStamp.ToString("MM/dd/yy H:mm:ss")))
+        .FirstOrDefaultAsync();
+
+public void RemoveCheep(CheepDTO cheepDto)
+{
+    // Find the corresponding Cheep entity
+    var cheepToRemove = _databaseContext.Cheeps
+        .FirstOrDefault(c => c.CheepId == cheepDto.Id);
+
+    if (cheepToRemove != null)
+    {
+        // Remove the Cheep entity from the database
+        _databaseContext.Cheeps.Remove(cheepToRemove);
+
+        // Save changes to persist the removal
+        _databaseContext.SaveChangesAsync();
+    }
+}
 }
 
 public class NewCheep
