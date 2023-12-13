@@ -12,7 +12,7 @@
     <div class="nav-item">
         <a class="nav-link text-dark" id="PublicTimeline" href="/">Public Timeline</a> |
         <a id="privateTimeline" class="nav-link text-dark" href="#" onclick="redirectToPrivateTimeline('@userName')">My Timeline</a> |  
-        <a asp-page="/UserInfoPage" title="Manage">about me</a> |
+        <a asp-page="/UserInfoPage" title="Manage">About Me</a> |
         <a id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })"> Logout [@User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Name)?.Value]</a>
         <script>
             function redirectToPrivateTimeline(username) {

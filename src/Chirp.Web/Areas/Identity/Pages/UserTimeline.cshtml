@@ -8,7 +8,15 @@
 }
 
 <div>
-    <h2> @routeName's Timeline </h2>
+    <h2> @routeName's Timeline 
+        <div class="dropdown">
+        <button class="dropbtn">Sort after</button>
+        <div class="dropdown-content">
+            <a href="?SortOrder=Newest">Newest</a>
+            <a href="?SortOrder=Oldest">Oldest</a>
+        </div>
+    </div>
+    </h2>
 
     @if (Model.Cheeps.Any())
     {

@@ -15,24 +15,58 @@ public class CheepRepository : ICheepRepository
         _databaseContext.InitializeDB();
     }
 
-    public async Task<IEnumerable<CheepDTO>> GetCheeps(int pageNumber = 0)
-        => await _databaseContext.Cheeps
+   public async Task<IEnumerable<CheepDTO>> GetCheeps(int pageNumber = 0, string sortOrder = "Newest")
+{
+    IQueryable<Cheep> query = _databaseContext.Cheeps;
+
+    switch (sortOrder)
+    {
+        case "Oldest":
+            query = query.OrderBy(c => c.TimeStamp);
+            break;
+        case "Newest":
+        default:
+            query = query.OrderByDescending(c => c.TimeStamp);
+            break;
+    }
+
+    var cheeps = await query
         .Include(c => c.Author)
         .Skip(CheepsPerPage * pageNumber)
         .Take(CheepsPerPage)
         .Select(c => new CheepDTO(c.CheepId, c.Author.Name, c.Text, c.TimeStamp.ToString("MM/dd/yy H:mm:ss")))
         .ToListAsync();
 
-    public async Task<IEnumerable<CheepDTO>> GetCheepsFromAuthor(int pageNumber, string author_name) =>
-        await _databaseContext.Cheeps
+    return cheeps;
+}
 
+
+
+    public async Task<IEnumerable<CheepDTO>> GetCheepsFromAuthor(int pageNumber, string author_name, string sortOrder)
+{
+    IQueryable<Cheep> query = _databaseContext.Cheeps;
+
+    switch (sortOrder)
+    {
+        case "Oldest":
+            query = query.OrderBy(c => c.TimeStamp);
+            break;
+        case "Newest":
+        default:
+            query = query.OrderByDescending(c => c.TimeStamp);
+            break;
+    }
+
+    var cheeps = await query
         .Include(c => c.Author)
         .Where(c => c.Author.Name == author_name)
         .Skip(CheepsPerPage * (pageNumber - 1))
         .Take(CheepsPerPage)
-        .Select(c =>
-            new CheepDTO(c.CheepId, c.Author.Name, c.Text, c.TimeStamp.ToString("MM/dd/yy H:mm:ss")))
+        .Select(c => new CheepDTO(c.CheepId, c.Author.Name, c.Text, c.TimeStamp.ToString("MM/dd/yy H:mm:ss")))
         .ToListAsync();
+
+    return cheeps;
+}
 
     public void CreateCheep(string Message, string username)
     {

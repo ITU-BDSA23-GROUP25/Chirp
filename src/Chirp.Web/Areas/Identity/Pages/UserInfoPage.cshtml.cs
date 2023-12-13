@@ -12,6 +12,9 @@ namespace Chirp.Razor.Areas.Identity.Pages
         public List<CheepDTO> Cheeps { get; set; }
         public PaginationModel? PaginationModel { get; set; }
 
+        [BindProperty(SupportsGet = true)]
+        public string SortOrder { get; set; } = "Newest";
+
         public UserInfoModel(ICheepRepository service)
         {
             _service = service;
@@ -27,7 +30,7 @@ namespace Chirp.Razor.Areas.Identity.Pages
                 page = 1; //if page is null or negative, set page to 1
             }
 
-            Cheeps = _service.GetCheepsFromAuthor((int)page, username).Result.ToList();
+            Cheeps = _service.GetCheepsFromAuthor((int)page, username, SortOrder).Result.ToList();
 
             foreach (var item in Cheeps)
             {
