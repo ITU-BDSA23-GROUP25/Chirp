@@ -50,7 +50,7 @@
                         @if (cheep.Author == User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Name)?.Value)
                         {
                         <form method="post" asp-page-handler="Delete" asp-route-cheepId="@cheep.Id">
-                             <button type="submit">delete</button>
+                             <button type="submit">Delete</button>
                         </form>
             }
         </p>

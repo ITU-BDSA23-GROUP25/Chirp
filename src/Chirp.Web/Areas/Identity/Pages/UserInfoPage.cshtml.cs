@@ -42,5 +42,20 @@ namespace Chirp.Razor.Areas.Identity.Pages
 
             return Page();
         }
+
+        public async Task<IActionResult> OnPostDelete(Guid cheepId)
+        {
+            // Perform cheep deletion logic here
+            var cheepToRemove = await _service.GetCheep(cheepId);
+
+
+            if (cheepToRemove != null)
+            {
+                _service.RemoveCheep(cheepToRemove);
+            }
+
+            // Redirect back to the public page after deletion
+            return RedirectToPage("UserInfoPage");
+        }
     }
 }
