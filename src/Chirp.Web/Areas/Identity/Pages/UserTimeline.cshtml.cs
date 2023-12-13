@@ -11,7 +11,7 @@ public class UserTimelineModel : PageModel
     public List<CheepDTO> Cheeps { get; set; }
 
     public PaginationModel? PaginationModel { get; set; }
-    
+
     [BindProperty(SupportsGet = true)]
     public string SortOrder { get; set; } = "Newest";
 
@@ -28,7 +28,7 @@ public class UserTimelineModel : PageModel
             page = 1; //if page is null or negative, set page to 1
         }
         Cheeps = _service.GetCheepsFromAuthor((int)page, author, SortOrder).Result.ToList();
-   
+
 
         foreach (var item in Cheeps)
         {
@@ -39,5 +39,20 @@ public class UserTimelineModel : PageModel
         PaginationModel = new PaginationModel(amountOfCheeps, (int)page);
 
         return Page();
+    }
+
+    public async Task<IActionResult> OnPostDelete(Guid cheepId)
+    {
+        // Perform cheep deletion logic here
+        var cheepToRemove = await _service.GetCheep(cheepId);
+
+
+        if (cheepToRemove != null)
+        {
+            _service.RemoveCheep(cheepToRemove);
+        }
+
+        // Redirect back to the public page after deletion
+        return RedirectToPage("UserTimeline");
     }
 }
