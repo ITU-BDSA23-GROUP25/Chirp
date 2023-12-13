@@ -7,7 +7,17 @@
 }
 
 <div>
-    <h2> Public Timeline </h2>
+    <h2> Public Timeline 
+    <div class="dropdown">
+        <button class="dropbtn">Sort after</button>
+        <div class="dropdown-content">
+            <a href="?SortOrder=Newest">Newest</a>
+            <a href="?SortOrder=Oldest">Oldest</a>
+        </div>
+    </div>
+</div>
+
+    </h2>
 
   @if (User.Identity?.IsAuthenticated ?? false)
     {

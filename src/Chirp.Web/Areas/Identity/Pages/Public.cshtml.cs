@@ -14,6 +14,10 @@ public class PublicModel : PageModel
 
     public string Text {get; set;}
 
+    [BindProperty(SupportsGet = true)]
+    public string SortOrder { get; set; } = "Newest";
+    
+
 
     public PublicModel(ICheepRepository service)
     {
@@ -25,10 +29,11 @@ public class PublicModel : PageModel
     {
         if (!page.HasValue || page < 1)
         {
-            page = 1; //if page is null or negative, set page to 1
+            page = 1;
         }
-        Cheeps = _service.GetCheeps((int)page - 1).Result.ToList();
 
+        // Sort cheeps based on the selected order
+        Cheeps = _service.GetCheeps((int)page - 1, SortOrder).Result.ToList();
 
         var amountOfCheeps = _service.CheepTotal().Result;
         PaginationModel = new PaginationModel(amountOfCheeps, (int)page);
