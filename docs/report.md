@@ -16,8 +16,7 @@ numbersections: true
 
 First, temporary domain model. Description tbd
 
-![Domain Model](/images/firstDM.png)
-
+![Domain Model](https://github.com/ITU-BDSA23-GROUP25/Chirp/blob/report/docs/images/firstDM.png)
 
 ## Architecture — In the small
 
