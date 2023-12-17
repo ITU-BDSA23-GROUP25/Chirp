@@ -1,0 +1,25 @@
+name: Generate PDF from Markdown
+
+on:
+  push:
+    branches:
+      - report
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install Pandoc
+      run: sudo apt-get install pandoc
+
+    - name: Convert Markdown to PDF
+      run: pandoc docs/report.md -o docs/report.pdf
+
+    - name: Upload PDF
+      uses: actions/upload-artifact@v2
+      with:
+        name: Generated PDF
+        path: docs/report.pdf
