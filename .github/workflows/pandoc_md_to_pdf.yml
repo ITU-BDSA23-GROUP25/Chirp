@@ -12,8 +12,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Install Pandoc
-      run: sudo apt install pandoc
+    - name: Install Pandoc and TeX Live
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y pandoc texlive
 
     - name: Convert Markdown to PDF
       run: pandoc docs/report.md -o docs/report.pdf
