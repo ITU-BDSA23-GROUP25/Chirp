@@ -8,6 +8,7 @@ author:
 - "Adam Nørgård Aabye <aaab@itu.dk>"
 - "Atila Arianpour <atia@itu.dk>"
 numbersections: true
+geometry: "left=1in, right=1in, top=1in, bottom=1in"
 ---
 
 # Design and Architecture of _Chirp!_

@@ -1,0 +1,28 @@
+@startuml
+!theme vibrant
+skinparam classAttributeIconSize 0
+
+' Define the classes
+class Author {
+    +string Name
+    +string Email
+    +List<Cheep> Cheeps
+    +List<Author> Following
+    +List<Author> Followers
+}
+
+class Cheep {
+    +Guid CheepId
+    +string Text
+    +DateTime TimeStamp
+}
+
+class IdentityUser {
+}
+
+' Define relationships
+Author "1" *-- "0..*" Cheep : has
+Author --|> IdentityUser
+Author "0..*" -- "0..*" Author : follows
+
+@enduml
