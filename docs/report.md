@@ -14,9 +14,10 @@ numbersections: true
 
 ## Domain model
 
-Here comes a description of our domain model.
+First, temporary domain model. Description tbd
 
-![Illustration of the _Chirp!_ data model as UML class diagram.](docs/images/domain_model.png)
+![image](https://github.com/ITU-BDSA23-GROUP25/Chirp/assets/124109483/d760c1d8-0a3b-4ed8-83db-aeec3a67b545)
+
 
 ## Architecture — In the small
 
