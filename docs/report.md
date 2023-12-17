@@ -16,7 +16,7 @@ numbersections: true
 
 First, temporary domain model. Description tbd
 
-![Domain Model](/docs/images/firstDM.png)
+<!-- ![Domain Model](/docs/images/firstDM.png) -->
 
 ## Architecture — In the small
 
