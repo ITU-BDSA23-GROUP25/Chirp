@@ -15,6 +15,9 @@ jobs:
     - name: Install Pandoc
       run: sudo apt-get install pandoc
 
+    - name: Install pdflatex
+      run: sudo apt-get install pdflatex
+
     - name: Convert Markdown to PDF
       run: pandoc docs/report.md -o docs/report.pdf
 
