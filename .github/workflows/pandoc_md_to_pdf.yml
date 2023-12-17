@@ -16,7 +16,7 @@ jobs:
       run: sudo apt-get install pandoc
 
     - name: Install TeX Live
-      run: sudo apt-get install texlive
+      run: sudo apt install texlive-base
 
     - name: Convert Markdown to PDF
       run: pandoc docs/report.md -o docs/report.pdf
