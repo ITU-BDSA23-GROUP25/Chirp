@@ -17,7 +17,7 @@ geometry: "left=1in, right=1in, top=1in, bottom=1in"
 
 First, temporary domain model. Description tbd
 
-![Domain Model](/docs/images/firstDM.png)
+![Domain Model](docs/images/firstDM.png)
 
 ## Architecture — In the small
 
