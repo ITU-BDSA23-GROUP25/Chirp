@@ -57,5 +57,23 @@ namespace Chirp.Razor.Areas.Identity.Pages
             // Redirect back to the public page after deletion
             return RedirectToPage("UserInfoPage");
         }
+
+        public async Task<IActionResult> OnPostDeleteUser()
+        {
+            // Retrieve the username from the user's claims
+            var username = User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Name)?.Value;
+
+            var cheepsToRemove = _service.GetAllCheepsFromAuthor(username).Result.ToList();
+
+            foreach (CheepDTO cheepDTO in cheepsToRemove)
+            {
+                if (cheepDTO != null)
+                {
+                    _service.RemoveCheep(cheepDTO);
+                }
+            }
+
+            return RedirectToPage("public");
+        }
     }
 }
