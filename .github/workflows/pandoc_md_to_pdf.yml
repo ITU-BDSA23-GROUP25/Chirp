@@ -26,7 +26,7 @@ jobs:
         run: |
           git config --global user.name 'Silas Wolff'
           git config --global user.email 'siwo@itu.dk'
-          git add report.pdf
+          git add docs/report.pdf
           git commit -m "Generate PDF"
           git push
 
@@ -34,4 +34,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Generated PDF
-          path: report.pdf
+          path: docs/report.pdf
