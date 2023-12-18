@@ -74,7 +74,7 @@ namespace Chirp.Razor.Areas.Identity.Pages
 
             //Removes the author of the user
             var userToRemove = await _authorRepo.GetAuthorByName(username);
-            await _authorRepo.RemoveAuthor((AuthorDTO)userToRemove);
+            await _authorRepo.RemoveAuthor(userToRemove);
 
             //Signes the user out of the website
             await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);

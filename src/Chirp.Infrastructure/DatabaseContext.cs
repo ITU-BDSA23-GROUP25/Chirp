@@ -19,6 +19,7 @@ public class DatabaseContext : IdentityDbContext<Author, IdentityRole<string>, s
         modelBuilder.Entity<Cheep>().Property(c => c.Text).HasMaxLength(160);
         modelBuilder.Entity<Author>().Property(a => a.Name).HasMaxLength(32);
         modelBuilder.Entity<Author>().HasIndex(a => a.Name).IsUnique();
+        modelBuilder.Entity<Follower>().HasKey(a => new{a.FollowerId, a.FollowedId});
     }
 
     public void InitializeDB()

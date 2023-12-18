@@ -39,7 +39,7 @@ public class AuthorRepository : IAuthorRepository
         _databaseContext.SaveChanges();
     }
 
-    public async Task<IEnumerable<AuthorDTO>> GetAuthorByName(string author_name) =>
+    public async Task<AuthorDTO> GetAuthorByName(string author_name) =>
         await _databaseContext.Authors
 
         .Where(a => a.Name == author_name)
@@ -48,8 +48,7 @@ public class AuthorRepository : IAuthorRepository
             Name = a.Name,
             Email = a.Email
         })
-        .ToListAsync();
-
+        .FirstOrDefaultAsync();
         
 
 

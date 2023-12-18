@@ -2,7 +2,7 @@ namespace Core;
 public interface IAuthorRepository
 {
     // Get
-    public Task<IEnumerable<AuthorDTO>> GetAuthorByName(string author_name);
+    public Task<AuthorDTO> GetAuthorByName(string author_name);
     public Task<IEnumerable<AuthorDTO>> GetAuthorByEmail(string Email);
 
     // post

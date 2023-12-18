@@ -263,16 +263,16 @@ namespace DBContext.Migrations
                     b.Property<string>("FollowerId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("FollowedAuthorId")
+                    b.Property<string>("FollowedId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("FollowedId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("FollowedAuthorId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FollowerAuthorId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("FollowerId");
+                    b.HasKey("FollowerId", "FollowedId");
 
                     b.HasIndex("FollowedAuthorId");
 

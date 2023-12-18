@@ -12,7 +12,7 @@ using Repository;
 namespace DBContext.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20231218105229_InitialCreate")]
+    [Migration("20231218134859_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -266,16 +266,16 @@ namespace DBContext.Migrations
                     b.Property<string>("FollowerId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("FollowedAuthorId")
+                    b.Property<string>("FollowedId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("FollowedId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("FollowedAuthorId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FollowerAuthorId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("FollowerId");
+                    b.HasKey("FollowerId", "FollowedId");
 
                     b.HasIndex("FollowedAuthorId");
 
