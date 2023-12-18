@@ -100,12 +100,12 @@ public class CheepRepository : ICheepRepository
     }
 
     //This query was made to get all cheeps from an author for deletion
-    public async Task RemoveAllCheepsFromAuthor(CheepDTO cheepDTO)
+    public async Task RemoveAllCheepsFromAuthor(AuthorDTO authorDTO)
     {
         IQueryable<Cheep> query = _databaseContext.Cheeps;
 
         var cheepsToRemove = await query
-            .Where(c => c.CheepId == cheepDTO.Id)
+            .Where(c => c.Author.Name == authorDTO.Name)
             .ExecuteDeleteAsync();
     }
 
@@ -157,7 +157,7 @@ public class CheepRepository : ICheepRepository
         .Select(c => new CheepDTO(c.CheepId, c.Author.Name, c.Text, c.TimeStamp.ToString("MM/dd/yy H:mm:ss")))
         .FirstOrDefaultAsync();
 
-    public async Task RemoveCheep(CheepDTO cheepDto)
+    public void RemoveCheep(CheepDTO cheepDto)
     {
         // Find the corresponding Cheep entity
         var cheepToRemove = _databaseContext.Cheeps
