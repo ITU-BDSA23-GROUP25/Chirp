@@ -109,6 +109,8 @@ The license can be found on our [Github repository](https://github.com/ITU-BDSA2
 ## LLMs, ChatGPT, CoPilot, and others
 Lad os lige snakke om hvad vi siger her?
 
+Lille test
+
 <!-- Denne sektion er ikke en del af template -->
 # Perspektivering, eller overvejelser, eller noter, eller fri leg?
 Den her sektion er ikke en del af templatet, men jeg tænker her kan vi skrive nogle overvejelser som vi har gjort og som vi måske/måske ikke vil have med i rapporten.
