@@ -68,7 +68,7 @@ public class UserTimelineModel : PageModel
             }
 
         var amountOfCheeps = _service.AuthorsCheepTotal(author).Result;
-        PaginationModel = new PaginationModel(amountOfCheeps, (int)page);
+        PaginationModel = new PaginationModel(amountOfCheeps, (int)page, SortOrder);
 
         return Page();
     }

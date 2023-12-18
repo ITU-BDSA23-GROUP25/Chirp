@@ -1,10 +1,43 @@
 @model PaginationModel
 
-<div>
-    <ul class="pagination">
-        @for (var i = 1; i <= Model.amountOfPages; i++)
-        {
-            <a href="?page=@i">@i</a>
-        }
-    </ul>
+<div class="pagination">
+    @if (Model.CurrentPage > 1)
+    {
+        <a href="?page=1&sortOrder=@Model.SortOrder">&#171;</a>
+        <a href="?page=@(Model.CurrentPage - 1)&sortOrder=@Model.SortOrder">&#60;</a>
+    }
+
+    @for (var i = Math.Max(1, Model.CurrentPage - 2); i <= Math.Min(Model.AmountOfPages, Model.CurrentPage + 2); i++)
+    {
+        <a href="?page=@i&sortOrder=@Model.SortOrder" class="@(i == Model.CurrentPage ? "current" : "")">@i</a>
+    }
+
+    @if (Model.CurrentPage < Model.AmountOfPages)
+    {
+        <a href="?page=@(Model.CurrentPage + 1)&sortOrder=@Model.SortOrder">&#62;</a>
+        <a href="?page=@Model.AmountOfPages&sortOrder=@Model.SortOrder">&#187;</a>
+    }
 </div>
+
+
+@* this styling on a statement is generated with help from ChatGPT *@
+<script>
+    // Get the current page number from the model
+    var currentPage = @Model.CurrentPage;
+
+    // Apply styles dynamically using JavaScript
+    document.addEventListener('DOMContentLoaded', function () {
+        var pageLinks = document.querySelectorAll('.pagination a');
+
+        pageLinks.forEach(function (link) {
+            var pageNumber = parseInt(link.innerText);
+
+            // Check if the link represents the current page
+            if (pageNumber === currentPage) {
+                link.style.color = '#dd6f6f';
+                link.style.borderRadius = '2px';
+                link.style.textDecoration = 'none';
+            }
+        });
+    });
+</script>

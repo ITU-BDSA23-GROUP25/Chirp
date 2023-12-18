@@ -1,11 +1,11 @@
 body {
   background: #eccaca;
-  font-family: 'Trebuchet MS', sans-serif;
+  font-family: "Trebuchet MS", sans-serif;
   font-size: 14px;
 }
 
 a {
-  color: #26776F;
+  color: #26776f;
 }
 
 a:hover {
@@ -17,7 +17,7 @@ input[type="password"] {
   background: white;
   border: 1px solid #e6c0bf;
   padding: 2px;
-  font-family: 'Trebuchet MS', sans-serif;
+  font-family: "Trebuchet MS", sans-serif;
   font-size: 14px;
   border-radius: 2px;
   -moz-border-radius: 2px;
@@ -29,7 +29,7 @@ input[type="submit"] {
   background: #571010;
   border: 1px solid #3b0707;
   padding: 1px 3px;
-  font-family: 'Trebuchet MS', sans-serif;
+  font-family: "Trebuchet MS", sans-serif;
   font-size: 14px;
   font-weight: bold;
   border-radius: 2px;
@@ -61,7 +61,7 @@ div.page h1 img {
 }
 
 div.page div.navigation {
-  background: #DEE9E8;
+  background: #dee9e8;
   padding: 4px 10px;
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #eee;
@@ -94,7 +94,7 @@ div.page div.footer {
 
 div.page div.followstatus {
   border: 1px solid #ccc;
-  background: #E3EBEA;
+  background: #e3ebea;
   border-radius: 2px;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
@@ -111,8 +111,8 @@ div.page ul.cheeps {
 div.page ul.cheeps li {
   margin: 10px 0;
   padding: 5px;
-  background: #F0FAF9;
-  border: 1px solid #DBF3F1;
+  background: #f0faf9;
+  border: 1px solid #dbf3f1;
   border-radius: 2px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -136,7 +136,7 @@ div.page ul.cheeps li small {
 div.page div.cheepbox {
   margin: 10px 0;
   padding: 5px;
-  background: #F0FAF9;
+  background: #f0faf9;
   border: 1px solid #e29494;
   border-radius: 2px;
   -moz-border-radius: 5px;
@@ -187,8 +187,8 @@ ul.message li {
 
 div.error {
   margin: 10px 0;
-  background: #FAE4E4;
-  border: 1px solid #DD6F6F;
+  background: #fae4e4;
+  border: 1px solid #dd6f6f;
   border-radius: 2px;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
@@ -219,50 +219,51 @@ ul.topic {
 li.topic {
   margin: 10px 0;
   padding: 5px;
-  background: #F0FAF9;
-  border: 1px solid #DBF3F1;
+  background: #f0faf9;
+  border: 1px solid #dbf3f1;
   border-radius: 2px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   min-height: 20px;
 }
 
-    /* Add CSS styling for the dropdown */
-    .dropdown {
-        float: right;
-        position: relative;
-        display: inline-block;
-    }
+/* Add CSS styling for the dropdown */
+.dropdown {
+  float: right;
+  position: relative;
+  display: inline-block;
+}
 
-    .dropbtn {
-        background-color: #e29494;
-        color: white;
-        padding: 10px;
-        font-size: 16px;
-        border: none;
-        cursor: pointer;
-    }
+.dropbtn {
+  background-color: #e29494;
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
 
-    .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: #f9f9f9;
-        min-width: 160px;
-        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-        z-index: 1;
-    }
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
 
-    .dropdown-content a {
-        color: black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-    }
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
 
-    .dropdown-content a:hover {
-        background-color: #f1f1f1;
-    }
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
 
-    .dropdown:hover .dropdown-content {
-        display: block;
-    }
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
