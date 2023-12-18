@@ -79,7 +79,13 @@ The final step is publishing the release on GitHub, attaching all the zipped exe
 
 ### Deployment workflow
 
-![Activity Diagram for Deployment](images/ActivityDiagramDeployment.png)
+<!-- ![Activity Diagram for Deployment](images/ActivityDiagramDeployment.png) -->
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{images/ActivityDiagramDeployment.png}
+\caption{Activity Diagram Deployment}
+\end{figure}
 
 Our deployment workflow, as visualized in the activity diagram, efficiently manages the deployment of the Chirp! application to Azure Web App. The process is triggered upon pushes to the main branch or via manual dispatch, ensuring that our latest stable build is always deployed.
 
