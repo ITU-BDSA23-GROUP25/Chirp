@@ -9,7 +9,10 @@ namespace Chirp.Razor.Areas.Identity.Pages;
 public class PublicModel : PageModel
 {
     private readonly ICheepRepository _service;
+
+    private readonly IAuthorRepository _authorRepo;
     private readonly IFollowerRepository _followerRepository;
+
     public List<CheepDTO> Cheeps { get; set; }
     public PaginationModel? PaginationModel { get; set; }
 
@@ -21,18 +24,35 @@ public class PublicModel : PageModel
     [BindProperty(SupportsGet = true)]
     public string SortOrder { get; set; } = "Newest";
     
-
-
-    public PublicModel(ICheepRepository service, IFollowerRepository followerRepository)
+    public PublicModel(ICheepRepository service, IAuthorRepository authorRepo,IFollowerRepository followerRepository)
     {
         Cheeps = new List<CheepDTO>();
         _service = service;
+        _authorRepo = authorRepo;
         _followerRepository = followerRepository;
-
     }
 
-    public async Task<IActionResult> OnGetAsync([FromQuery] int? page)
+    public async Task<IActionResult> OnGet([FromQuery] int? page)
+
     {
+         if (User.Identity?.IsAuthenticated == true)
+        {
+            try
+            {
+                var newUser = new AuthorDTO
+                {
+                    Name = User.Identity?.Name ?? "Unknown"
+                };
+
+                Console.WriteLine("hej");
+                await _authorRepo.CreateAuthor(newUser.Name);
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
         if (!page.HasValue || page < 1)
         {
             page = 1;

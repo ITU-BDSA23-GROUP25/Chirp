@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Core;
+using Microsoft.Data.SqlClient;
 
 namespace Chirp.Razor.Areas.Identity.Pages;
 
@@ -8,27 +9,30 @@ namespace Chirp.Razor.Areas.Identity.Pages;
 public class UserTimelineModel : PageModel
 {
     private readonly ICheepRepository _service;
+
+    private readonly IAuthorRepository _authorRepo;
     public List<CheepDTO> Cheeps { get; set; }
 
     public PaginationModel? PaginationModel { get; set; }
 
-    [BindProperty(SupportsGet = true)]
-    public string SortOrder { get; set; } = "Newest";
+    public string SortOrder { get; set;} = "Newest";
 
-    public UserTimelineModel(ICheepRepository service)
+    public UserTimelineModel(ICheepRepository service, IAuthorRepository authorRepo)
     {
         _service = service;
+        _authorRepo = authorRepo;
     }
 
     public ActionResult OnGet([FromQuery] int? page, String author)
     {
-
         if (!page.HasValue || page < 1)
-        {
-            page = 1; //if page is null or negative, set page to 1
-        }
+            {
+                page = 1; // Set a default page value if it is null or negative
+            }
+            
+        if (page == null) { page = 0; }
         Cheeps = _service.GetCheepsFromAuthor((int)page, author, SortOrder).Result.ToList();
-
+   
 
         foreach (var item in Cheeps)
         {
@@ -39,20 +43,5 @@ public class UserTimelineModel : PageModel
         PaginationModel = new PaginationModel(amountOfCheeps, (int)page);
 
         return Page();
-    }
-
-    public async Task<IActionResult> OnPostDelete(Guid cheepId)
-    {
-        // Perform cheep deletion logic here
-        var cheepToRemove = await _service.GetCheep(cheepId);
-
-
-        if (cheepToRemove != null)
-        {
-            _service.RemoveCheep(cheepToRemove);
-        }
-
-        // Redirect back to the public page after deletion
-        return RedirectToPage("UserTimeline");
     }
 }

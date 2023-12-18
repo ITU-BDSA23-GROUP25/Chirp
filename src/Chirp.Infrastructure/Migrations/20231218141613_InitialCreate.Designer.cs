@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
@@ -11,9 +12,11 @@ using Repository;
 namespace DBContext.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20231218141613_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -257,29 +260,6 @@ namespace DBContext.Migrations
                     b.ToTable("Cheeps");
                 });
 
-            modelBuilder.Entity("Repository.Follower", b =>
-                {
-                    b.Property<string>("FollowerId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("FollowedId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("FollowedAuthorId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("FollowerAuthorId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("FollowerId", "FollowedId");
-
-                    b.HasIndex("FollowedAuthorId");
-
-                    b.HasIndex("FollowerAuthorId");
-
-                    b.ToTable("Followers");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<string>", null)
@@ -342,21 +322,6 @@ namespace DBContext.Migrations
                     b.Navigation("Author");
                 });
 
-            modelBuilder.Entity("Repository.Follower", b =>
-                {
-                    b.HasOne("Repository.Author", "FollowedAuthor")
-                        .WithMany()
-                        .HasForeignKey("FollowedAuthorId");
-
-                    b.HasOne("Repository.Author", "FollowerAuthor")
-                        .WithMany()
-                        .HasForeignKey("FollowerAuthorId");
-
-                    b.Navigation("FollowedAuthor");
-
-                    b.Navigation("FollowerAuthor");
-                });
-                
             modelBuilder.Entity("Repository.Author", b =>
                 {
                     b.Navigation("Cheeps");
