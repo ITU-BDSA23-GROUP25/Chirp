@@ -82,6 +82,8 @@ The final step is publishing the release on GitHub, attaching all the zipped exe
 
 ![Activity Diagram for Deployment](images/ActivityDiagramDeployment.png)
 
+**Note:** Figure x, 'Activity Diagram Deployment' should have been here, but latex has its own life, and its not easy to fix when it needs to go through pandoc. 
+
 Our deployment workflow, as visualized in the activity diagram, efficiently manages the deployment of the Chirp! application to Azure Web App. The process is triggered upon pushes to the main branch or via manual dispatch, ensuring that our latest stable build is always deployed.
 
 The workflow begins with checking out the repository and setting up the .NET Core environment. The build phase involves compiling the code and publishing it to a specified directory. The published application is then uploaded as an artifact, ready for deployment.
