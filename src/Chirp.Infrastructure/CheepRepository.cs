@@ -102,21 +102,11 @@ public class CheepRepository : ICheepRepository
         // throw new ValidationException(cheepValidationResult.Errors);
         //}
 
-        Author author;
+        var existingAuthor = _databaseContext.Authors.FirstOrDefault(a => a.Name == username);
 
-        if (!_databaseContext.Authors.Any(a => a.Name == username))
+        if (existingAuthor is null)
         {
-
-            author = new Author
-            {
-                Name = username,
-                Email = Guid.NewGuid().ToString(),
-            };
-            _databaseContext.Authors.Add(author);
-        }
-        else
-        {
-            author = _databaseContext.Authors.SingleAsync(a => a.Name == username).Result;
+            throw new ArgumentException($"No existing author with that name found: {username}");
         }
 
         var cheep = new Cheep
@@ -124,7 +114,7 @@ public class CheepRepository : ICheepRepository
             CheepId = Guid.NewGuid(),
             Text = Message,
             TimeStamp = DateTime.UtcNow,
-            Author = author,
+            Author = existingAuthor,
         };
         _databaseContext.Cheeps.Add(cheep);
         _databaseContext.SaveChanges();

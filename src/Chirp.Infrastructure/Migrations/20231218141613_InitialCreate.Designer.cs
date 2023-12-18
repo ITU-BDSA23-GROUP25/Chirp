@@ -12,7 +12,7 @@ using Repository;
 namespace DBContext.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20231212143235_InitialCreate")]
+    [Migration("20231218141613_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -175,7 +175,6 @@ namespace DBContext.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 

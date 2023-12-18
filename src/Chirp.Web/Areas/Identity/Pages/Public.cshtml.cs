@@ -9,6 +9,7 @@ namespace Chirp.Razor.Areas.Identity.Pages;
 public class PublicModel : PageModel
 {
     private readonly ICheepRepository _service;
+    private readonly IAuthorRepository _authorRepo;
     public List<CheepDTO> Cheeps { get; set; }
     public PaginationModel? PaginationModel { get; set; }
 
@@ -19,14 +20,33 @@ public class PublicModel : PageModel
     
 
 
-    public PublicModel(ICheepRepository service)
+    public PublicModel(ICheepRepository service, IAuthorRepository authorRepo)
     {
         Cheeps = new List<CheepDTO>();
         _service = service;
+        _authorRepo = authorRepo;
     }
 
-    public IActionResult OnGet([FromQuery] int? page)
+    public async Task<IActionResult> OnGet([FromQuery] int? page)
     {
+         if (User.Identity?.IsAuthenticated == true)
+        {
+            try
+            {
+                var newUser = new AuthorDTO
+                {
+                    Name = User.Identity?.Name ?? "Unknown"
+                };
+
+                Console.WriteLine("hej");
+                await _authorRepo.CreateAuthor(newUser.Name);
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
         if (!page.HasValue || page < 1)
         {
             page = 1;

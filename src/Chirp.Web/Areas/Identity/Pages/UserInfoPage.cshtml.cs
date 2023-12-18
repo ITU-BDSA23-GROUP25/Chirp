@@ -37,11 +37,6 @@ namespace Chirp.Razor.Areas.Identity.Pages
 
             Cheeps = _service.GetCheepsFromAuthor((int)page, username, SortOrder).Result.ToList();
 
-            foreach (var item in Cheeps)
-            {
-                Console.WriteLine(item.Message);
-            }
-
             var amountOfCheeps = _service.AuthorsCheepTotal(username).Result;
             PaginationModel = new PaginationModel(amountOfCheeps, (int)page);
 
