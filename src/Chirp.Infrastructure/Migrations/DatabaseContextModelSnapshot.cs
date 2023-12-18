@@ -356,7 +356,7 @@ namespace DBContext.Migrations
 
                     b.Navigation("FollowerAuthor");
                 });
-                
+
             modelBuilder.Entity("Repository.Author", b =>
                 {
                     b.Navigation("Cheeps");

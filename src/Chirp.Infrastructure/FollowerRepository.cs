@@ -20,7 +20,6 @@ public class FollowerRepository : IFollowerRepository
         .Select<Author, AuthorDTO>(f => new AuthorDTO()
         {
            Name = f.Name,
-           Email = f.Email?? string.Empty
         }).ToListAsync();
 
     public async Task<IEnumerable<AuthorDTO>> GetFollowedAuthor(string AuthorName) => await _databaseContext.Followers
@@ -30,7 +29,6 @@ public class FollowerRepository : IFollowerRepository
         .Select<Author, AuthorDTO>(f => new AuthorDTO()
         {
            Name = f.Name,
-           Email = f.Email?? string.Empty
         }).ToListAsync();
 
     /* public async Task AddFollower(String AuthorName, string FollowerName)
