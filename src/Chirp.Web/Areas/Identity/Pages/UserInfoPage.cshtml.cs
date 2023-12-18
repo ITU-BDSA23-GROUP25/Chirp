@@ -66,19 +66,25 @@ namespace Chirp.Razor.Areas.Identity.Pages
             // Retrieve the username from the user's claims
             var username = User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Name)?.Value;
 
-            //Removes all cheeps of the user
-            var cheepsToRemove = _service.GetAllCheepsFromAuthor(username).Result.FirstOrDefault();
-            await _service.RemoveAllCheepsFromAuthor(cheepsToRemove);
-
+            Console.WriteLine($"USERNAME: {username}");
+            
             await _followerRepo.RemoveFollowers(username);
+
+            //Removes all cheeps of the user
+            //var findfirstCheepFromUser = _service.GetAllCheepsFromAuthor(username).Result.FirstOrDefault();
+            var userDTO = _authorRepo.GetAuthorByName(username).Result;
+            if(userDTO != null){
+                await _service.RemoveAllCheepsFromAuthor(userDTO);
+                await _authorRepo.RemoveAuthor(userDTO);
+            }
     
-            //Removes the author of the user
+            /* //Removes the author of the user
             var userToRemove = await _authorRepo.GetAuthorByName(username);
-            await _authorRepo.RemoveAuthor(userToRemove);
+            await _authorRepo.RemoveAuthor(userToRemove); */
 
             //Signes the user out of the website
             await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
-            return RedirectToPage("Public");
+            return RedirectToPage("Account/Login");
         }
     }
 }

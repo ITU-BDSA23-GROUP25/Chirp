@@ -15,7 +15,7 @@ public interface ICheepRepository
 
     // Post
     public void CreateCheep(string message, string Username);
-    public Task RemoveCheep(CheepDTO cheepDto);
-    public Task RemoveAllCheepsFromAuthor(CheepDTO cheepDTO);
+    public void RemoveCheep(CheepDTO cheepDto);
+    public Task RemoveAllCheepsFromAuthor(AuthorDTO authorDTO);
 
 }
