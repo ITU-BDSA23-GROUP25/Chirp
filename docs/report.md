@@ -17,7 +17,7 @@ geometry: "left=1in, right=1in, top=1in, bottom=1in"
 
 Our domain model is built around the core concept of an Author, which is central to the _Chirp!_ application's functionality. An Author represents a user of the application, encapsulating their identity and interactions within the system. The UML class diagram model the key entities that make up our application.
 
-![Domain Model](images/firstDM.png)
+![Domain Model](images/DomainModel.png)
 
 ### Author
 The Author entity is an extension of the ASP.NET Identity's IdentityUser, inheriting features essential for authentication and authorization.
@@ -39,6 +39,22 @@ TBD
 is direct and exclusive, signifying that every Cheep is a direct output of an Author. 
 
 ## Architecture — In the small
+Our application is separated into 3 main layers, that are common for the onion architecture
+
+Layers:
+* core
+* infrastructure
+* web
+
+Dependencies:
+* identity -> infrastructure
+* ef core -> infrastructure
+* core -> infrastructure
+* OAuth -> web
+* core -> web
+* infrastructure -> web
+* 
+
 
 ## Architecture of deployed application
 
