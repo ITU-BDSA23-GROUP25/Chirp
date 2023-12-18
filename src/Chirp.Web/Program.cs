@@ -17,6 +17,8 @@ builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(c
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<ICheepRepository, CheepRepository>();
 builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
+builder.Services.AddScoped<IFollowerRepository, FollowerRepository>();
+
 builder.Services.AddAuthentication()
     .AddGitHub("GitHub", o =>
     {

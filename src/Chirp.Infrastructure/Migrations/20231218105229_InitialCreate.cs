@@ -177,6 +177,30 @@ namespace DBContext.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Followers",
+                columns: table => new
+                {
+                    FollowerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FollowedId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FollowerAuthorId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    FollowedAuthorId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Followers", x => x.FollowerId);
+                    table.ForeignKey(
+                        name: "FK_Followers_AspNetUsers_FollowedAuthorId",
+                        column: x => x.FollowedAuthorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Followers_AspNetUsers_FollowerAuthorId",
+                        column: x => x.FollowerAuthorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -226,6 +250,16 @@ namespace DBContext.Migrations
                 name: "IX_Cheeps_AuthorId",
                 table: "Cheeps",
                 column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Followers_FollowedAuthorId",
+                table: "Followers",
+                column: "FollowedAuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Followers_FollowerAuthorId",
+                table: "Followers",
+                column: "FollowerAuthorId");
         }
 
         /// <inheritdoc />
@@ -248,6 +282,9 @@ namespace DBContext.Migrations
 
             migrationBuilder.DropTable(
                 name: "Cheeps");
+
+            migrationBuilder.DropTable(
+                name: "Followers");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

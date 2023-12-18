@@ -8,6 +8,7 @@ public class DatabaseContext : IdentityDbContext<Author, IdentityRole<string>, s
     }
 
     public virtual DbSet<Cheep> Cheeps { get; set; }
+    public virtual DbSet<Follower> Followers { get; set; }
     public virtual DbSet<Author> Authors => Users;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

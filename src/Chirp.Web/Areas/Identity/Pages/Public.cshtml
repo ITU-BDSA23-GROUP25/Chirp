@@ -47,12 +47,34 @@
                     </strong>
                         @cheep.Message
                         <small>&mdash; @cheep.Timestamp</small>
+                        @if (User.Identity?.IsAuthenticated ?? false)
+                        {
                         @if (cheep.Author == User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Name)?.Value)
                         {
                         <form method="post" asp-page-handler="Delete" asp-route-cheepId="@cheep.Id">
                              <button type="submit">Delete</button>
                         </form>
-            }
+                        } else 
+                        {
+                        <div>
+                        <form method="post" asp-page-handler="Follow" asp-route-UserName="@cheep.Author" asp-route-FollowerName="@User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Name)?.Value">
+                            <!-- Add a hidden field for IsFollowing -->
+                            <input type="hidden" name="IsFollowing" value="@Model.FollowStatus[cheep.Author]" />
+
+                            <button class="follow-btn" type="submit">
+                                @if (Model.FollowStatus.TryGetValue(cheep.Author, out bool isFollowing) && isFollowing)
+                                {
+                                    <span>Unfollow</span>
+                                }
+                                else
+                                {
+                                    <span>Follow</span>
+                                }
+                            </button>
+                        </form>
+                        </div>
+                        }
+                        }
         </p>
     </li>
 }
