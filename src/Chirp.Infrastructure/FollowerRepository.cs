@@ -85,10 +85,10 @@ public class FollowerRepository : IFollowerRepository
     var follower = await _databaseContext.Users.SingleOrDefaultAsync(a => a.Name == followerName);
     bool isFollowing = false;
 
-    /* if (user == follower)
+    if (user == follower)
     {
         throw new ArgumentException("User and follower cannot be equal to one another: ", nameof(userName));
-    } */
+    }
 
     if (user is null)
     {

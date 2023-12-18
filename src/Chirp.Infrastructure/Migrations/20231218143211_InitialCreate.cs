@@ -182,13 +182,13 @@ namespace DBContext.Migrations
                 columns: table => new
                 {
                     FollowerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FollowedId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FollowedId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FollowerAuthorId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     FollowedAuthorId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Followers", x => x.FollowerId);
+                    table.PrimaryKey("PK_Followers", x => new { x.FollowerId, x.FollowedId });
                     table.ForeignKey(
                         name: "FK_Followers_AspNetUsers_FollowedAuthorId",
                         column: x => x.FollowedAuthorId,
