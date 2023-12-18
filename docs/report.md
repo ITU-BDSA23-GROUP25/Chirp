@@ -69,23 +69,24 @@ We use Github Actions to automate the build, test, release and deployment proces
 
 ### Publishing workflow
 
+![Activity Diagram for Publishing](images/ActivityDiagramPublish.png)
+
 The publishing workflow focuses on creating executable artifacts for various platforms, including Linux, Windows, macOS, and macOS ARM. This workflow is triggered by pushing specific version tags, reflecting our versioning strategy. We apply the [semver](https://semver.org/) strategy.
 
 After the standard initial steps of checking out the repository and setting up the .NET Core environment, the workflow splits into parallel tasks for each platform. Each branch involves building the application, publishing the executable, zipping the file, and removing the build directory. This parallel structure allows for efficient and simultaneous preparation of executables for different platforms.
 
 The final step is publishing the release on GitHub, attaching all the zipped executables. This process not only automates the release creation but also ensures that our application is readily available for a wide range of platforms, enhancing its accessibility to users.
 
-![Activity Diagram for Publishing](images/ActivityDiagramPublish.png)
 
 ### Deployment workflow
+
+![Activity Diagram for Deployment](images/ActivityDiagramDeployment.png)
 
 Our deployment workflow, as visualized in the activity diagram, efficiently manages the deployment of the Chirp! application to Azure Web App. The process is triggered upon pushes to the main branch or via manual dispatch, ensuring that our latest stable build is always deployed.
 
 The workflow begins with checking out the repository and setting up the .NET Core environment. The build phase involves compiling the code and publishing it to a specified directory. The published application is then uploaded as an artifact, ready for deployment.
 
-In the deployment phase, the build artifact is downloaded and deployed to the Azure Web App. This automated process ensures a consistent and reliable deployment strategy, minimizing human error and streamlining our release process.
-
-![Activity Diagram for Deployment](images/ActivityDiagramDeployment.png) 
+In the deployment phase, the build artifact is downloaded and deployed to the Azure Web App. This automated process ensures a consistent and reliable deployment strategy, minimizing human error and streamlining our release process. 
 
 
 ## Team work
