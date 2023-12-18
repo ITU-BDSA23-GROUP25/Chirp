@@ -73,7 +73,7 @@ namespace Chirp.Razor.Areas.Identity.Pages
 
             //Signes the user out of the website
             await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
-            return RedirectToPage("public");
+            return RedirectToPage("Public");
         }
     }
 }
