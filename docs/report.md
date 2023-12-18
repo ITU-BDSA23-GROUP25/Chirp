@@ -33,7 +33,7 @@ A Cheep is essentially a message, or a singular piece of communication, created 
 Hmm... lidt tbd, lad os lige snakke om implementationen, evt association class, ellers lister som nu
 
 ### Reactions
-TBD
+A reaction is entity that refers to the interactive engagement that users can express in response to a cheep. These reactions are represented by a “thumps up” emoji that turns red if pressed. For each cheep a number of reactions will be displayed in the application. Each reaction is uniquely identified by a Guid representing the cheep, a string which represents the user who has reacted and a reactiontype representing which type of reaction it is. Reactions is in one-to-many relationships with both authors and cheeps meaning that both authors and cheeps can have many reactions but each reaction is uniquely related to one author and one cheep.
 
 
 is direct and exclusive, signifying that every Cheep is a direct output of an Author. 
