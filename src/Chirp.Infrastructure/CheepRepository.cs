@@ -15,58 +15,82 @@ public class CheepRepository : ICheepRepository
         _databaseContext.InitializeDB();
     }
 
-   public async Task<IEnumerable<CheepDTO>> GetCheeps(int pageNumber = 0, string sortOrder = "Newest")
-{
-    IQueryable<Cheep> query = _databaseContext.Cheeps;
-
-    switch (sortOrder)
+    public async Task<IEnumerable<CheepDTO>> GetCheeps(int pageNumber = 0, string sortOrder = "Newest")
     {
-        case "Oldest":
-            query = query.OrderBy(c => c.TimeStamp);
-            break;
-        case "Newest":
-        default:
-            query = query.OrderByDescending(c => c.TimeStamp);
-            break;
+        IQueryable<Cheep> query = _databaseContext.Cheeps;
+
+        switch (sortOrder)
+        {
+            case "Oldest":
+                query = query.OrderBy(c => c.TimeStamp);
+                break;
+            case "Newest":
+            default:
+                query = query.OrderByDescending(c => c.TimeStamp);
+                break;
+        }
+
+        var cheeps = await query
+            .Include(c => c.Author)
+            .Skip(CheepsPerPage * pageNumber)
+            .Take(CheepsPerPage)
+            .Select(c => new CheepDTO(c.CheepId, c.Author.Name, c.Text, c.TimeStamp.ToString("MM/dd/yy H:mm:ss")))
+            .ToListAsync();
+
+        return cheeps;
     }
-
-    var cheeps = await query
-        .Include(c => c.Author)
-        .Skip(CheepsPerPage * pageNumber)
-        .Take(CheepsPerPage)
-        .Select(c => new CheepDTO(c.CheepId, c.Author.Name, c.Text, c.TimeStamp.ToString("MM/dd/yy H:mm:ss")))
-        .ToListAsync();
-
-    return cheeps;
-}
 
 
 
     public async Task<IEnumerable<CheepDTO>> GetCheepsFromAuthor(int pageNumber, string author_name, string sortOrder)
-{
-    IQueryable<Cheep> query = _databaseContext.Cheeps;
-
-    switch (sortOrder)
     {
-        case "Oldest":
-            query = query.OrderBy(c => c.TimeStamp);
-            break;
-        case "Newest":
-        default:
-            query = query.OrderByDescending(c => c.TimeStamp);
-            break;
+        IQueryable<Cheep> query = _databaseContext.Cheeps;
+
+        switch (sortOrder)
+        {
+            case "Oldest":
+                query = query.OrderBy(c => c.TimeStamp);
+                break;
+            case "Newest":
+            default:
+                query = query.OrderByDescending(c => c.TimeStamp);
+                break;
+        }
+
+        var cheeps = await query
+            .Include(c => c.Author)
+            .Where(c => c.Author.Name == author_name)
+            .Skip(CheepsPerPage * (pageNumber - 1))
+            .Take(CheepsPerPage)
+            .Select(c => new CheepDTO(c.CheepId, c.Author.Name, c.Text, c.TimeStamp.ToString("MM/dd/yy H:mm:ss")))
+            .ToListAsync();
+
+        return cheeps;
     }
 
-    var cheeps = await query
-        .Include(c => c.Author)
-        .Where(c => c.Author.Name == author_name)
-        .Skip(CheepsPerPage * (pageNumber - 1))
-        .Take(CheepsPerPage)
-        .Select(c => new CheepDTO(c.CheepId, c.Author.Name, c.Text, c.TimeStamp.ToString("MM/dd/yy H:mm:ss")))
-        .ToListAsync();
+    //This query was made to get all cheeps from an author for deletion
+    public async Task<IEnumerable<CheepDTO>> GetAllCheepsFromAuthor(string author_name)
+    {
+        IQueryable<Cheep> query = _databaseContext.Cheeps;
 
-    return cheeps;
-}
+        var cheeps = await query
+            .Include(c => c.Author)
+            .Where(c => c.Author.Name == author_name)
+            .Select(c => new CheepDTO(c.CheepId, c.Author.Name, c.Text, c.TimeStamp.ToString("MM/dd/yy H:mm:ss")))
+            .ToListAsync();
+
+        return cheeps;
+    }
+
+    //This query was made to get all cheeps from an author for deletion
+    public async Task RemoveAllCheepsFromAuthor(CheepDTO cheepDTO)
+    {
+        IQueryable<Cheep> query = _databaseContext.Cheeps;
+
+        var cheepsToRemove = await query
+            .Where(c => c.CheepId == cheepDTO.Id)
+            .ExecuteDeleteAsync();
+    }
 
     public void CreateCheep(string Message, string username)
     {
@@ -120,27 +144,27 @@ public class CheepRepository : ICheepRepository
 
     public async Task<CheepDTO> GetCheep(Guid cheepId) =>
         await _databaseContext.Cheeps
-        
+
         .Include(c => c.Author)
         .Where(c => c.CheepId == cheepId)
         .Select(c => new CheepDTO(c.CheepId, c.Author.Name, c.Text, c.TimeStamp.ToString("MM/dd/yy H:mm:ss")))
         .FirstOrDefaultAsync();
 
-public void RemoveCheep(CheepDTO cheepDto)
-{
-    // Find the corresponding Cheep entity
-    var cheepToRemove = _databaseContext.Cheeps
-        .FirstOrDefault(c => c.CheepId == cheepDto.Id);
-
-    if (cheepToRemove != null)
+    public async Task RemoveCheep(CheepDTO cheepDto)
     {
-        // Remove the Cheep entity from the database
-        _databaseContext.Cheeps.Remove(cheepToRemove);
+        // Find the corresponding Cheep entity
+        var cheepToRemove = _databaseContext.Cheeps
+            .FirstOrDefault(c => c.CheepId == cheepDto.Id);
 
-        // Save changes to persist the removal
-        _databaseContext.SaveChangesAsync();
+        if (cheepToRemove != null)
+        {
+            // Remove the Cheep entity from the database
+            _databaseContext.Cheeps.Remove(cheepToRemove);
+
+            // Save changes to persist the removal
+            _databaseContext.SaveChangesAsync();
+        }
     }
-}
 }
 
 public class NewCheep
