@@ -68,15 +68,17 @@ Dependencies:
 We use Github Actions to automate the build, test, release and deployment process of our executables and website. This pipeline is centered around two workflows, one for the executables, and one for the website.
 
 ### Publishing workflow
+
 ![Activity Diagram for Publishing](images/ActivityDiagramPublish.png)
 
-The publishing workflow focuses on creating executable artifacts for various platforms, including Linux, Windows, macOS, and macOS ARM. This workflow is triggered by pushing specific version tags, reflecting our versioning strategy. We apply the [semver](semver.org) strategy.
+The publishing workflow focuses on creating executable artifacts for various platforms, including Linux, Windows, macOS, and macOS ARM. This workflow is triggered by pushing specific version tags, reflecting our versioning strategy. We apply the [semver](https://semver.org/) strategy.
 
 After the standard initial steps of checking out the repository and setting up the .NET Core environment, the workflow splits into parallel tasks for each platform. Each branch involves building the application, publishing the executable, zipping the file, and removing the build directory. This parallel structure allows for efficient and simultaneous preparation of executables for different platforms.
 
 The final step is publishing the release on GitHub, attaching all the zipped executables. This process not only automates the release creation but also ensures that our application is readily available for a wide range of platforms, enhancing its accessibility to users.
 
 ### Deployment workflow
+
 ![Activity Diagram for Deployment](images/ActivityDiagramDeployment.png)
 
 Our deployment workflow, as visualized in the activity diagram, efficiently manages the deployment of the Chirp! application to Azure Web App. The process is triggered upon pushes to the main branch or via manual dispatch, ensuring that our latest stable build is always deployed.
