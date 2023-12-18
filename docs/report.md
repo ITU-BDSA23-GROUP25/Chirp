@@ -18,7 +18,15 @@ header-includes:
     } {
       \endorigfigure
     }
+  - \usepackage{hyperref}
+  - \hypersetup{
+      colorlinks=true,
+      linkcolor=blue,
+      filecolor=magenta,      
+      urlcolor=cyan,
+    }
 ---
+
 
 # Design and Architecture of _Chirp!_
 
