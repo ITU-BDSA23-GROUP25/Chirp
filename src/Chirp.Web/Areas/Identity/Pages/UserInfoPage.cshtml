@@ -6,14 +6,14 @@
 }
 
 <div>
-    <h2> About me 
+    <h2> About me
         <div class="dropdown">
-        <button class="dropbtn">Sort after</button>
-        <div class="dropdown-content">
-            <a href="?SortOrder=Newest">Newest</a>
-            <a href="?SortOrder=Oldest">Oldest</a>
+            <button class="dropbtn">Sort after</button>
+            <div class="dropdown-content">
+                <a href="?SortOrder=Newest">Newest</a>
+                <a href="?SortOrder=Oldest">Oldest</a>
+            </div>
         </div>
-    </div>
     </h2>
 
     <h4>Username: @User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Name)?.Value</h4>
@@ -38,10 +38,11 @@
                         </strong>
                         @cheep.Message
                         <small>&mdash; @cheep.Timestamp</small>
-                        @if (cheep.Author == User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Name)?.Value)
+                        @if (cheep.Author == User.Claims.FirstOrDefault(x => x.Type ==
+                       System.Security.Claims.ClaimTypes.Name)?.Value)
                         {
                         <form method="post" asp-page-handler="Delete" asp-route-cheepId="@cheep.Id">
-                             <button type="submit">Delete</button>
+                            <button type="submit">Delete</button>
                         </form>
                         }
                     </p>
@@ -55,7 +56,9 @@
     }
 
     <div style="text-align: center">
-        <button style="Color:Red" href=""> Forget me! </button>
+        <form method="post" asp-page-handler="DeleteUser">
+            <button type="submit" style="Color:Red">Forget me!</button>
+        </form>
         <p>⚠️ Warning! ⚠️</p>
         <p>By Pressing "Forget me!", all your data will be deleted</p>
     </div>
