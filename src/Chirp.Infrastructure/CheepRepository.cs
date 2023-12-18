@@ -15,6 +15,23 @@ public class CheepRepository : ICheepRepository
         _databaseContext.InitializeDB();
     }
 
+    public async Task<IEnumerable<CheepDTO>> SortCheeps(List<CheepDTO> cheeps, string sortOrder)
+    {
+
+        switch (sortOrder)
+        {
+            case "Oldest":
+                cheeps = cheeps.OrderBy(c => c.Timestamp).ToList();
+                break;
+            case "Newest":
+            default:
+                cheeps = cheeps.OrderByDescending(c => c.Timestamp).ToList();
+                break;
+        }
+
+        return cheeps;
+    }
+
     public async Task<IEnumerable<CheepDTO>> GetCheeps(int pageNumber = 0, string sortOrder = "Newest")
     {
         IQueryable<Cheep> query = _databaseContext.Cheeps;

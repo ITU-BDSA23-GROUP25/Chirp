@@ -44,7 +44,6 @@ public class PublicModel : PageModel
                     Name = User.Identity?.Name ?? "Unknown"
                 };
 
-                Console.WriteLine("hej");
                 await _authorRepo.CreateAuthor(newUser.Name);
             }
             catch (ArgumentException ex)

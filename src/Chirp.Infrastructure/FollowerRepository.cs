@@ -13,6 +13,8 @@ public class FollowerRepository : IFollowerRepository
         _databaseContext = databaseContext;
     }
 
+    
+
     public async Task<IEnumerable<AuthorDTO>> GetFollowerAuthor(string AuthorName) => await _databaseContext.Followers
 
         .Where(f => f.FollowedAuthor.Name == AuthorName)

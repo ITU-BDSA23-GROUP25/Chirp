@@ -9,6 +9,7 @@ public interface ICheepRepository
     public Task<int> CheepTotal();
     public Task<CheepDTO> GetCheep(Guid cheepId);
     public Task<int> AuthorsCheepTotal(string author);
+    public Task<IEnumerable<CheepDTO>> SortCheeps(List<CheepDTO> cheeps, string sortOrder);
 
 
 
