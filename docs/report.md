@@ -9,6 +9,15 @@ author:
 - "Atila Arianpour <atia@itu.dk>"
 numbersections: true
 geometry: "left=1in, right=1in, top=1in, bottom=1in"
+header-includes:
+  - \usepackage{float}
+  - \let\origfigure\figure
+  - \let\endorigfigure\endfigure
+  - \renewenvironment{figure}[1][2] {
+      \expandafter\origfigure\expandafter[H]
+    } {
+      \endorigfigure
+    }
 ---
 
 # Design and Architecture of _Chirp!_
