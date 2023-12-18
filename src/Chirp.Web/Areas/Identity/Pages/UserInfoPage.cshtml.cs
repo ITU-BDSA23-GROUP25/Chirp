@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Core;
 using System.Linq;
 using Azure.Identity;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 
 namespace Chirp.Razor.Areas.Identity.Pages
 {
@@ -65,30 +67,18 @@ namespace Chirp.Razor.Areas.Identity.Pages
         {
             // Retrieve the username from the user's claims
             var username = User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Name)?.Value;
-            DeleteAllCheeps(username);
-            DeleteUser(username);
 
+            //Removes all cheeps of the user
+            var cheepsToRemove = _service.GetAllCheepsFromAuthor(username).Result.FirstOrDefault();
+            await _service.RemoveAllCheepsFromAuthor(cheepsToRemove);
+
+            //Removes the author of the user
+            var userToRemove = await _authorRepo.GetAuthorByName(username);
+            await _authorRepo.RemoveAuthor(userToRemove);
+
+            //Signes the user out of the website
+            await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
             return RedirectToPage("public");
-        }
-
-        public void DeleteAllCheeps(String username)
-        {
-            var cheepsToRemove = _service.GetAllCheepsFromAuthor(username).Result.ToList();
-
-            foreach (CheepDTO cheepDTO in cheepsToRemove)
-            {
-                if (cheepDTO != null)
-                {
-                    _service.RemoveCheep(cheepDTO);
-                }
-            }
-        }
-
-        public void DeleteUser(String username)
-        {
-            var userToRemove = _authorRepo.GetAuthorByName(username).Result.FirstOrDefault();
-            Console.WriteLine("***" + userToRemove + "***");
-            _authorRepo.RemoveAuthor(userToRemove);
         }
     }
 }
