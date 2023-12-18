@@ -42,9 +42,12 @@ public class AuthorRepository : IAuthorRepository
     public async Task<IEnumerable<AuthorDTO>>  GetAuthorByName(string author_name) =>
         await _databaseContext.Authors
 
-        .Where(a => a.Name == author_name)
+       .Where(a => a.Name == author_name)
         .Select(a =>
-            new AuthorDTO(a.Name, a.Email))
+            new AuthorDTO(){
+            Name = a.Name,
+            Email = a.Email
+        })
         .ToListAsync();
 
 
@@ -53,6 +56,8 @@ public class AuthorRepository : IAuthorRepository
 
         .Where(a => a.Email == author_Email)
         .Select(c =>
-            new AuthorDTO(c.Name, c.Email))
+            new AuthorDTO(){
+            Name = c.Name,
+            Email = c.Email})
         .ToListAsync();
 }
