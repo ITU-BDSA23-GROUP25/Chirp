@@ -21,9 +21,6 @@ header-includes:
   - \usepackage{hyperref}
   - \hypersetup{
       colorlinks=true,
-      <!-- linkcolor=blue,
-      filecolor=magenta,      
-      urlcolor=cyan, -->
     }
 ---
 
