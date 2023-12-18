@@ -1,0 +1,37 @@
+@startuml
+!theme vibrant
+
+start
+
+:Checkout Repository;
+:Setup .NET Core;
+:Install Dependencies;
+:Get Latest Tag;
+:Set Release Name;
+
+split
+  :Build for Linux;
+  :Publish Linux Executable;
+  :Zip Linux Executable;
+  :Remove Linux Build Directory;
+split again
+  :Build for Windows;
+  :Publish Windows Executable;
+  :Zip Windows Executable;
+  :Remove Windows Build Directory;
+split again
+  :Build for macOS;
+  :Publish macOS Executable;
+  :Zip macOS Executable;
+  :Remove macOS Build Directory;
+split again
+  :Build for macOS ARM;
+  :Publish macOS ARM Executable;
+  :Zip macOS ARM Executable;
+  :Remove macOS ARM Build Directory;
+end split
+
+:Publish Release;
+
+stop
+@enduml

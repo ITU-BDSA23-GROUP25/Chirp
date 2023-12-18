@@ -66,6 +66,14 @@ Dependencies:
 
 ## Build, test, release, and deployment
 
+### Publishing workflow
+
+![Domain Model](images/ActivityDiagramPublish.png)
+
+### Deployment workflow
+![Domain Model](images/ActivityDiagramDeployment.png)
+
+
 ## Team work
 
 ## How to make _Chirp!_ work locally
