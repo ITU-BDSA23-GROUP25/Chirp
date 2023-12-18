@@ -39,7 +39,7 @@ public class AuthorRepository : IAuthorRepository
         _databaseContext.SaveChanges();
     }
 
-    public async Task<IEnumerable<AuthorDTO>>  GetAuthorByName(string author_name) =>
+    public async Task<IEnumerable<AuthorDTO>> GetAuthorByName(string author_name) =>
         await _databaseContext.Authors
 
         .Where(a => a.Name == author_name)
@@ -55,4 +55,19 @@ public class AuthorRepository : IAuthorRepository
         .Select(c =>
             new AuthorDTO(c.Name, c.Email))
         .ToListAsync();
+
+    public void RemoveAuthor(AuthorDTO authorDTO)
+    {
+        var authorToRemove = _databaseContext.Authors
+            .FirstOrDefault(c => c.Name == authorDTO.Name);
+
+        if (authorToRemove != null)
+        {
+            //Remove the author entity from the database
+            _databaseContext.Authors.Remove(authorToRemove);
+
+            // Save changes to persist the removal
+            _databaseContext.SaveChangesAsync();
+        }
+    }
 }

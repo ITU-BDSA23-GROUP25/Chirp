@@ -8,4 +8,6 @@ public interface IAuthorRepository
     // post
     public void CreateAuthor(string name, string Email);
 
+    public void RemoveAuthor(AuthorDTO authorDTO);
+
 }

@@ -2,12 +2,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Core;
 using System.Linq;
+using Azure.Identity;
 
 namespace Chirp.Razor.Areas.Identity.Pages
 {
     public class UserInfoModel : PageModel
     {
         private readonly ICheepRepository _service;
+        private readonly IAuthorRepository _authorRepo;
 
         public List<CheepDTO> Cheeps { get; set; }
         public PaginationModel? PaginationModel { get; set; }
@@ -15,9 +17,10 @@ namespace Chirp.Razor.Areas.Identity.Pages
         [BindProperty(SupportsGet = true)]
         public string SortOrder { get; set; } = "Newest";
 
-        public UserInfoModel(ICheepRepository service)
+        public UserInfoModel(ICheepRepository service, IAuthorRepository authorRepo)
         {
             _service = service;
+            _authorRepo = authorRepo;
         }
 
         public ActionResult OnGet([FromQuery] int? page)
@@ -62,7 +65,14 @@ namespace Chirp.Razor.Areas.Identity.Pages
         {
             // Retrieve the username from the user's claims
             var username = User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Name)?.Value;
+            DeleteAllCheeps(username);
+            DeleteUser(username);
 
+            return RedirectToPage("public");
+        }
+
+        public void DeleteAllCheeps(String username)
+        {
             var cheepsToRemove = _service.GetAllCheepsFromAuthor(username).Result.ToList();
 
             foreach (CheepDTO cheepDTO in cheepsToRemove)
@@ -72,8 +82,13 @@ namespace Chirp.Razor.Areas.Identity.Pages
                     _service.RemoveCheep(cheepDTO);
                 }
             }
+        }
 
-            return RedirectToPage("public");
+        public void DeleteUser(String username)
+        {
+            var userToRemove = _authorRepo.GetAuthorByName(username).Result.FirstOrDefault();
+            Console.WriteLine("***" + userToRemove + "***");
+            _authorRepo.RemoveAuthor(userToRemove);
         }
     }
 }
