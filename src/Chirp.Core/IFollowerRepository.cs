@@ -10,4 +10,6 @@ public interface IFollowerRepository
     //public Task DeleteFollower(String AuthorName, string FollowerName);
     public Task AddOrRemoveFollower(string followerName, string userName);
 
+    public Task RemoveFollowers(string userName);
+
 }

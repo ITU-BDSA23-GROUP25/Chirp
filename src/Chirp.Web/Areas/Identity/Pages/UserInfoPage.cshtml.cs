@@ -13,16 +13,19 @@ namespace Chirp.Razor.Areas.Identity.Pages
         private readonly ICheepRepository _service;
         private readonly IAuthorRepository _authorRepo;
 
+        private readonly IFollowerRepository _followerRepo;
+
         public List<CheepDTO> Cheeps { get; set; }
         public PaginationModel? PaginationModel { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string SortOrder { get; set; } = "Newest";
 
-        public UserInfoModel(ICheepRepository service, IAuthorRepository authorRepo)
+        public UserInfoModel(ICheepRepository service, IAuthorRepository authorRepo, IFollowerRepository followerRepo)
         {
             _service = service;
             _authorRepo = authorRepo;
+            _followerRepo = followerRepo;
         }
 
         public ActionResult OnGet([FromQuery] int? page)
@@ -67,6 +70,8 @@ namespace Chirp.Razor.Areas.Identity.Pages
             var cheepsToRemove = _service.GetAllCheepsFromAuthor(username).Result.FirstOrDefault();
             await _service.RemoveAllCheepsFromAuthor(cheepsToRemove);
 
+            await _followerRepo.RemoveFollowers(username);
+    
             //Removes the author of the user
             var userToRemove = await _authorRepo.GetAuthorByName(username);
             await _authorRepo.RemoveAuthor(userToRemove);
