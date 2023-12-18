@@ -69,6 +69,7 @@ We use Github Actions to automate the build, test, release and deployment proces
 
 ### Publishing workflow
 ![Activity Diagram for Publishing](images/ActivityDiagramPublish.png)
+
 The publishing workflow focuses on creating executable artifacts for various platforms, including Linux, Windows, macOS, and macOS ARM. This workflow is triggered by pushing specific version tags, reflecting our versioning strategy. We apply the [semver](semver.org) strategy.
 
 After the standard initial steps of checking out the repository and setting up the .NET Core environment, the workflow splits into parallel tasks for each platform. Each branch involves building the application, publishing the executable, zipping the file, and removing the build directory. This parallel structure allows for efficient and simultaneous preparation of executables for different platforms.
