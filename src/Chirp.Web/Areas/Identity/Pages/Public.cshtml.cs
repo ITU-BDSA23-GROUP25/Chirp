@@ -9,25 +9,31 @@ namespace Chirp.Razor.Areas.Identity.Pages;
 public class PublicModel : PageModel
 {
     private readonly ICheepRepository _service;
+
     private readonly IAuthorRepository _authorRepo;
+    private readonly IFollowerRepository _followerRepository;
+
     public List<CheepDTO> Cheeps { get; set; }
     public PaginationModel? PaginationModel { get; set; }
 
+    public Dictionary<string, bool> FollowStatus { get; set; } = new Dictionary<string, bool>();
+
+    public bool IsFollowing { get; set; } = false;
     public string Text {get; set;}
 
     [BindProperty(SupportsGet = true)]
     public string SortOrder { get; set; } = "Newest";
     
-
-
-    public PublicModel(ICheepRepository service, IAuthorRepository authorRepo)
+    public PublicModel(ICheepRepository service, IAuthorRepository authorRepo,IFollowerRepository followerRepository)
     {
         Cheeps = new List<CheepDTO>();
         _service = service;
         _authorRepo = authorRepo;
+        _followerRepository = followerRepository;
     }
 
     public async Task<IActionResult> OnGet([FromQuery] int? page)
+
     {
          if (User.Identity?.IsAuthenticated == true)
         {
@@ -58,6 +64,17 @@ public class PublicModel : PageModel
         var amountOfCheeps = _service.CheepTotal().Result;
         PaginationModel = new PaginationModel(amountOfCheeps, (int)page);
 
+        foreach (var cheep in Cheeps)
+            {
+              
+                var userName = cheep.Author;
+                var followersFromUser = await _followerRepository.GetFollowedAuthor(userName);
+                var isFollowing = followersFromUser.Any(follower => follower.Name == User.Identity.Name);
+
+                FollowStatus[userName] = isFollowing;
+               
+            }
+
         return Page();
     }
 
@@ -76,9 +93,17 @@ public class PublicModel : PageModel
     return RedirectToPage("Public");
 }
 
-   public IActionResult OnPost()
+    public IActionResult OnPost()
     {
         _service.CreateCheep(Request.Form["Text"], User.Identity?.Name!);
+        return RedirectToPage("Public");
+        
+    }
+
+    public async Task<IActionResult> OnPostFollow(string Username, string FollowerName)
+    {
+        await _followerRepository.AddOrRemoveFollower(FollowerName, Username);
+
         return RedirectToPage("Public");
     }
 }

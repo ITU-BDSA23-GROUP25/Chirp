@@ -40,9 +40,9 @@ public class AuthorRepository : IAuthorRepository
             new AuthorDTO
             {
                 Name = a.Name
-            }
-            )
+            })
         .FirstOrDefaultAsync();
+        
 
     public async Task RemoveAuthor(AuthorDTO authorDTO)
     {
