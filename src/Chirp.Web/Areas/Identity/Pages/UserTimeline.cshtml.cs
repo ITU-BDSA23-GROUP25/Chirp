@@ -94,6 +94,6 @@ public class UserTimelineModel : PageModel
     public async Task<IActionResult> OnPostHandleReaction(ReactionType reactionType, Guid cheepId, string username)
     {
         await _reactions.ReactionOnCheep(reactionType, cheepId, username);
-        return RedirectToPage("Public");
+        return RedirectToPage("UserTimeline");
     }
 }
