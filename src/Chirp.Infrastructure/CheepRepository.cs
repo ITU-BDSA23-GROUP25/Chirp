@@ -48,10 +48,6 @@ public class CheepRepository : ICheepRepository
                 break;
         }
 
-        var userTimeZoneId = TimeZoneInfo.Local.Id;
-
-        var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(userTimeZoneId.ToString());
-
         var cheeps = await query
             .Include(c => c.Author)
             .Skip(CheepsPerPage * pageNumber)
@@ -60,7 +56,8 @@ public class CheepRepository : ICheepRepository
                 c.CheepId,
                 c.Author.Name,
                 c.Text,
-                c.TimeStamp.ToLocalTime().ToString("MM/dd/yy H:mm:ss")))            
+                //We have chosen to create cheeps as utc, but display them as GMT+1
+                c.TimeStamp.AddHours(1).ToString("MM/dd/yy H:mm:ss")))            
                 .ToListAsync();
                 
         return cheeps;
@@ -83,10 +80,6 @@ public class CheepRepository : ICheepRepository
                 break;
         }
 
-        var userTimeZoneId = TimeZoneInfo.Local.Id;
-
-        var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(userTimeZoneId.ToString());
-
         var cheeps = await query
             .Include(c => c.Author)
             .Where(c => c.Author.Name == author_name)
@@ -96,7 +89,8 @@ public class CheepRepository : ICheepRepository
                 c.CheepId,
                 c.Author.Name,
                 c.Text,
-                c.TimeStamp.ToLocalTime().ToString("MM/dd/yy H:mm:ss")))
+                //We have chosen to create cheeps as utc, but display them as GMT+1
+                c.TimeStamp.AddHours(1).ToString("MM/dd/yy H:mm:ss"))) 
             .ToListAsync();
 
         return cheeps;
@@ -107,10 +101,6 @@ public class CheepRepository : ICheepRepository
     {
         IQueryable<Cheep> query = _databaseContext.Cheeps;
 
-        var userTimeZoneId = TimeZoneInfo.Local.Id;
-
-        var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(userTimeZoneId.ToString());
-
         var cheeps = await query
             .Include(c => c.Author)
             .Where(c => c.Author.Name == author_name)
@@ -118,7 +108,8 @@ public class CheepRepository : ICheepRepository
                 c.CheepId,
                 c.Author.Name,
                 c.Text,
-                c.TimeStamp.ToLocalTime().ToString("MM/dd/yy H:mm:ss")))            
+                //We have chosen to create cheeps as utc, but display them as GMT+1
+                c.TimeStamp.AddHours(1).ToString("MM/dd/yy H:mm:ss")))           
             .ToListAsync();
 
         return cheeps;
@@ -177,10 +168,6 @@ public class CheepRepository : ICheepRepository
     public async Task<CheepDTO> GetCheep(Guid cheepId)
     {
 
-        var userTimeZoneId = TimeZoneInfo.Local.Id;
-
-        var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(userTimeZoneId);
-
         return await _databaseContext.Cheeps
         .Include(c => c.Author)
         .Where(c => c.CheepId == cheepId)
@@ -188,7 +175,8 @@ public class CheepRepository : ICheepRepository
             c.CheepId,
             c.Author.Name,
             c.Text,
-            c.TimeStamp.ToLocalTime().ToString("MM/dd/yy H:mm:ss")))
+            //We have chosen to create cheeps as utc, but display them as GMT+1
+            c.TimeStamp.AddHours(1).ToString("MM/dd/yy H:mm:ss"))) 
         .FirstOrDefaultAsync();
 
 
