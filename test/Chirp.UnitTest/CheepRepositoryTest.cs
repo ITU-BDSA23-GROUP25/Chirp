@@ -35,12 +35,22 @@ public class CheepRepository_tests
 
     [Theory]
     [InlineData(1)]
-    public async void GetCheeps_returns32Cheeps(int page)
+    public async void publictimeline_returns32Cheeps(int page)
     {
         var cheeps = await _cheepRepository.GetCheeps(page, "Newest");
 
         Assert.Equal(32, cheeps.Count());
     }
+
+    [Theory]
+    [InlineData(1, "Jacqualine Gilcoine")]
+    public async void authortimeline_returns32Cheeps(int page, string author)
+    {
+        var cheeps = await _cheepRepository.GetCheepsFromAuthor(page, author ,"Newest");
+
+        Assert.Equal(32, cheeps.Count());
+    }
+
 
    /*  public async void GetCheeps_ReturnsEmpty()
     {}
