@@ -24,24 +24,31 @@ public class CheepRepository_tests
 
         _context = new DatabaseContext(options);
         _context.Database.Migrate();
+        _context.InitializeDB();
 
         _cheepRepository = new CheepRepository(_context);
         _authorRepository = new AuthorRepository(_context);
     }
 
-    public async void Get_All_Cheeps()
-    {}
+  /*   public async void Get_All_Cheeps()
+    {} */
 
+    [Theory]
+    [InlineData(1)]
     public async void GetCheeps_returns32Cheeps(int page)
-    {}
+    {
+        var cheeps = await _cheepRepository.GetCheeps(page, "Newest");
 
-    public async void GetCheeps_ReturnsEmpty()
+        Assert.Equal(32, cheeps.Count());
+    }
+
+   /*  public async void GetCheeps_ReturnsEmpty()
     {}
 
     public async void CreateCheep()
-    {}
+    {} */
 
-    public GetCheepsFromUsertimeline_ReturnsCorrectPage(string name, string email, int page)
+    /* public GetCheepsFromUsertimeline_ReturnsCorrectPage(string name, string email, int page)
     {}
 
     [Theory]
@@ -58,6 +65,6 @@ public class CheepRepository_tests
         var cheeps = await _cheepRepository.GetCheepsFromAuthor(999 , author.Name);
 
         Assert.Empty(cheeps);
-    }
+    } */
 
 }
