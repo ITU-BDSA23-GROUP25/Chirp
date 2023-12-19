@@ -88,4 +88,12 @@ public class FollowerRepository : IFollowerRepository
             .ExecuteDeleteAsync();
     }
 
+    public async Task RemoveAllFollowersToUser(string userName)
+    {
+            
+            await _databaseContext.Followers
+            .Where(f => f.FollowerAuthor.Name == userName)
+            .ExecuteDeleteAsync();
+    }
+
 }
