@@ -1,20 +1,18 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Chirp.Razor.Areas.Identity.Pages;
-
 public class PaginationModel : PageModel
 {
     public int CurrentPage { get; set; } = 1;
-    public int amountOfPages { get; set; }
+    public int AmountOfPages { get; set; }
     public int CheepsOnEachPage { get; set; } = 32;
+    public string SortOrder { get; set; } = "Newest";
 
-    public PaginationModel(int amountOfCheeps, int currentPage)
+    public PaginationModel(int amountOfCheeps, int currentPage, string sortOrder)
     {
         CurrentPage = currentPage;
-        amountOfPages = (amountOfCheeps + CheepsOnEachPage - 1) / CheepsOnEachPage;
-        if (amountOfCheeps % CheepsOnEachPage == 1)
-        {
-            amountOfPages++;
-        }
+        SortOrder = sortOrder;
+
+        // Calculate the number of pages
+        AmountOfPages = (int)Math.Ceiling((double)amountOfCheeps / CheepsOnEachPage);
     }
 }

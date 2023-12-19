@@ -54,6 +54,9 @@
     {
         <em>You have yet to post any cheeps.</em>
     }
+    @{
+        await Html.RenderPartialAsync("PaginationModel", Model.PaginationModel);
+    }
 
     <div style="text-align: center">
         <form method="post" asp-page-handler="DeleteUser">

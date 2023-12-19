@@ -61,7 +61,7 @@ public class PublicModel : PageModel
         Cheeps = _service.GetCheeps((int)page - 1, SortOrder).Result.ToList();
 
         var amountOfCheeps = _service.CheepTotal().Result;
-        PaginationModel = new PaginationModel(amountOfCheeps, (int)page);
+        PaginationModel = new PaginationModel(amountOfCheeps, (int)page, SortOrder);
 
         foreach (var cheep in Cheeps)
             {
