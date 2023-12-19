@@ -25,6 +25,6 @@ public class DatabaseContext : IdentityDbContext<Author, IdentityRole<string>, s
     public void InitializeDB()
     {
         Database.Migrate();
-        //DbInitializer.SeedDatabase(this);
+        DbInitializer.SeedDatabase(this);
     }
 }
