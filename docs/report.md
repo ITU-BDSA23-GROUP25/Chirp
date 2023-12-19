@@ -82,6 +82,12 @@ Dependencies:
 
 ## User activities
 
+The user has different option of what to do with the Chirp! application, depending on whether they're authorized or not. 
+
+![image](https://github.com/ITU-BDSA23-GROUP25/Chirp/assets/143702466/b8293b8a-7592-4d37-adc0-c205aa1931ab)
+
+The above image shows the user journey of a user that is not authorized. The user is able to view the public timeline, which is the home page of the application. Here the user is able to scroll through the pages of cheeps, that has been posted. The user is also able to log in, using GitHub to authorized the user.
+
 ## Sequence of functionality/calls trough _Chirp!_
 
 # Process
