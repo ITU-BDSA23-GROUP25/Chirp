@@ -130,7 +130,7 @@ public class CheepRepository : ICheepRepository
         {
             CheepId = Guid.NewGuid(),
             Text = Message,
-            TimeStamp = DateTime.UtcNow,
+            TimeStamp = DateTime.Now,
             Author = existingAuthor,
         };
         _databaseContext.Cheeps.Add(cheep);
