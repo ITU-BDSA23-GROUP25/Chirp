@@ -1,0 +1,21 @@
+@startuml
+!theme vibrant
+
+start
+
+:Checkout Repository;
+:Set up .NET Core;
+
+partition "Build" {
+  :Build with dotnet;
+  :dotnet publish;
+  :Upload artifact for deployment job;
+}
+
+partition "Deploy" {
+  :Download artifact from build job;
+  :Deploy to Azure Web App;
+}
+
+stop
+@enduml
