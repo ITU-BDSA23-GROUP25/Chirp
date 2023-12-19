@@ -73,6 +73,10 @@ namespace Chirp.Razor.Areas.Identity.Pages
             
             await _followerRepo.RemoveFollowers(username);
 
+            await _followerRepo.RemoveAllFollowersToUser(username);
+
+            await _reactions.RemoveAllReactionsByUser(username);
+
             //Removes all cheeps of the user
             //var findfirstCheepFromUser = _service.GetAllCheepsFromAuthor(username).Result.FirstOrDefault();
             var userDTO = _authorRepo.GetAuthorByName(username).Result;
@@ -81,9 +85,9 @@ namespace Chirp.Razor.Areas.Identity.Pages
                 await _authorRepo.RemoveAuthor(userDTO);
             }
     
-            /* //Removes the author of the user
+            //Removes the author of the user
             var userToRemove = await _authorRepo.GetAuthorByName(username);
-            await _authorRepo.RemoveAuthor(userToRemove); */
+            _ = _authorRepo.RemoveAuthor(userToRemove); 
 
             //Signes the user out of the website
             await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);

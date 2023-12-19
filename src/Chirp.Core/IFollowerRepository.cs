@@ -6,9 +6,8 @@ public interface IFollowerRepository
     public Task<IEnumerable<AuthorDTO>> GetFollowedAuthor(string AuthorName);
 
     // Do
-    //public Task AddFollower(String AuthorName, string FollowerName);
-    //public Task DeleteFollower(String AuthorName, string FollowerName);
     public Task AddOrRemoveFollower(string followerName, string userName);
+    public Task RemoveAllFollowersToUser(string userName);
 
     public Task RemoveFollowers(string userName);
 

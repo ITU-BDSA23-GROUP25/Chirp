@@ -55,7 +55,7 @@ public class AuthorRepository : IAuthorRepository
             _databaseContext.Authors.Remove(authorToRemove);
 
             // Save changes to persist the removal
-            _databaseContext.SaveChangesAsync();
+            await _databaseContext.SaveChangesAsync();
         }
     }
 }
