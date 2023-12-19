@@ -30,8 +30,15 @@ public class CheepRepository_tests
         _authorRepository = new AuthorRepository(_context);
     }
 
-  /*   public async void Get_All_Cheeps()
-    {} */
+    [Theory]
+    [InlineData("Jacqualine Gilcoine")]
+    public async void GetAllCheepsFromAuthor(string author)
+    {
+       var cheeps = await _cheepRepository.GetAllCheepsFromAuthor(author);
+
+       var cheeps_Database = await _context.Cheeps.Where(c => c.Author.Name == author).ToListAsync();
+       Assert.Equal(cheeps_Database.Count(), cheeps.Count());
+    }
 
     [Theory]
     [InlineData(1)]
@@ -44,23 +51,20 @@ public class CheepRepository_tests
 
     [Theory]
     [InlineData(1, "Jacqualine Gilcoine")]
-    public async void authortimeline_returns32Cheeps(int page, string author)
+    public async void authortimeline_Returns32Cheeps(int page, string author)
     {
         var cheeps = await _cheepRepository.GetCheepsFromAuthor(page, author ,"Newest");
 
         Assert.Equal(32, cheeps.Count());
     }
 
-    
+    [Fact]
+    public async void GetCheeps_FromNonExistingPage()
+    {
+        var cheeps = await _cheepRepository.GetCheeps(999, "Newest");
 
-   /*  public async void GetCheeps_ReturnsEmpty()
-    {}
-
-    public async void CreateCheep()
-    {} */
-
-    /* public GetCheepsFromUsertimeline_ReturnsCorrectPage(string name, string email, int page)
-    {}
+        Assert.Empty(cheeps);
+    }
 
     [Theory]
     [InlineData("Helge", "ropf@itu.dk")]
@@ -73,9 +77,9 @@ public class CheepRepository_tests
             Email = email
         };
 
-        var cheeps = await _cheepRepository.GetCheepsFromAuthor(999 , author.Name);
+        var cheeps = await _cheepRepository.GetCheepsFromAuthor(999 , author.Name, "Newest");
 
         Assert.Empty(cheeps);
-    } */
+    }
 
 }
