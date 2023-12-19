@@ -86,7 +86,11 @@ The user has different option of what to do with the Chirp! application, dependi
 
 ![image](https://github.com/ITU-BDSA23-GROUP25/Chirp/assets/143702466/b8293b8a-7592-4d37-adc0-c205aa1931ab)
 
-The above image shows the user journey of a user that is not authorized. The user is able to view the public timeline, which is the home page of the application. Here the user is able to scroll through the pages of cheeps, that has been posted. The user is also able to log in, using GitHub to authorized the user.
+The above image shows the user journey of a user that is not authorized. The user is able to view the public timeline, which is the home page of the application. Here the user is able to scroll through the pages of cheeps, that has been posted. The user is also able to log in, using GitHub to authorized the user. Once the user is logged in, they have many more option of things to do with the application. 
+
+From an authorized state the public timeline now has an input field, for the user to write cheeps, and share them. The user is able to delete all cheeps they have posted, regardless of where the cheep is shown. The cheeps of the user are shown on the public timeline, 'My timeline' and on the 'About me' page.
+
+
 
 ## Sequence of functionality/calls trough _Chirp!_
 
