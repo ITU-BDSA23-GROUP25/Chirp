@@ -18,6 +18,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddScoped<ICheepRepository, CheepRepository>();
 builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 builder.Services.AddScoped<IFollowerRepository, FollowerRepository>();
+builder.Services.AddScoped<IReactionRepository, ReactionRepository>();
 
 builder.Services.AddAuthentication()
     .AddGitHub("GitHub", o =>

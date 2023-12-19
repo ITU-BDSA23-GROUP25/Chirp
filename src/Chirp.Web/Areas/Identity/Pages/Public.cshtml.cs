@@ -9,9 +9,11 @@ namespace Chirp.Razor.Areas.Identity.Pages;
 public class PublicModel : PageModel
 {
     private readonly ICheepRepository _service;
-
+    private readonly IReactionRepository _reactions;
     private readonly IAuthorRepository _authorRepo;
     private readonly IFollowerRepository _followerRepository;
+
+    public ReactionType reactionType = ReactionType.Like;
 
     public List<CheepDTO> Cheeps { get; set; }
     public PaginationModel? PaginationModel { get; set; }
@@ -24,10 +26,11 @@ public class PublicModel : PageModel
     [BindProperty(SupportsGet = true)]
     public string SortOrder { get; set; } = "Newest";
     
-    public PublicModel(ICheepRepository service, IAuthorRepository authorRepo,IFollowerRepository followerRepository)
+    public PublicModel(ICheepRepository service, IAuthorRepository authorRepo,IFollowerRepository followerRepository, IReactionRepository reactions)
     {
         Cheeps = new List<CheepDTO>();
         _service = service;
+        _reactions = reactions;
         _authorRepo = authorRepo;
         _followerRepository = followerRepository;
     }
@@ -103,6 +106,22 @@ public class PublicModel : PageModel
     {
         await _followerRepository.AddOrRemoveFollower(FollowerName, Username);
 
+        return RedirectToPage("Public");
+    }
+
+    public async Task<bool> HasUserReacted(Guid cheepId, string authorName, ReactionType reactionType)
+    {
+        return await _reactions.HasUserReacted(cheepId, authorName, reactionType);
+    }
+
+    public async Task<int> GetLikeCount(Guid cheepId, ReactionType reactionType)
+    {
+        return await _reactions.GetReactionAmount(cheepId, reactionType);
+    }
+
+    public async Task<IActionResult> OnPostHandleReaction(ReactionType reactionType, Guid cheepId, string username)
+    {
+        await _reactions.ReactionOnCheep(reactionType, cheepId, username);
         return RedirectToPage("Public");
     }
 }

@@ -7,26 +7,26 @@
 }
 
 <div>
-    <h2> Public Timeline 
-    <div class="dropdown">
-        <button class="dropbtn">Sort after</button>
-        <div class="dropdown-content">
-            <a href="?SortOrder=Newest">Newest</a>
-            <a href="?SortOrder=Oldest">Oldest</a>
+    <h2> Public Timeline
+        <div class="dropdown">
+            <button class="dropbtn">Sort after</button>
+            <div class="dropdown-content">
+                <a href="?SortOrder=Newest">Newest</a>
+                <a href="?SortOrder=Oldest">Oldest</a>
+            </div>
         </div>
-    </div>
 </div>
 </h2>
 
 @if (User.Identity?.IsAuthenticated ?? false)
 {
     <div class="cheepbox">
-        <h3>What's on your mind @(User.Identity.Name)?</h3>
-        <form method="post">
-            <input style="float: left" type="text" asp-for="Text">
-            <input type="submit" value="Share">
-        </form>
-    </div>
+    <h3>What's on your mind @(User.Identity.Name)?</h3>
+    <form method="post">
+        <input style="float: left" type="text" asp-for="Text">
+        <input type="submit" value="Share">
+    </form>
+</div>
 }
 
 @if (Model.Cheeps.Any())
@@ -48,16 +48,50 @@
                     <small>&mdash; @cheep.Timestamp</small>
                     @if (User.Identity?.IsAuthenticated ?? false)
                     {
-                        @if (cheep.Author == User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Name)?.Value)
-                        {
-                            <form method="post" asp-page-handler="Delete" asp-route-cheepId="@cheep.Id">
-                                <button type="submit">Delete</button>
+                        <div class="reactions-container">
+                            <form method="post" asp-page-handler="HandleReaction" asp-route-reactionType="@Core.ReactionType.Like"
+                                asp-route-username="@User.Identity.Name" asp-route-cheepId="@cheep.Id">
+                                <button class="reaction-button"
+                                        style="@(Model.HasUserReacted(cheep.Id, @User.Identity.Name, @Core.ReactionType.Like).Result ? "background-color: pink;" : "")">
+                                    <i>&#x1F44D;</i>
+                                    <span class="reaction-count" id="@cheep.Id">
+                                        @Model.GetLikeCount(cheep.Id, @Core.ReactionType.Like).Result
+                                    </span>
+                                </button>
                             </form>
-                        }
-                        else
-                        {
-                            <div>
-                                <form method="post" asp-page-handler="Follow" asp-route-UserName="@cheep.Author" asp-route-FollowerName="@User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Name)?.Value">
+
+                            <form method="post" asp-page-handler="HandleReaction" asp-route-reactionType="@Core.ReactionType.Dislike"
+                                asp-route-username="@User.Identity.Name" asp-route-cheepId="@cheep.Id">
+                                <button class="reaction-button"
+                                        style="@(Model.HasUserReacted(cheep.Id, @User.Identity.Name, @Core.ReactionType.Dislike).Result ? "background-color: pink;" : "")">
+                                    <i>&#x1F44E;</i>
+                                    <span class="reaction-count" id="@cheep.Id">
+                                        @Model.GetLikeCount(cheep.Id, @Core.ReactionType.Dislike).Result
+                                    </span>
+                                </button>
+                            </form>
+
+                            <form method="post" asp-page-handler="HandleReaction" asp-route-reactionType="@Core.ReactionType.Skull"
+                                asp-route-username="@User.Identity.Name" asp-route-cheepId="@cheep.Id">
+                                <button class="reaction-button"
+                                        style="@(Model.HasUserReacted(cheep.Id, @User.Identity.Name, @Core.ReactionType.Skull).Result ? "background-color: pink;" : "")">
+                                    <i>&#x1F480;</i>
+                                    <span class="reaction-count" id="@cheep.Id">
+                                        @Model.GetLikeCount(cheep.Id, @Core.ReactionType.Skull).Result
+                                    </span>
+                                </button>
+                            </form>
+
+                            @if (cheep.Author == User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Name)?.Value)
+                            {
+                                <form method="post" asp-page-handler="Delete" asp-route-cheepId="@cheep.Id">
+                                    <button type="submit">Delete</button>
+                                </form>
+                            }
+                            else
+                            {
+                                <form method="post" asp-page-handler="Follow" asp-route-UserName="@cheep.Author"
+                                      asp-route-FollowerName="@User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Name)?.Value">
                                     <!-- Add a hidden field for IsFollowing -->
                                     <input type="hidden" name="IsFollowing" value="@Model.FollowStatus[cheep.Author]" />
 
@@ -72,8 +106,8 @@
                                         }
                                     </button>
                                 </form>
-                            </div>
-                        }
+                            }
+                        </div>
                     }
                 </p>
             </li>
@@ -88,4 +122,3 @@ else
 @{
     await Html.RenderPartialAsync("PaginationModel", Model.PaginationModel);
 }
-

@@ -12,7 +12,7 @@ using Repository;
 namespace DBContext.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20231218145410_InitialCreate")]
+    [Migration("20231219144930_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -283,6 +283,23 @@ namespace DBContext.Migrations
                     b.ToTable("Followers");
                 });
 
+            modelBuilder.Entity("Repository.Reaction", b =>
+                {
+                    b.Property<Guid>("CheepId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AuthorName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ReactionType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CheepId", "AuthorName");
+
+                    b.ToTable("Reactions");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<string>", null)
@@ -360,9 +377,23 @@ namespace DBContext.Migrations
                     b.Navigation("FollowerAuthor");
                 });
 
+            modelBuilder.Entity("Repository.Reaction", b =>
+                {
+                    b.HasOne("Repository.Cheep", null)
+                        .WithMany("Reactions")
+                        .HasForeignKey("CheepId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Repository.Author", b =>
                 {
                     b.Navigation("Cheeps");
+                });
+
+            modelBuilder.Entity("Repository.Cheep", b =>
+                {
+                    b.Navigation("Reactions");
                 });
 #pragma warning restore 612, 618
         }

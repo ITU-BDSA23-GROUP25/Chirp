@@ -267,3 +267,31 @@ li.topic {
   display: block;
 }
 
+.reactions-container {
+  display: flex;
+}
+
+.reaction-button {
+  margin-right: 5px;
+  /* Adjust the margin as needed */
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 5px;
+  cursor: pointer;
+  /* Add cursor pointer to indicate interactivity */
+}
+
+.reaction-button.pressed {
+  background-color: pink;
+}
+
+.reaction-count {
+  margin-left: 5px;
+  color: black;
+  /* Default color for count number */
+}
+
+.reaction-button.pressed .reaction-count {
+  color: pink;
+  /* Color for count number when button is pressed */
+}

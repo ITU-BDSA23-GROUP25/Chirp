@@ -13,6 +13,8 @@ namespace Chirp.Razor.Areas.Identity.Pages
         private readonly ICheepRepository _service;
         private readonly IAuthorRepository _authorRepo;
 
+        private readonly IReactionRepository _reactions;
+
         private readonly IFollowerRepository _followerRepo;
 
         public List<CheepDTO> Cheeps { get; set; }
@@ -21,10 +23,11 @@ namespace Chirp.Razor.Areas.Identity.Pages
         [BindProperty(SupportsGet = true)]
         public string SortOrder { get; set; } = "Newest";
 
-        public UserInfoModel(ICheepRepository service, IAuthorRepository authorRepo, IFollowerRepository followerRepo)
+        public UserInfoModel(ICheepRepository service, IAuthorRepository authorRepo, IFollowerRepository followerRepo, IReactionRepository reactions)
         {
             _service = service;
             _authorRepo = authorRepo;
+            _reactions = reactions;
             _followerRepo = followerRepo;
         }
 
@@ -86,5 +89,21 @@ namespace Chirp.Razor.Areas.Identity.Pages
             await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
             return RedirectToPage("Account/Login");
         }
+
+        public async Task<bool> HasUserReacted(Guid cheepId, string authorName, ReactionType reactionType)
+    {
+        return await _reactions.HasUserReacted(cheepId, authorName, reactionType);
+    }
+
+    public async Task<int> GetLikeCount(Guid cheepId, ReactionType reactionType)
+    {
+        return await _reactions.GetReactionAmount(cheepId, reactionType);
+    }
+
+    public async Task<IActionResult> OnPostHandleReaction(ReactionType reactionType, Guid cheepId, string username)
+    {
+        await _reactions.ReactionOnCheep(reactionType, cheepId, username);
+        return RedirectToPage("Public");
+    }
     }
 }

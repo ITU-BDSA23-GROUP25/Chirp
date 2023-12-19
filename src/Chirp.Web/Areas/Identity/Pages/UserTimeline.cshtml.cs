@@ -12,12 +12,14 @@ public class UserTimelineModel : PageModel
 
     private readonly IAuthorRepository _authorRepo;
 
+    private readonly IReactionRepository _reactions;
+
      private readonly IFollowerRepository _followerRepo;
     public List<CheepDTO> Cheeps { get; set; }
 
     public List<AuthorDTO> Authors { get; set; }
 
-    public PaginationModel? PaginationModel { get; set; }
+    public PaginationModel? PaginationModel { get; set; } 
 
     public Dictionary<string, bool> FollowStatus { get; set; } = new Dictionary<string, bool>();
 
@@ -25,36 +27,38 @@ public class UserTimelineModel : PageModel
 
     public string SortOrder { get; set;} = "Newest";
 
-    public UserTimelineModel(ICheepRepository service, IAuthorRepository authorRepo, IFollowerRepository followerRepo)
+    public UserTimelineModel(ICheepRepository service, IAuthorRepository authorRepo, IFollowerRepository followerRepo, IReactionRepository reactions)
     {
         _service = service;
         _authorRepo = authorRepo;
+        _reactions = reactions;
         _followerRepo = followerRepo;
     }
 
-    public async Task<ActionResult> OnGet([FromQuery] int? page, String author, String SortOrder)
-    
+    public async Task<ActionResult> OnGet([FromQuery] int? page, string author, string SortOrder)
+{
+    if (!page.HasValue || page < 1)
     {
-        if (!page.HasValue || page < 1)
-            {
-                page = 1; // Set a default page value if it is null or negative
-            }
-            
-        if (page == null) { page = 0; }
+        page = 1; // Set a default page value if it is null or negative
+    }
 
-        Cheeps = _service.GetCheepsFromAuthor((int)page, author, SortOrder).Result.ToList();
+    Cheeps = new List<CheepDTO>();
 
-        Authors = _followerRepo.GetFollowerAuthor(author).Result.ToList();
+    Authors = _followerRepo.GetFollowerAuthor(author).Result.ToList();
 
+    var amountOfCheeps = 0;
 
-        foreach (var authorDTO in Authors)
-        {
+    foreach (var authorDTO in Authors)
+    {
+        var authorCheeps = _service.GetCheepsFromAuthor((int)page, authorDTO.Name, SortOrder).Result.ToList();
+        Cheeps.AddRange(authorCheeps);
+        amountOfCheeps += _service.AuthorsCheepTotal(authorDTO.Name).Result;
+    }
 
-            var authorCheeps = _service.GetAllCheepsFromAuthor(authorDTO.Name).Result.ToList();
-            Cheeps.AddRange(authorCheeps);
-        }
+    Cheeps = _service.SortCheeps(Cheeps, SortOrder).Result.ToList();
 
-        Cheeps = _service.SortCheeps(Cheeps, SortOrder).Result.ToList();
+    PaginationModel = new PaginationModel(amountOfCheeps, (int)page, SortOrder);
+
 
         foreach (var cheep in Cheeps)
             {
@@ -67,9 +71,6 @@ public class UserTimelineModel : PageModel
                
             }
 
-        var amountOfCheeps = _service.AuthorsCheepTotal(author).Result;
-        PaginationModel = new PaginationModel(amountOfCheeps, (int)page, SortOrder);
-
         return Page();
     }
 
@@ -78,5 +79,21 @@ public class UserTimelineModel : PageModel
         await _followerRepo.AddOrRemoveFollower(FollowerName, Username);
 
         return RedirectToPage("UserTimeline");
+    }
+
+     public async Task<bool> HasUserReacted(Guid cheepId, string authorName, ReactionType reactionType)
+    {
+        return await _reactions.HasUserReacted(cheepId, authorName, reactionType);
+    }
+
+    public async Task<int> GetLikeCount(Guid cheepId, ReactionType reactionType)
+    {
+        return await _reactions.GetReactionAmount(cheepId, reactionType);
+    }
+
+    public async Task<IActionResult> OnPostHandleReaction(ReactionType reactionType, Guid cheepId, string username)
+    {
+        await _reactions.ReactionOnCheep(reactionType, cheepId, username);
+        return RedirectToPage("Public");
     }
 }

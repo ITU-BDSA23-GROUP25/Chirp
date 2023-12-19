@@ -201,6 +201,25 @@ namespace DBContext.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Reactions",
+                columns: table => new
+                {
+                    CheepId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AuthorName = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ReactionType = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reactions", x => new { x.CheepId, x.AuthorName });
+                    table.ForeignKey(
+                        name: "FK_Reactions_Cheeps_CheepId",
+                        column: x => x.CheepId,
+                        principalTable: "Cheeps",
+                        principalColumn: "CheepId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -281,13 +300,16 @@ namespace DBContext.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Cheeps");
-
-            migrationBuilder.DropTable(
                 name: "Followers");
 
             migrationBuilder.DropTable(
+                name: "Reactions");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Cheeps");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

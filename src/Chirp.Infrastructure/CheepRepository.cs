@@ -52,13 +52,8 @@ public class CheepRepository : ICheepRepository
             .Include(c => c.Author)
             .Skip(CheepsPerPage * pageNumber)
             .Take(CheepsPerPage)
-            .Select(c => new CheepDTO(
-                c.CheepId,
-                c.Author.Name,
-                c.Text,
-                //We have chosen to create cheeps as utc, but display them as GMT+1
-                c.TimeStamp.AddHours(1).ToString("MM/dd/yy H:mm:ss")))            
-                .ToListAsync();
+            .Select(c => new CheepDTO(c.CheepId, c.Author.Name, c.Text, c.TimeStamp.AddHours(1).ToString("MM/dd/yy H:mm:ss"), Array.Empty<ReactionDTO>()))          
+            .ToListAsync();
                 
         return cheeps;
     }
@@ -85,12 +80,7 @@ public class CheepRepository : ICheepRepository
             .Where(c => c.Author.Name == author_name)
             .Skip(CheepsPerPage * (pageNumber - 1))
             .Take(CheepsPerPage)
-            .Select(c => new CheepDTO(
-                c.CheepId,
-                c.Author.Name,
-                c.Text,
-                //We have chosen to create cheeps as utc, but display them as GMT+1
-                c.TimeStamp.AddHours(1).ToString("MM/dd/yy H:mm:ss"))) 
+            .Select(c => new CheepDTO(c.CheepId, c.Author.Name, c.Text, c.TimeStamp.AddHours(1).ToString("MM/dd/yy H:mm:ss"), Array.Empty<ReactionDTO>()))          
             .ToListAsync();
 
         return cheeps;
@@ -104,12 +94,7 @@ public class CheepRepository : ICheepRepository
         var cheeps = await query
             .Include(c => c.Author)
             .Where(c => c.Author.Name == author_name)
-            .Select(c => new CheepDTO(
-                c.CheepId,
-                c.Author.Name,
-                c.Text,
-                //We have chosen to create cheeps as utc, but display them as GMT+1
-                c.TimeStamp.AddHours(1).ToString("MM/dd/yy H:mm:ss")))           
+            .Select(c => new CheepDTO(c.CheepId, c.Author.Name, c.Text, c.TimeStamp.AddHours(1).ToString("MM/dd/yy H:mm:ss"), Array.Empty<ReactionDTO>()))                    
             .ToListAsync();
 
         return cheeps;
@@ -171,12 +156,7 @@ public class CheepRepository : ICheepRepository
         return await _databaseContext.Cheeps
         .Include(c => c.Author)
         .Where(c => c.CheepId == cheepId)
-        .Select(c => new CheepDTO(
-            c.CheepId,
-            c.Author.Name,
-            c.Text,
-            //We have chosen to create cheeps as utc, but display them as GMT+1
-            c.TimeStamp.AddHours(1).ToString("MM/dd/yy H:mm:ss"))) 
+        .Select(c => new CheepDTO(c.CheepId, c.Author.Name, c.Text, c.TimeStamp.AddHours(1).ToString("MM/dd/yy H:mm:ss"), Array.Empty<ReactionDTO>()))          
         .FirstOrDefaultAsync();
 
 
