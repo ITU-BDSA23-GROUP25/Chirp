@@ -81,6 +81,21 @@ public class UserTimelineModel : PageModel
         return Page();
     }
 
+    public async Task<IActionResult> OnPostDelete(Guid cheepId)
+        {
+            // Perform cheep deletion logic here
+            var cheepToRemove = await _service.GetCheep(cheepId);
+
+
+            if (cheepToRemove != null)
+            {
+                _service.RemoveCheep(cheepToRemove);
+            }
+
+            // Redirect back to the public page after deletion
+            return RedirectToPage("UserTimeline");
+        }
+
     public async Task<IActionResult> OnPostFollow(string Username, string FollowerName)
     {
         await _followerRepo.AddOrRemoveFollower(FollowerName, Username);
