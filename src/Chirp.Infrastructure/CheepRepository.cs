@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Linq;
 using FluentValidation;
 
@@ -47,13 +48,21 @@ public class CheepRepository : ICheepRepository
                 break;
         }
 
+        var userTimeZoneId = TimeZoneInfo.Local.Id;
+
+        var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(userTimeZoneId.ToString());
+
         var cheeps = await query
             .Include(c => c.Author)
             .Skip(CheepsPerPage * pageNumber)
             .Take(CheepsPerPage)
-            .Select(c => new CheepDTO(c.CheepId, c.Author.Name, c.Text, c.TimeStamp.ToString("MM/dd/yy H:mm:ss")))
-            .ToListAsync();
-
+            .Select(c => new CheepDTO(
+                c.CheepId,
+                c.Author.Name,
+                c.Text,
+                c.TimeStamp.ToLocalTime().ToString("MM/dd/yy H:mm:ss")))            
+                .ToListAsync();
+                
         return cheeps;
     }
 
@@ -74,12 +83,20 @@ public class CheepRepository : ICheepRepository
                 break;
         }
 
+        var userTimeZoneId = TimeZoneInfo.Local.Id;
+
+        var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(userTimeZoneId.ToString());
+
         var cheeps = await query
             .Include(c => c.Author)
             .Where(c => c.Author.Name == author_name)
             .Skip(CheepsPerPage * (pageNumber - 1))
             .Take(CheepsPerPage)
-            .Select(c => new CheepDTO(c.CheepId, c.Author.Name, c.Text, c.TimeStamp.ToString("MM/dd/yy H:mm:ss")))
+            .Select(c => new CheepDTO(
+                c.CheepId,
+                c.Author.Name,
+                c.Text,
+                c.TimeStamp.ToLocalTime().ToString("MM/dd/yy H:mm:ss")))
             .ToListAsync();
 
         return cheeps;
@@ -90,10 +107,18 @@ public class CheepRepository : ICheepRepository
     {
         IQueryable<Cheep> query = _databaseContext.Cheeps;
 
+        var userTimeZoneId = TimeZoneInfo.Local.Id;
+
+        var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(userTimeZoneId.ToString());
+
         var cheeps = await query
             .Include(c => c.Author)
             .Where(c => c.Author.Name == author_name)
-            .Select(c => new CheepDTO(c.CheepId, c.Author.Name, c.Text, c.TimeStamp.ToString("MM/dd/yy H:mm:ss")))
+            .Select(c => new CheepDTO(
+                c.CheepId,
+                c.Author.Name,
+                c.Text,
+                c.TimeStamp.ToLocalTime().ToString("MM/dd/yy H:mm:ss")))            
             .ToListAsync();
 
         return cheeps;
@@ -149,13 +174,25 @@ public class CheepRepository : ICheepRepository
         .Where(c => c.Author.Name == author_name)
         .CountAsync();
 
-    public async Task<CheepDTO> GetCheep(Guid cheepId) =>
-        await _databaseContext.Cheeps
+    public async Task<CheepDTO> GetCheep(Guid cheepId)
+    {
 
+        var userTimeZoneId = TimeZoneInfo.Local.Id;
+
+        var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(userTimeZoneId);
+
+        return await _databaseContext.Cheeps
         .Include(c => c.Author)
         .Where(c => c.CheepId == cheepId)
-        .Select(c => new CheepDTO(c.CheepId, c.Author.Name, c.Text, c.TimeStamp.ToString("MM/dd/yy H:mm:ss")))
+        .Select(c => new CheepDTO(
+            c.CheepId,
+            c.Author.Name,
+            c.Text,
+            c.TimeStamp.ToLocalTime().ToString("MM/dd/yy H:mm:ss")))
         .FirstOrDefaultAsync();
+
+
+    }
 
     public void RemoveCheep(CheepDTO cheepDto)
     {
