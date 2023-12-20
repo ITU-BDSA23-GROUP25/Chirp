@@ -46,7 +46,7 @@ In addition to creating cheeps, Authors can 'follow' other Authors. This is repr
 A Cheep is essentially a message, or a singular piece of communication, created by an Author. Each Cheep is uniquely identified by a Guid and contains the message text along with a timestamp of its creation. Cheeps is in a one-to-many composition with Authors, meaning that, Authors can have many cheeps, but cheeps must have exactly one author. Additionally, they have a strong life-cycle dependency.
 
 ### Following
-Hmm... lidt tbd, lad os lige snakke om implementationen, evt association class, ellers lister som nu
+Chirp allows its users to follow and unfollow eachother. The follow entity is used to inforce this  
 
 ### Reactions
 A reaction is entity that refers to the interactive engagement that users can express in response to a cheep. These reactions are represented by a “thumps up” emoji that turns red if pressed. For each cheep a number of reactions will be displayed in the application. Each reaction is uniquely identified by a Guid representing the cheep, a string which represents the user who has reacted and a reactiontype representing which type of reaction it is. Reactions is in one-to-many relationships with both authors and cheeps meaning that both authors and cheeps can have many reactions but each reaction is uniquely related to one author and one cheep.
