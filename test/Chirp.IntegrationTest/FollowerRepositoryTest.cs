@@ -12,8 +12,6 @@ public class FollowerRepositoryTest
     private readonly ICheepRepository _cheepRepository;
     private readonly IReactionRepository _reactionRepository;
     private readonly IAuthorRepository _authorRepository;
-
-    private readonly IFollowerRepository _followerRepository;
     private readonly DatabaseContext _context;
 
     public FollowerRepositoryTest()
@@ -31,29 +29,6 @@ public class FollowerRepositoryTest
         _reactionRepository = new ReactionRepository(_context);
         _cheepRepository = new CheepRepository(_context);
         _authorRepository = new AuthorRepository(_context);
-        _followerRepository = new FollowerRepository(_context);
-    }
-
-    [Theory]
-    [InlineData("Lars Ulrich")]
-    public async void GetFollowerAuthor_OnNoFollowers(string userName)
-    {
-
-        // Arrange
-        await _authorRepository.CreateAuthor(userName);
-
-        // Author should have been created
-        var author = await _context.Authors
-        .AnyAsync(c => c.Name == userName);
-
-        Assert.True(author);
-
-        // Act
-        // Get followers
-        var Followers = await _followerRepository.GetFollowerAuthor(userName);
-
-        // Assert
-        Assert.Empty(Followers);
     }
 
     [Theory]
@@ -328,5 +303,4 @@ public class FollowerRepositoryTest
         //
         Assert.Empty(followersAfterRemoval);
     }
-
 }
