@@ -325,6 +325,7 @@ public class FollowerRepositoryTest
         var followersAfterRemoval = await _followerRepository.GetFollowerAuthor(userName);
 
         // Check that the follower list is empty
+        //
         Assert.Empty(followersAfterRemoval);
     }
 
