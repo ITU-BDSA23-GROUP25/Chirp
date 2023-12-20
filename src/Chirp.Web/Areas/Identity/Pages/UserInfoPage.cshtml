@@ -29,10 +29,14 @@
                 <li>
                     <p>
                         @{
-                            var imageUrl = "https://github.com/" + @cheep.Author + ".png";
+                            var user = @cheep.Author.Split(" ");
+                            var imageUrl = "images/placeHolder.png";
+                            if (user.Length == 1)
+                            {
+                                imageUrl = "https://github.com/" + user[0] + ".png";
+                            }
                         }
-                        @* The 47 is hardcoded, can be done better using css *@
-                        <img src=@imageUrl width="47" height="47">
+                        <img id="userImage" src="@imageUrl" width="47" height="47" onload="checkImage()">
                         <strong>
                             <a href="/@cheep.Author">@cheep.Author</a>
                         </strong>
@@ -45,21 +49,22 @@
                             <form method="post" asp-page-handler="HandleReaction" asp-route-reactionType="@Core.ReactionType.Like"
                                 asp-route-username="@User.Identity.Name" asp-route-cheepId="@cheep.Id">
                                 <button class="reaction-button"
-                                        style="@(Model.HasUserReacted(cheep.Id, @User.Identity.Name, @Core.ReactionType.Like).Result ? "background-color: pink;" : "")">
+                                    style="@(Model.HasUserReacted(cheep.Id, @User.Identity.Name, @Core.ReactionType.Like).Result ? "background-color: pink;" : "")">
                                     <i>&#x1F44D;</i>
                                     <span class="reaction-count" id="@cheep.Id">
-                                        @Model.GetLikeCount(cheep.Id, @Core.ReactionType.Like).Result
+                                            @Model.GetLikeCount(cheep.Id, @Core.ReactionType.Like).Result
                                     </span>
                                 </button>
                             </form>
 
-                            <form method="post" asp-page-handler="HandleReaction" asp-route-reactionType="@Core.ReactionType.Dislike"
-                                asp-route-username="@User.Identity.Name" asp-route-cheepId="@cheep.Id">
+                            <form method="post" asp-page-handler="HandleReaction"
+                                asp-route-reactionType="@Core.ReactionType.Dislike" asp-route-username="@User.Identity.Name"
+                                asp-route-cheepId="@cheep.Id">
                                 <button class="reaction-button"
-                                        style="@(Model.HasUserReacted(cheep.Id, @User.Identity.Name, @Core.ReactionType.Dislike).Result ? "background-color: pink;" : "")">
+                                    style="@(Model.HasUserReacted(cheep.Id, @User.Identity.Name, @Core.ReactionType.Dislike).Result ? "background-color: pink;" : "")">
                                     <i>&#x1F44E;</i>
                                     <span class="reaction-count" id="@cheep.Id">
-                                        @Model.GetLikeCount(cheep.Id, @Core.ReactionType.Dislike).Result
+                                            @Model.GetLikeCount(cheep.Id, @Core.ReactionType.Dislike).Result
                                     </span>
                                 </button>
                             </form>
@@ -67,10 +72,10 @@
                             <form method="post" asp-page-handler="HandleReaction" asp-route-reactionType="@Core.ReactionType.Skull"
                                 asp-route-username="@User.Identity.Name" asp-route-cheepId="@cheep.Id">
                                 <button class="reaction-button"
-                                        style="@(Model.HasUserReacted(cheep.Id, @User.Identity.Name, @Core.ReactionType.Skull).Result ? "background-color: pink;" : "")">
+                                    style="@(Model.HasUserReacted(cheep.Id, @User.Identity.Name, @Core.ReactionType.Skull).Result ? "background-color: pink;" : "")">
                                     <i>&#x1F480;</i>
                                     <span class="reaction-count" id="@cheep.Id">
-                                        @Model.GetLikeCount(cheep.Id, @Core.ReactionType.Skull).Result
+                                            @Model.GetLikeCount(cheep.Id, @Core.ReactionType.Skull).Result
                                     </span>
                                 </button>
                             </form>
