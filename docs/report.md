@@ -82,13 +82,32 @@ Dependencies:
 
 ## User activities
 
-The user has different option of what to do with the Chirp! application, depending on whether they're authorized or not. 
+User Journey for Unauthenticated Users
 
-![image](https://github.com/ITU-BDSA23-GROUP25/Chirp/assets/143702466/b8293b8a-7592-4d37-adc0-c205aa1931ab)
+The unauthenticated user is able to browse all cheeps on the public timeline. That is, they can only view them. Since they aren’t authenticated they have no personal timeline and no ‘About me’ page to visit. Besides viewing the public timeline they have the ability to log in. In the log in page they can be authenticated through github. 
 
-The above image shows the user journey of a user that is not authorized. The user is able to view the public timeline, which is the home page of the application. Here the user is able to scroll through the pages of cheeps, that has been posted. The user is also able to log in, using GitHub to authorized the user. Once the user is logged in, they have many more option of things to do with the application. 
 
-From an authorized state the public timeline now has an input field, for the user to write cheeps, and share them. The user is able to delete all cheeps they have posted, regardless of where the cheep is shown. The cheeps of the user are shown on the public timeline, 'My timeline' and on the 'About me' page.
+Image X, the public timeline for an unauthenticated user.
+
+
+Image X shows the top of the webpage, that the unauthenticated user sees. Under the logo, the user is able to navigate the website by clicking on the links ‘Public Timeline’ and ‘Login’. The public timeline serves as the frontpage, so the ‘Public Timeline’ link is meant to return to the front page, when the user is somewhere else on the website. 
+
+
+Image XX, The bottom of the public timeline for the unauthenticated user
+
+Image XX shows the bottom of the frontpage for the unauthenticated user. Here the user can use the numbers and arrows highlighted in the image, to scroll through the different pages of cheeps. There are a maximum of 32 cheeps per page. 
+
+The user journey of the unauthenticated user is shown in a sequence diagram in figure X below.
+
+
+
+
+
+
+
+
+
+Diagram X. Sequence diagram of the user journey of the unauthenticated user
 
 
 
