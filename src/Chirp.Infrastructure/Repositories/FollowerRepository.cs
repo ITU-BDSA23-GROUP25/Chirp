@@ -76,8 +76,6 @@ public class FollowerRepository : IFollowerRepository
         }
 
         await _databaseContext.SaveChangesAsync();
-
-        Console.WriteLine($"FOLLOWSTATUS: {isFollowing}");
     }
 
     public async Task RemoveFollowers(string userName)
