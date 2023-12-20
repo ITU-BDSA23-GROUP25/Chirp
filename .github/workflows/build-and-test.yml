@@ -25,4 +25,6 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: |
+        dotnet test test/Chirp.UnitTest/Chirp.UnitTest.csproj --no-build --verbosity normal
+        dotnet test test/Chirp.IntegrationTest/Chirp.IntegrationTest.csproj --no-build --verbosity normal
