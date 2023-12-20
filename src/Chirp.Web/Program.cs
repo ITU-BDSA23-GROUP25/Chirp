@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authentication.OAuth;
 using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("DatabaseContextConnection") ?? throw new InvalidOperationException("Connection string 'DatabaseContextConnection' not found.");
+var connectionString = builder.Configuration["ConnectionString"] ?? throw new InvalidOperationException("Connection string 'DatabaseContextConnection' not found.");
 
 builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString));
 
