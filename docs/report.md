@@ -84,20 +84,74 @@ Dependencies:
 
 User Journey for Unauthenticated Users
 
-The unauthenticated user is able to browse all cheeps on the public timeline. That is, they can only view them. Since they aren’t authenticated they have no personal timeline and no ‘About me’ page to visit. Besides viewing the public timeline they have the ability to log in. In the log in page they can be authenticated through github. 
+The unauthenticated user is able to browse all cheeps on the public timeline. That is, they can only view them. Since they aren’t authenticated they have no personal timeline and no ‘About me’ page to visit. Besides viewing the public timeline they have the ability to log in. In the log in page they can be authenticated through github.
+
 ![User activities](images/PublicTimelineOfUnauthenticatedUser.png)
+
 Image X, the public timeline for an unauthenticated user.
 
-Image X shows the top of the webpage, that the unauthenticated user sees. Under the logo, the user is able to navigate the website by clicking on the links ‘Public Timeline’ and ‘Login’. The public timeline serves as the frontpage, so the ‘Public Timeline’ link is meant to return to the front page, when the user is somewhere else on the website. 
+Image X shows the top of the webpage, that the unauthenticated user sees. Under the logo, the user is able to navigate the website by clicking on the links ‘Public Timeline’ and ‘Login’. The public timeline serves as the frontpage, so the ‘Public Timeline’ link is meant to return to the front page, when the user is somewhere else on the website.
+
 ![User activities](images/BottomOfPublicTimelineOfUnauthenticatedUser.png)
+
 Image XX, The bottom of the public timeline for the unauthenticated user
+
 ![User activities](images/PublicTimelineOfUnauthenticatedUser.png)
+
 Image XX shows the bottom of the frontpage for the unauthenticated user. Here the user can use the numbers and arrows highlighted in the image, to scroll through the different pages of cheeps. There are a maximum of 32 cheeps per page. 
 
 The user journey of the unauthenticated user is shown in a sequence diagram in figure X below.
+
 ![User activities](images/SequenceDiagramUnauthenticatedUser.png)
+
 Diagram X. Sequence diagram of the user journey of the unauthenticated user
 
+As illustrated by the above diagram, the options of the unauthenticated user are very limited, as most of the functionalities of the applications are made specifically for authenticated users.
+
+
+User Journey for Authenticated Users
+
+Functionality of the authenticated user
+
+Once the user is authenticated, a lot more functionalities become available compared to the unauthenticated user. These functionalities include the ability to post cheeps, delete cheeps, adding a reaction on other user’s posts, following other users, viewing ‘My timeline’, viewing other users’ timelines and deleting all personal information related to the user as well as deleting all cheeps posted by the user. All this functionality is visualized it the sitemap. 
+
+Posting, reacting, following and deleting - A user story
+
+The authenticated user is met with a front page that can be seen in image XX.
+
+![User activities](images/PublicTimelineOfAuthenticatedUser.png)
+
+A typical use application like this, entails posting a cheep. This is done from the front page, just under the headline. The user will write a cheep in the input field, and press ‘enter’ or press the ‘Share’ button, to post it. 
+
+![User activities](images/APostedCheep.png)
+
+After posting the cheep the user wants to react to another user’s cheep. This is done by pressing one of the react buttons, that can be seen on Image XX, on the cheep that is there. The user can either give a ‘thumbs up’, a ‘thumbs down’ or react with a skull. The user can only react in one way, meaning they can not leave both a ‘thumbs up’ and a ‘thumbs down’ on the same post. After reacting to a post the chosen reaction will be highlighted with the color pink, as shown in image XXX below.
+
+![User activities](images/ReactionOnACheep.png)
+
+After reacting to the cheep, the user now wants to follow the user that posted it. This is easily done by pressing the ‘Follow’ button, which is seen to the right of the reactions. After pressing the ‘Follow’ button it changes to ‘Unfollow’ as seen image XXXX below.
+
+![User activities](images/FollowAUser.png)
+
+The final act of the user will be deleting the cheep they posting in the beginning. On cheeps posted by the user, a ‘delete’ button can be found where the ‘Follow’ button would be, if it was a cheep of another user. Clicking the ‘delete’ button result in the cheep being deleted.
+
+![User activities](images/CheepWithDeleteButton.png)
+
+‘My Timeline’, other user’s timeline and deleting profile - a user story
+
+The user starts their journey by viewing ‘My Timeline’. The link to this page is found in the navigation bar. Here the user can see the cheeps they have posted, and the cheeps of the users they are following.
+
+![User activities](images/TimelineOfTheUser.png)
+
+After viewing the ‘My Timeling’ page, the user wants to see the timeline of another user, so they click on the username of the user who’s timeline they want to view.
+
+![User activities](images/TimelineOfTheUser.png)
+
+The final act of the user is to delete their profile. They do this by going to the ‘About Me’ page. This page is seen in image X.
+
+![User activities](images/AboutMePage.png)
+
+On the ‘About Me’ page the user, can see information about themselves, as well as see the cheeps they have posted. A button with red text saying ‘Forget Me!’ can be seen below the cheeps. By pressing this button, all the user’s information will be deleted, and their cheeps as well. All reaction they have left on other users’ posts will be delete and their following of other users will also be deleted. Lastly the user will be unauthenticated and redirected to the ‘Public Timeline’.
 
 
 ## Sequence of functionality/calls trough _Chirp!_
