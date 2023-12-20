@@ -85,28 +85,17 @@ Dependencies:
 User Journey for Unauthenticated Users
 
 The unauthenticated user is able to browse all cheeps on the public timeline. That is, they can only view them. Since they aren’t authenticated they have no personal timeline and no ‘About me’ page to visit. Besides viewing the public timeline they have the ability to log in. In the log in page they can be authenticated through github. 
-
-
+![User activities](images/PublicTimelineOfUnauthenticatedUser.png)
 Image X, the public timeline for an unauthenticated user.
 
-
 Image X shows the top of the webpage, that the unauthenticated user sees. Under the logo, the user is able to navigate the website by clicking on the links ‘Public Timeline’ and ‘Login’. The public timeline serves as the frontpage, so the ‘Public Timeline’ link is meant to return to the front page, when the user is somewhere else on the website. 
-
-
+![User activities](images/BottomOfPublicTimelineOfUnauthenticatedUser.png)
 Image XX, The bottom of the public timeline for the unauthenticated user
-
+![User activities](images/PublicTimelineOfUnauthenticatedUser.png)
 Image XX shows the bottom of the frontpage for the unauthenticated user. Here the user can use the numbers and arrows highlighted in the image, to scroll through the different pages of cheeps. There are a maximum of 32 cheeps per page. 
 
 The user journey of the unauthenticated user is shown in a sequence diagram in figure X below.
-
-
-
-
-
-
-
-
-
+![Sequence Diagram of unauthenticated user](diagrams/SequenceDiagramUnauthenticatedUser.puml)
 Diagram X. Sequence diagram of the user journey of the unauthenticated user
 
 
