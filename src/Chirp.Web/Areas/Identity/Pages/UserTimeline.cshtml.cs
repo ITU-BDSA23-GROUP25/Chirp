@@ -9,22 +9,16 @@ namespace Chirp.Razor.Areas.Identity.Pages;
 public class UserTimelineModel : PageModel
 {
     private readonly ICheepRepository _service;
-
     private readonly IAuthorRepository _authorRepo;
-
     private readonly IReactionRepository _reactions;
-
     private readonly IFollowerRepository _followerRepo;
+
     public List<CheepDTO> Cheeps { get; set; }
-
     public List<AuthorDTO> Authors { get; set; }
-
     public PaginationModel? PaginationModel { get; set; }
-
     public Dictionary<string, bool> FollowStatus { get; set; } = new Dictionary<string, bool>();
 
     public bool IsFollowing { get; set; } = false;
-
     public string SortOrder { get; set; } = "Newest";
 
     public UserTimelineModel(ICheepRepository service, IAuthorRepository authorRepo, IFollowerRepository followerRepo, IReactionRepository reactions)
@@ -37,7 +31,6 @@ public class UserTimelineModel : PageModel
 
     public async Task<ActionResult> OnGet([FromQuery] int? page, string author, string SortOrder)
     {   
-
         var amountOfCheeps = 0;
         // Retrieve the username from the user's claims
         var username = User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Name)?.Value;
