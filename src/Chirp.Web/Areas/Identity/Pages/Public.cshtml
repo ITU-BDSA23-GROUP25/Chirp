@@ -98,11 +98,11 @@
                                     <button class="follow-btn" type="submit">
                                         @if (Model.FollowStatus.TryGetValue(cheep.Author, out bool isFollowing) && isFollowing)
                                         {
-                                            <span id="@{cheep.Author}-unfollow">Unfollow</span>
+                                            <span>Unfollow</span>
                                         }
                                         else
                                         {
-                                            <span id="@{cheep.Author}-follow">Follow</span>
+                                            <span>Follow</span>
                                         }
                                     </button>
                                 </form>
