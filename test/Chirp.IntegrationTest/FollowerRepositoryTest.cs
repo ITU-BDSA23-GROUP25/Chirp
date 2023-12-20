@@ -12,6 +12,7 @@ public class FollowerRepositoryTest
     private readonly ICheepRepository _cheepRepository;
     private readonly IReactionRepository _reactionRepository;
     private readonly IAuthorRepository _authorRepository;
+    private readonly IFollowerRepository _followerRepository;
     private readonly DatabaseContext _context;
 
     public FollowerRepositoryTest()
@@ -29,6 +30,7 @@ public class FollowerRepositoryTest
         _reactionRepository = new ReactionRepository(_context);
         _cheepRepository = new CheepRepository(_context);
         _authorRepository = new AuthorRepository(_context);
+        _followerRepository = new FollowerRepository(_context);
     }
 
     [Theory]
