@@ -1,7 +1,5 @@
-using Core;
-using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
-using Repository;
+using System.Diagnostics;
+using Microsoft.Identity.Client;
 
 namespace ChirpRepository_test;
 
@@ -9,8 +7,6 @@ namespace ChirpRepository_test;
 public class CheepRepository_tests
 {
     private readonly ICheepRepository _cheepRepository;
-
-    private readonly IAuthorRepository _authorRepository;
     private readonly DatabaseContext _context;
 
     public CheepRepository_tests()
@@ -27,7 +23,6 @@ public class CheepRepository_tests
         _context.InitializeDB();
 
         _cheepRepository = new CheepRepository(_context);
-        _authorRepository = new AuthorRepository(_context);
     }
 
     [Theory]
@@ -94,16 +89,17 @@ public class CheepRepository_tests
     }
 
     [Theory]
-    [InlineData("b4bf1c18-ce6d-4de3-bf92-020b82566b86")]
-    [InlineData("b4008746-4a55-4ca1-ba80-01d440138f88")]
-    [InlineData("04a3e0f3-075e-4fd3-895e-01bc80e5f9cb")]
-    public async void GetCheep_GetsSpecifiedCheep(string cheepID)
+    [InlineData("Helge")]
+    [InlineData("Rasmus")]
+    public async Task GetCheep_GetsSpecifiedCheep(string name)
     {
-        var cheepID_guid = Guid.Parse(cheepID);
-        //var cheep = await _cheepRepository.GetCheep(cheepID_guid);
+        var cheep = await _context.Cheeps.Where(c => c.Author.Name == name).FirstOrDefaultAsync();
 
-        var cheep_database = await _context.Cheeps.Where(c => c.CheepId == cheepID_guid).FirstAsync();
+        var cheep_from_testmethod = await _cheepRepository.GetCheep(cheep.CheepId);
 
-        Assert.Equal("b4bf1c18-ce6d-4de3-bf92-020b82566b86", cheep_database.CheepId.ToString());
-    }
+        Assert.Equal(cheep.CheepId, cheep_from_testmethod.Id);  
+    } 
+
+    [Fact]
+
 }
