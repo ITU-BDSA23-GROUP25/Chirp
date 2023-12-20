@@ -1,5 +1,8 @@
 namespace Repository;
 
+/// <summary>
+/// A cheep is a message block in Chirp, containing the following elements
+/// </summary>
 public class Cheep
 {
     public Guid CheepId { get; set; }

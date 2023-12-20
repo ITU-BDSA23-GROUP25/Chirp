@@ -5,6 +5,8 @@ public class AuthorRepository : IAuthorRepository
 {
 
     private readonly DatabaseContext _databaseContext;
+
+    // Amount of cheeps to display on each page
     private const int CheepsPerPage = 32;
 
     public AuthorRepository(DatabaseContext databaseContext)

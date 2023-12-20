@@ -1,33 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Core;
-using System.Configuration;
-using Microsoft.CodeAnalysis.Elfie.Extensions;
-using Microsoft.CodeAnalysis.CSharp;
 
 namespace Chirp.Razor.Areas.Identity.Pages;
 public class PublicModel : PageModel
 {
+    // Making instances of the repositories
     private readonly ICheepRepository _service;
     private readonly IReactionRepository _reactions;
     private readonly IAuthorRepository _authorRepo;
     private readonly IFollowerRepository _followerRepository;
 
-    public ReactionType reactionType = ReactionType.Like;
 
     public List<CheepDTO> Cheeps { get; set; }
     public PaginationModel? PaginationModel { get; set; }
-
     public Dictionary<string, bool> FollowStatus { get; set; } = new Dictionary<string, bool>();
 
     public bool IsFollowing { get; set; } = false;
     public string Text {get; set;}
 
-    [BindProperty(SupportsGet = true)]
+    //[BindProperty(SupportsGet = true)]
+
+    // Making instance and initialization of sort order, starting with being equal to Newest
     public string SortOrder { get; set; } = "Newest";
     
     public PublicModel(ICheepRepository service, IAuthorRepository authorRepo,IFollowerRepository followerRepository, IReactionRepository reactions)
     {
+        // Initializing the instances
         Cheeps = new List<CheepDTO>();
         _service = service;
         _reactions = reactions;
@@ -36,7 +35,6 @@ public class PublicModel : PageModel
     }
 
     public async Task<IActionResult> OnGet([FromQuery] int? page)
-
     {
          if (User.Identity?.IsAuthenticated == true)
         {
