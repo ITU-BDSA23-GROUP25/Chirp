@@ -18,7 +18,7 @@ namespace DBContext.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(4000)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -36,10 +36,10 @@ namespace DBContext.Migrations
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PasswordHash = table.Column<string>(type: "nvarchar(4000)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(4000)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(4000)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(4000)", nullable: true),
                     PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -58,8 +58,8 @@ namespace DBContext.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ClaimType = table.Column<string>(type: "nvarchar(4000)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(4000)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -79,8 +79,8 @@ namespace DBContext.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ClaimType = table.Column<string>(type: "nvarchar(4000)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(4000)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -99,7 +99,7 @@ namespace DBContext.Migrations
                 {
                     LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProviderDisplayName = table.Column<string>(type: "nvarchar(4000)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
@@ -144,7 +144,7 @@ namespace DBContext.Migrations
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Value = table.Column<string>(type: "nvarchar(4000)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -207,7 +207,7 @@ namespace DBContext.Migrations
                 {
                     CheepId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AuthorName = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ReactionType = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    ReactionType = table.Column<string>(type: "nvarchar(4000)", nullable: false)
                 },
                 constraints: table =>
                 {
