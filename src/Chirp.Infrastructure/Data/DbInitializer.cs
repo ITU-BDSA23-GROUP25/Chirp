@@ -1,9 +1,19 @@
  using Repository;
 
+/// <summary>
+/// Static class responsible for initializing and seeding the database with initial data.
+/// </summary>
+
 public static class DbInitializer
 {
+
+    /// <summary>
+    /// Seeds the specified DatabaseContext with initial data if the database is not already populated.
+    /// </summary>
+    /// <param name="chirpContext">The DatabaseContext to seed</param>
     public static void SeedDatabase(DatabaseContext chirpContext)
     {
+        // Check if Database is populated by authors and cheeps
         if (!(chirpContext.Authors.Any() && chirpContext.Cheeps.Any()))
         {
             var a1 = new Author() { Id = "1", Name = "Roger Histand", Email = "Roger+Histand@hotmail.com", Cheeps = new List<Cheep>() };
