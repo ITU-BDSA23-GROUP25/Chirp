@@ -1,0 +1,11 @@
+@startuml
+actor User as u
+
+== Home Page ==
+u -> Chirp : Open Home Page
+Chirp --> Chirp : Display Public Timeline
+
+== Next Page of Public Timeline ==
+u -> Chirp : Click Next
+Chirp --> Chirp : Load Next Page
+@enduml
