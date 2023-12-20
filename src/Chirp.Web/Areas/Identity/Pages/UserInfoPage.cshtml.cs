@@ -68,8 +68,6 @@ namespace Chirp.Razor.Areas.Identity.Pages
         {
             // Retrieve the username from the user's claims
             var username = User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.Name)?.Value;
-
-            Console.WriteLine($"USERNAME: {username}");
             
             await _followerRepo.RemoveFollowers(username);
 

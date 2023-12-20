@@ -38,19 +38,6 @@ builder.Services.AddAuthentication()
         o.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "id");
         o.ClaimActions.MapJsonKey(ClaimTypes.Name, "name");
         o.ClaimActions.MapJsonKey(ClaimTypes.Email, "email");
-        o.Events = new OAuthEvents
-        {
-            OnCreatingTicket = context =>
-            {
-                // Log claims during the authentication process
-                foreach (var claim in context.Principal.Claims)
-                {
-                    Console.WriteLine($"Type: {claim.Type}, Value: {claim.Value}");
-                }
-
-                return Task.CompletedTask;
-            }
-        };
     });
 
 
