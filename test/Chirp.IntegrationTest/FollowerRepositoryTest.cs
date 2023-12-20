@@ -1,22 +1,20 @@
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Core;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Moq;
 using Repository;
 
-namespace ReactionRepository_test;
+namespace Chirp.IntegrationTest;
 
 
-public class ReactionRepositoryTest
+public class FollowerRepositoryTest
 {
     private readonly ICheepRepository _cheepRepository;
     private readonly IReactionRepository _reactionRepository;
     private readonly IAuthorRepository _authorRepository;
     private readonly DatabaseContext _context;
 
-    public ReactionRepositoryTest()
+    public FollowerRepositoryTest()
     {
         var connection = new SqliteConnection("DataSource=:memory:");
         connection.Open();
@@ -32,4 +30,5 @@ public class ReactionRepositoryTest
         _cheepRepository = new CheepRepository(_context);
         _authorRepository = new AuthorRepository(_context);
     }
+    
 }
