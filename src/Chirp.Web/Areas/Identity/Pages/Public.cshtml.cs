@@ -19,9 +19,8 @@ public class PublicModel : PageModel
     public bool IsFollowing { get; set; } = false;
     public string Text {get; set;}
 
-    //[BindProperty(SupportsGet = true)]
-
     // Making instance and initialization of sort order, starting with being equal to Newest
+    [BindProperty(SupportsGet = true)]
     public string SortOrder { get; set; } = "Newest";
     
     public PublicModel(ICheepRepository service, IAuthorRepository authorRepo,IFollowerRepository followerRepository, IReactionRepository reactions)
