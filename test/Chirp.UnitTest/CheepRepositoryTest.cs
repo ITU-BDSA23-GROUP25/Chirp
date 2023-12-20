@@ -29,11 +29,11 @@ public class CheepRepository_tests
     [InlineData("Jacqualine Gilcoine")]
     public async void GetAllCheepsFromAuthor(string author)
     {
-       var cheeps = await _cheepRepository.GetAllCheepsFromAuthor(author);
+        var cheeps = await _cheepRepository.GetAllCheepsFromAuthor(author);
 
-       var cheeps_Database = await _context.Cheeps.Where(c => c.Author.Name == author).ToListAsync();
+        var cheeps_Database = await _context.Cheeps.Where(c => c.Author.Name == author).ToListAsync();
 
-       Assert.Equal(cheeps_Database.Count(), cheeps.Count());
+        Assert.Equal(cheeps_Database.Count(), cheeps.Count());
     }
 
     [Theory]
@@ -49,7 +49,7 @@ public class CheepRepository_tests
     [InlineData(1, "Jacqualine Gilcoine")]
     public async void authortimeline_Returns32Cheeps(int page, string author)
     {
-        var cheeps = await _cheepRepository.GetCheepsFromAuthor(page, author ,"Newest");
+        var cheeps = await _cheepRepository.GetCheepsFromAuthor(page, author, "Newest");
 
         Assert.Equal(32, cheeps.Count());
     }
@@ -73,7 +73,7 @@ public class CheepRepository_tests
             Email = email
         };
 
-        var cheeps = await _cheepRepository.GetCheepsFromAuthor(999 , author.Name, "Newest");
+        var cheeps = await _cheepRepository.GetCheepsFromAuthor(999, author.Name, "Newest");
 
         Assert.Empty(cheeps);
     }
@@ -83,9 +83,11 @@ public class CheepRepository_tests
     {
         var cheeps = await _cheepRepository.CheepTotal();
 
-        var cheeps_Database = await _context.Cheeps.Where(c => c.CheepId != null).ToListAsync();
-       
-       Assert.Equal(cheeps_Database.Count(),cheeps);
+        var cheeps_Database = await _context.Cheeps
+        .Where(c => c.CheepId != null)
+        .ToListAsync();
+
+        Assert.Equal(cheeps_Database.Count(), cheeps);
     }
 
     [Theory]
@@ -93,13 +95,40 @@ public class CheepRepository_tests
     [InlineData("Rasmus")]
     public async Task GetCheep_GetsSpecifiedCheep(string name)
     {
-        var cheep = await _context.Cheeps.Where(c => c.Author.Name == name).FirstOrDefaultAsync();
+        var cheep = await _context.Cheeps
+        .Where(c => c.Author.Name == name)
+        .FirstOrDefaultAsync();
 
         var cheep_from_testmethod = await _cheepRepository.GetCheep(cheep.CheepId);
 
-        Assert.Equal(cheep.CheepId, cheep_from_testmethod.Id);  
-    } 
+        Assert.Equal(cheep.CheepId, cheep_from_testmethod.Id);
+    }
 
     [Fact]
+    public async void RemoveAllCheepsFromAuthor()
+    {
+        string name = "Jacqualine Gilcoine";
 
+        var cheeps = await _context.Cheeps
+        .Where(c => c.Author.Name == name)
+        .ToListAsync();
+
+        Assert.NotEmpty(cheeps);
+
+        var author = await _context.Authors
+            .Where(c => c.Name == name)
+            .Select(a =>
+            new AuthorDTO
+            {
+                Name = a.Name
+            }).FirstOrDefaultAsync();
+
+        await _cheepRepository.RemoveAllCheepsFromAuthor(author);
+
+        cheeps = await _context.Cheeps
+        .Where(c => c.Author.Name == name)
+        .ToListAsync();
+
+        Assert.Empty(cheeps);
+    }
 }

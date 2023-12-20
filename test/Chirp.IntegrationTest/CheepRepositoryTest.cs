@@ -63,6 +63,5 @@ public class CheepRepositoryTest
         .FirstOrDefaultAsync();
 
         Assert.Null(cheep);
-    }
-   
+    }   
 }
