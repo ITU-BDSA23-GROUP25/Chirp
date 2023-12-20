@@ -1,9 +1,3 @@
-using System.Runtime.InteropServices;
-using Core;
-using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
-using Repository;
-
 namespace Chirp.IntegrationTest;
 
 
