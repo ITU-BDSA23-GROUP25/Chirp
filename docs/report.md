@@ -95,7 +95,7 @@ Image XX, The bottom of the public timeline for the unauthenticated user
 Image XX shows the bottom of the frontpage for the unauthenticated user. Here the user can use the numbers and arrows highlighted in the image, to scroll through the different pages of cheeps. There are a maximum of 32 cheeps per page. 
 
 The user journey of the unauthenticated user is shown in a sequence diagram in figure X below.
-![Sequence Diagram of unauthenticated user](diagrams/SequenceDiagramUnauthenticatedUser.png)
+![User activities](images/SequenceDiagramUnauthenticatedUser.png)
 Diagram X. Sequence diagram of the user journey of the unauthenticated user
 
 
