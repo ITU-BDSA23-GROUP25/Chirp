@@ -6,7 +6,9 @@ using Repository;
 
 namespace Chirp.IntegrationTest;
 
-
+/// <summary>
+/// Integretion tests for FollowerRepository
+/// </summary>
 public class FollowerRepositoryTest
 {
     private readonly ICheepRepository _cheepRepository;
@@ -17,9 +19,11 @@ public class FollowerRepositoryTest
 
     public FollowerRepositoryTest()
     {
+        // Set up an in-memory SQLite database for testing
         var connection = new SqliteConnection("DataSource=:memory:");
         connection.Open();
 
+        // Create a new DatabaseContext with the in-memory database and apply migrations
         var options = new DbContextOptionsBuilder<DatabaseContext>()
             .UseSqlite(connection)
             .Options;
@@ -27,6 +31,7 @@ public class FollowerRepositoryTest
         _context = new DatabaseContext(options);
         _context.Database.Migrate();
 
+        // Initialize repositories with the in-memory database context
         _reactionRepository = new ReactionRepository(_context);
         _cheepRepository = new CheepRepository(_context);
         _authorRepository = new AuthorRepository(_context);
