@@ -166,6 +166,8 @@ On the ‘About Me’ page the user, can see information about themselves, as we
 
 ## Sequence of functionality/calls trough _Chirp!_
 
+The UML-sequence-diagram above showcases the sequence of actions between User, Web page, Database and a Github Open Endpoint. When a user (client) tries to access the webpage, their computer sends a HTTP GET-request, and when the Azure Web page receives the request, it calls the c# method GetCheep, which returns a list of CheepDTO's (Cheep Data Transfer Objects). Then the Web Page will access an open-end github endpoint made up by www.GitHub.com/.png, where the NameOfAuthor is gotten from the CheepDTO. This returns the image and 200 OK. At last, the Web Page formats and displays the cheeps.
+
 # Process
 
 ## Build, test, release, and deployment
@@ -288,7 +290,7 @@ The license can be found on our [Github repository](https://github.com/ITU-BDSA2
 
 ## LLMs, ChatGPT, CoPilot, and others
 
-As of the use of LLM's, the group haven't used CoPilot, but have used ChatGPT throughout the course of developing Chirp!. We have used ChatGPT to help with debugging and css styling. The overall gain from using such LLM is varying, but for the most part, ChatGPT took of in wrong directions. Despite the limited use, we still regretfully acknowlegde that we havent appropriately attributed ChatGPT as a co-author in our commits. 
+As of the use of LLM's, the group haven't used CoPilot, but have used ChatGPT throughout the course of developing Chirp!. We have used ChatGPT to help with debugging and css styling. The overall gain from using such LLM is varying, but for the most part, ChatGPT took of in wrong directions. Despite the limited use, we still regretfully acknowlegde that we haven't appropriately attributed ChatGPT as a co-author in our commits. 
 
 <!-- Denne sektion er ikke en del af template -->
 # Perspektivering, eller overvejelser, eller noter, eller fri leg?
