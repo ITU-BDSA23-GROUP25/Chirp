@@ -78,7 +78,6 @@ Dependencies:
 * core -> web
 * infrastructure -> web
 
-
 ## Architecture of deployed application
 
 ![Deployment diagram](images/deploymentDiagram.png)
@@ -201,7 +200,7 @@ In the deployment phase, the build artifact is downloaded and deployed to the Az
 
 This workflow builds and test the aplication before each push to branch, and pull request to main. The workflow runs every test but the end to end test. 
 
-![Build and test workflow](images/Build%20and%20test.png)
+![Build and test workflow](images/Buildandtest.png)
 
 
 ## Team work
