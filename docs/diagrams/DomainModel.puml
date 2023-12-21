@@ -37,8 +37,7 @@ class Follower{
 ' Define relationships
 Author "1" *-- "0..*" Cheep : has
 Author --|> IdentityUser
-Author "0..*" -- Follower: follows
-Follower "0..*" -- Author: follows
+Author "0..*" *-- Follower: follows
+Follower "0..*" --* Author: follows
 Reaction -- Cheep
-
 @enduml
