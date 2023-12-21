@@ -4,25 +4,41 @@ skinparam classAttributeIconSize 0
 
 ' Define the classes
 class Author {
-    +string Name
-    +string Email
-    +List<Cheep> Cheeps
-    +List<Author> Following
-    +List<Author> Followers
+  + required string Name
+  + List<Cheep>
 }
 
 class Cheep {
-    +Guid CheepId
-    +string Text
-    +DateTime TimeStamp
+  + Guid CheepId
+  + required string Text
+  + required DateTime Timestamp
+  + requried Author Author
+  + ICollection<Reaction>? Reactions
+}
+
+class Reaction{
+  + requried Guid CheepId
+  + requried string AuthorName
+  + ReactionType ReactionType
 }
 
 class IdentityUser {
+  string Id
+  string SecurityStamp
+}
+
+class Follower{
+  + string? FollowerId
+  + string? FollowedId
+  + Author? FollowerAuthor
+  + Author? FollowedAuthor
 }
 
 ' Define relationships
 Author "1" *-- "0..*" Cheep : has
 Author --|> IdentityUser
-Author "0..*" -- "0..*" Author : follows
+Author "0..*" -- Follower: follows
+Follower "0..*" -- Author: follows
+Reaction -- Cheep
 
 @enduml
