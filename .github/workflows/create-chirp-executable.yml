@@ -23,14 +23,6 @@ jobs:
           cd src/Chirp.Web
           dotnet restore
 
-      # - name: Test
-      #   run: |
-      #     cd test/razorwebApp_test/Integration_test.cs
-      #     dotnet test --no-restore --verbosity normal
-      #     cd ../..
-      #     cd test/razorwebApp_test/UnitTest.cs
-      #     dotnet test --no-restore --verbosity normal
-
       - name: Get Latest Tag
         id: get_latest_tag
         run: |
