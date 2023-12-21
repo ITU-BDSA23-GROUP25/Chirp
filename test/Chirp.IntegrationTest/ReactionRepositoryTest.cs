@@ -10,9 +10,11 @@ public class ReactionRepositoryTest
 
     public ReactionRepositoryTest()
     {
+        // Set up an in-memory SQLite database for testing
         var connection = new SqliteConnection("DataSource=:memory:");
         connection.Open();
 
+        // Create a new DatabaseContext with the in-memory database and apply migrations
         var options = new DbContextOptionsBuilder<DatabaseContext>()
             .UseSqlite(connection)
             .Options;
@@ -20,6 +22,7 @@ public class ReactionRepositoryTest
         _context = new DatabaseContext(options);
         _context.Database.Migrate();
 
+        // Initialize repositories with the in-memory database context
         _reactionRepository = new ReactionRepository(_context);
         _cheepRepository = new CheepRepository(_context);
         _authorRepository = new AuthorRepository(_context);
