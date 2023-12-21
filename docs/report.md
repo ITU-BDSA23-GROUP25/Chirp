@@ -287,9 +287,8 @@ SOFTWARE.
 The license can be found on our [Github repository](https://github.com/ITU-BDSA23-GROUP25/Chirp/blob/main/LICENSE), under LICENSE.
 
 ## LLMs, ChatGPT, CoPilot, and others
-Lad os lige snakke om hvad vi siger her?
 
-Lille test
+As of the use of LLM's, the group haven't used CoPilot, but have used ChatGPT throughout the course of developing Chirp!. We have used ChatGPT to help with debugging and css styling. The overall gain from using such LLM is varying, but for the most part, ChatGPT took of in wrong directions. Despite the limited use, we still regretfully acknowlegde that we havent appropriately attributed ChatGPT as a co-author in our commits. 
 
 <!-- Denne sektion er ikke en del af template -->
 # Perspektivering, eller overvejelser, eller noter, eller fri leg?
