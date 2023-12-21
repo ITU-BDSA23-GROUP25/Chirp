@@ -189,7 +189,45 @@ In the deployment phase, the build artifact is downloaded and deployed to the Az
 
 ## How to make _Chirp!_ work locally
 
+First clone the repository into a local file structure on the computer with the following command:
+
+Git clone https://github.com/ITU-BDSA23-GROUP25/Chirp.git
+
+Then navigate to the directory Chirp\src\Chirp.Web. Then run 1 of the following commands to start the program:
+
+dotnet run or dotnet watch
+
+## Our test suit
+
+### Unittests & integrationtests
+We are testing our systems functionalities using: End-to-end tests, Integration tests, and Unit tests for the different projects in our program
+
+Each Repository and its related methods is test thruoh either unittest or integratins test. In most cases the repository is test using a combination of both.
+
+### Ui-testing
+
+For ui testing we use the open source libary playwright. The ui testing is a form of end to end test, where the test interact with the web applications features simulating user behaviour, thereby verifying that features work as intended.
+
 ## How to run test suite locally
+
+In order for the ui test to run locally, you have to make sure the libary playwright is installed.
+
+To install run the following command in powershell:
+
+cd test/Chirp.Web.Ui.Tests
+pwsh bin/Debug/netX/playwright.ps1 install
+
+Note that if you are on a Mac or linux computer remeber that the install command needs to be run in powershell, so you might need to install powershell.
+
+
+## To running test suit 
+In order to run the test suit locally navigate to \chirp and run the following command:
+
+dotnet test
+
+This should run all the test.
+
+Note if the playwright labary isnt propaly installed the UI test will automaticlly fail.
 
 # Ethics
 We are committed to being inclusive and respectful to anyone, related or unrelated to the work done in this project. We have included a slightly modified version of the Citizen Code of Conduct, that has been included in our repository on Github under [CODE_OF_CONDUCT](https://github.com/ITU-BDSA23-GROUP25/Chirp/blob/main/CODE_OF_CONDUCT.md).   
