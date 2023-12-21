@@ -80,6 +80,14 @@ Dependencies:
 
 ## Architecture of deployed application
 
+![Deployment diagram](images/deploymentDiagram.png)
+
+Chirp! uses Azure App Service to host its website. Here Chirp.web handles the frontend of Chirp! and Infrastructure handles the database context and the repositories. As shown on the image above, a client can access Chirp.Web through azurewebsites and thereby be authorized and authenticated by github, before unlocking all features.
+
+![Deployment diagram](images/SequenceDiagramGithub.png)
+
+As shown on the image above, Chirp! uses a third party external login provider (GitHub), to authenticate and authorize the user. Because Chirp! needs a name claim from github, to create an Author, a sequence of request are made.
+
 ## User activities
 
 User Journey for Unauthenticated Users
