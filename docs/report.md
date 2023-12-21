@@ -63,6 +63,8 @@ The last task is responsible for letting the system know how many reactions a ch
 ## Architecture — In the small
 Our application is separated into 3 main layers, that are common for the onion architecture
 
+![Deployment diagram](images/Onion.png)
+
 Layers:
 * core
 * infrastructure
@@ -194,6 +196,15 @@ In the deployment phase, the build artifact is downloaded and deployed to the Az
 
 
 ## Team work
+
+![Backlog](images/Backlog.png)
+
+The only unresolved task, was to create a constraint within the program that prohibits cheeps which have a length of more than 160 charectars.
+
+The below image shows the flow of events from creation of issue to resolved issue:
+
+![Backlog](images/IssueFlowChart.png)
+
 
 ## How to make _Chirp!_ work locally
 
