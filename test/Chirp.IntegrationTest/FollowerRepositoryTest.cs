@@ -6,7 +6,9 @@ using Repository;
 
 namespace Chirp.IntegrationTest;
 
-
+/// <summary>
+/// Integretion tests for FollowerRepository
+/// </summary>
 public class FollowerRepositoryTest
 {
     private readonly ICheepRepository _cheepRepository;
