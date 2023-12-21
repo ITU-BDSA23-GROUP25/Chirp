@@ -156,6 +156,8 @@ On the ‘About Me’ page the user, can see information about themselves, as we
 
 ## Sequence of functionality/calls trough _Chirp!_
 
+![User activities](images/SequenceDiagram.png)
+
 # Process
 
 ## Build, test, release, and deployment
