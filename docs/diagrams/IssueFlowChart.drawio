@@ -1,0 +1,157 @@
+<mxfile host="app.diagrams.net" modified="2023-12-21T03:20:46.329Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" etag="cMMMWXBoMaaRumxl9WQL" version="22.1.11" type="device">
+  <diagram name="Side-1" id="iFRuk5IlaNGhOEwaeS5_">
+    <mxGraphModel dx="1434" dy="738" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-1" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="20" y="225" width="50" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-17" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="obdzHH59rfkjjFZ3ZKD4-2" target="obdzHH59rfkjjFZ3ZKD4-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-2" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="30" y="235" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-3" value="Create issue" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry y="195" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="obdzHH59rfkjjFZ3ZKD4-4" target="obdzHH59rfkjjFZ3ZKD4-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-4" value="Move issue to &#39;New&#39; in project board" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="230" y="220" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="obdzHH59rfkjjFZ3ZKD4-6" target="obdzHH59rfkjjFZ3ZKD4-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-6" value="Research the problem to find solution" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="510" y="220" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="obdzHH59rfkjjFZ3ZKD4-8" target="obdzHH59rfkjjFZ3ZKD4-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-8" value="Someone picks up the issue" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="370" y="220" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-14" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="obdzHH59rfkjjFZ3ZKD4-11" target="obdzHH59rfkjjFZ3ZKD4-13">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="800" y="250" />
+              <mxPoint x="800" y="300" />
+              <mxPoint x="140" y="300" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-11" value="Create new branch for adding feature" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="650" y="220" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-19" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="obdzHH59rfkjjFZ3ZKD4-13" target="obdzHH59rfkjjFZ3ZKD4-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-13" value="Move issue to &#39;In progress&#39; in project board" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="320" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="obdzHH59rfkjjFZ3ZKD4-15" target="obdzHH59rfkjjFZ3ZKD4-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-15" value="Write user story and acceptance criteria" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="220" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-21" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="obdzHH59rfkjjFZ3ZKD4-18" target="obdzHH59rfkjjFZ3ZKD4-20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-18" value="Start coding solution, with continues commits" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="230" y="320" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-23" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="obdzHH59rfkjjFZ3ZKD4-20" target="obdzHH59rfkjjFZ3ZKD4-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-20" value="Resolve issue" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="370" y="320" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-25" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="obdzHH59rfkjjFZ3ZKD4-22" target="obdzHH59rfkjjFZ3ZKD4-24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-22" value="Test that the solution works localy" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="510" y="320" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-27" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="obdzHH59rfkjjFZ3ZKD4-24" target="obdzHH59rfkjjFZ3ZKD4-28">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="790" y="400" as="sourcePoint" />
+            <mxPoint x="170" y="520" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="810" y="350" />
+              <mxPoint x="810" y="410" />
+              <mxPoint x="150" y="410" />
+              <mxPoint x="150" y="470" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-24" value="Create new pull request" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="650" y="320" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-31" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="obdzHH59rfkjjFZ3ZKD4-28" target="obdzHH59rfkjjFZ3ZKD4-30">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-28" value="Move issue to &#39;In review&#39; on project board" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="470" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-33" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="obdzHH59rfkjjFZ3ZKD4-30" target="obdzHH59rfkjjFZ3ZKD4-32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-30" value="Someone else reviews the solution" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="230" y="470" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-42" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="obdzHH59rfkjjFZ3ZKD4-32" target="obdzHH59rfkjjFZ3ZKD4-41">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-32" value="Approve solution" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="510" y="470" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-36" value="Does solution work?" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="355" y="500" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-37" value="yes" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="460" y="470" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-39" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" target="obdzHH59rfkjjFZ3ZKD4-20">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="430" y="500" as="sourcePoint" />
+            <mxPoint x="550" y="440" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="430" y="450" />
+              <mxPoint x="430" y="440" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-40" value="no" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="394" y="430" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-44" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="obdzHH59rfkjjFZ3ZKD4-41" target="obdzHH59rfkjjFZ3ZKD4-43">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-41" value="Merge branch into main" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="650" y="470" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-46" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="obdzHH59rfkjjFZ3ZKD4-43">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="310" y="600" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-43" value="Move issue to &#39;Done&#39; in project board" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="570" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-47" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="310" y="575" width="50" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-49" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="320" y="585" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="obdzHH59rfkjjFZ3ZKD4-50" value="Finish issue" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="290" y="545" width="90" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
