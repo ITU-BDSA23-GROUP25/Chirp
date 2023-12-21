@@ -203,7 +203,7 @@ The only unresolved task, was to create a constraint within the program that pro
 
 The below image shows the flow of events from creation of issue to resolved issue:
 
-![Backlog](images/IssueFlowChart.png)
+![IssueFlowChart](images/IssueFlowChart.png)
 
 
 ## How to make _Chirp!_ work locally
@@ -249,7 +249,11 @@ This should run all the test.
 Note if the playwright labary isnt propaly installed the UI test will automaticlly fail.
 
 # Ethics
-We are committed to being inclusive and respectful to anyone, related or unrelated to the work done in this project. We have included a slightly modified version of the Citizen Code of Conduct, that has been included in our repository on Github under [CODE_OF_CONDUCT](https://github.com/ITU-BDSA23-GROUP25/Chirp/blob/main/CODE_OF_CONDUCT.md).   
+We are committed to being inclusive and respectful to anyone, related or unrelated to the work done in this project. We have included a slightly modified version of the Citizen Code of Conduct, that has been included in our repository on Github under [CODE_OF_CONDUCT](https://github.com/ITU-BDSA23-GROUP25/Chirp/blob/main/CODE_OF_CONDUCT.md).
+
+## GDPR
+
+With GDPR in mind, Chirp! wants to store as little possible information as possible about the user. Here the only data needed for making an Author, are their unique username on github. Their email is gotten through claims, but isn't stored, as chirp don't need it. The users github profile picture isn't stored either, it is gotten from a public github endpoint, and is picked from the endpoint each time a cheep is displayed.
 
 ## License
 We have picked the MIT License for our project. The MIT License is a simple and highly permissive open-source software license. It is one of the least restrictive, of the established licenses available. Under the MIT License, users are granted almost unrestricted freedom to use, modify, distribute, and sublicense the software. Our only requirement is that the copyright notice and license is included with the software when redistributed. As our group name is included in the MIT-license, this ensures that we are attributed. Additionally, the license absolves us of any responsibility or liability of how the software is used by others.
