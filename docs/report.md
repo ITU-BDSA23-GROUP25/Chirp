@@ -94,32 +94,23 @@ User Journey for Unauthenticated Users
 
 The unauthenticated user is able to browse all cheeps on the public timeline. That is, they can only view them. Since they aren’t authenticated they have no personal timeline and no ‘About me’ page to visit. Besides viewing the public timeline they have the ability to log in. In the log in page they can be authenticated through github.
 
-![User activities](images/PublicTimelineOfUnauthenticatedUser.png)
+![The public timeline for an unauthenticated user](images/PublicTimelineOfUnauthenticatedUser.png)
 
-Image X, the public timeline for an unauthenticated user.
+Image 7 shows the top of the webpage, that the unauthenticated user sees. Under the logo, the user is able to navigate the website by clicking on the links ‘Public Timeline’ and ‘Login’. The public timeline serves as the frontpage, so the ‘Public Timeline’ link is meant to return to the front page, when the user is somewhere else on the website.
 
-Image X shows the top of the webpage, that the unauthenticated user sees. Under the logo, the user is able to navigate the website by clicking on the links ‘Public Timeline’ and ‘Login’. The public timeline serves as the frontpage, so the ‘Public Timeline’ link is meant to return to the front page, when the user is somewhere else on the website.
-
-![User activitie2](images/BottomOfPublicTimelineOfUnauthenticatedUser.png)
-
-Image XX, The bottom of the public timeline for the unauthenticated user
+![The bottom of the public timeline for the unauthenticated user](images/BottomOfPublicTimelineOfUnauthenticatedUser.png) 
 
 ![User activities3](images/PublicTimelineOfUnauthenticatedUser.png)
 
-Image XX shows the bottom of the frontpage for the unauthenticated user. Here the user can use the numbers and arrows highlighted in the image, to scroll through the different pages of cheeps. There are a maximum of 32 cheeps per page. 
+Image 8 shows the bottom of the frontpage for the unauthenticated user. Here the user can use the numbers and arrows highlighted in the image, to scroll through the different pages of cheeps. There are a maximum of 32 cheeps per page. 
 
-The user journey of the unauthenticated user is shown in a sequence diagram in figure X below.
+The user journey of the unauthenticated user is shown in a sequence diagram in figure 10 below.
 
 ![User activities4](images/SequenceDiagramUnauthenticatedUser.png)
 
-Diagram X. Sequence diagram of the user journey of the unauthenticated user
+Diagram 8. Sequence diagram of the user journey of the unauthenticated user
 
 As illustrated by the above diagram, the options of the unauthenticated user are very limited, as most of the functionalities of the applications are made specifically for authenticated users.
-
-
-User Journey for Authenticated Users
-
-Functionality of the authenticated user
 
 Once the user is authenticated, a lot more functionalities become available compared to the unauthenticated user. These functionalities include the ability to post cheeps, delete cheeps, adding a reaction on other user’s posts, following other users, viewing ‘My timeline’, viewing other users’ timelines and deleting all personal information related to the user as well as deleting all cheeps posted by the user. All this functionality is visualized it the sitemap. 
 
