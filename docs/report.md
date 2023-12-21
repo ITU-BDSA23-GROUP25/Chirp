@@ -50,10 +50,10 @@ Chirp allows its users to follow and unfollow each other. The follow entity is u
 
 ### Reactions
 A reaction is the entity that refers to the interactive engagement that users can express in response to a cheep. These reactions are represented by a “thumps up”, "Thumps down" and "Skull" emoji that turns pink if pressed. For each cheep a number of reactions will be displayed in the application for each reactiontype. Each reaction is uniquely identified by a Guid representing the cheep, a string which represents the user who has reacted and a reactiontype representing which type of reaction it is. Reactions is in one-to-many relationships with both authors and cheeps meaning that both authors and cheeps can have many reactions but each reaction is uniquely related to one author and one cheep.
-![Reactions](images/ReactionOnCheep1.png)
+![ReactionsOnCheep1](images/ReactionOnCheep1.png)
 The reactions functionality is controlled by its interface IReactionRepository with it’s three mandatory methods, HasUserReacted, ReactionOnCheep and GetReactionAmount. 
 ReactionOnCheep is an asynchronous task that takes a reactiontype, cheepid and username. The task starts by checking for the specific username and cheepId in the database and if any of those two are null the method returns an exception.
-![Reactions](images/ReactionOnCheep2.png)
+![ReactionOnCheep2](images/ReactionOnCheep2.png)
 If not an instance of the object reaction will be created. Along side the task instantiate a variable “currentReaction” and check if the cheep already has a reaction from the user in the database. Based on the outcome of the check the system will either add the reaction to the database or remove it from database. This is because the ReactionOnCheep task handles both cases where a user wants to react on the cheep(add a reaction to the database) or remove the reactions from the cheep(remove the reaction in the database). Additionly if a user wants to change reactiontype, then the old reaction is removed and another one created.
 
 The asynchronous task “HasUserReacted” is responsible for letting the system know if a user has already reacted on a cheep. It takes a cheepId and username as arguments. Firstly it checks whether or not a user is to be found in the database and if that is the case an exception is thrown. In the case where a user is found the task checks if the database contains a reaction sat on the cheep and if the user is the owner of that reaction. The result will be a boolean which depends on the user interaction with the cheep.
@@ -63,7 +63,7 @@ The last task is responsible for letting the system know how many reactions a ch
 ## Architecture — In the small
 Our application is separated into 3 main layers, that are common for the onion architecture
 
-![Deployment diagram](images/Onion.png)
+![Onion model](images/Onion.png)
 
 Layers:
 * core
@@ -85,7 +85,7 @@ Dependencies:
 
 Chirp! uses Azure App Service to host its website. Here Chirp.web handles the frontend of Chirp! and Infrastructure handles the database context and the repositories. As shown on the image above, a client can access Chirp.Web through azurewebsites and thereby be authorized and authenticated by github, before unlocking all features.
 
-![Deployment diagram](images/SequenceDiagramGithub.png)
+![Sequence diagram](images/SequenceDiagramGithub.png)
 
 As shown on the image above, Chirp! uses a third party external login provider (GitHub), to authenticate and authorize the user. Because Chirp! needs a name claim from github, to create an Author, a sequence of request are made.
 
@@ -101,17 +101,17 @@ Image X, the public timeline for an unauthenticated user.
 
 Image X shows the top of the webpage, that the unauthenticated user sees. Under the logo, the user is able to navigate the website by clicking on the links ‘Public Timeline’ and ‘Login’. The public timeline serves as the frontpage, so the ‘Public Timeline’ link is meant to return to the front page, when the user is somewhere else on the website.
 
-![User activities](images/BottomOfPublicTimelineOfUnauthenticatedUser.png)
+![User activitie2](images/BottomOfPublicTimelineOfUnauthenticatedUser.png)
 
 Image XX, The bottom of the public timeline for the unauthenticated user
 
-![User activities](images/PublicTimelineOfUnauthenticatedUser.png)
+![User activities3](images/PublicTimelineOfUnauthenticatedUser.png)
 
 Image XX shows the bottom of the frontpage for the unauthenticated user. Here the user can use the numbers and arrows highlighted in the image, to scroll through the different pages of cheeps. There are a maximum of 32 cheeps per page. 
 
 The user journey of the unauthenticated user is shown in a sequence diagram in figure X below.
 
-![User activities](images/SequenceDiagramUnauthenticatedUser.png)
+![User activities4](images/SequenceDiagramUnauthenticatedUser.png)
 
 Diagram X. Sequence diagram of the user journey of the unauthenticated user
 
@@ -128,37 +128,37 @@ Posting, reacting, following and deleting - A user story
 
 The authenticated user is met with a front page that can be seen in image XX.
 
-![User activities](images/PublicTimelineOfAuthenticatedUser.png)
+![User activities5](images/PublicTimelineOfAuthenticatedUser.png)
 
 A typical use application like this, entails posting a cheep. This is done from the front page, just under the headline. The user will write a cheep in the input field, and press ‘enter’ or press the ‘Share’ button, to post it. 
 
-![User activities](images/APostedCheep.png)
+![User activities6](images/APostedCheep.png)
 
 After posting the cheep the user wants to react to another user’s cheep. This is done by pressing one of the react buttons, that can be seen on Image XX, on the cheep that is there. The user can either give a ‘thumbs up’, a ‘thumbs down’ or react with a skull. The user can only react in one way, meaning they can not leave both a ‘thumbs up’ and a ‘thumbs down’ on the same post. After reacting to a post the chosen reaction will be highlighted with the color pink, as shown in image XXX below.
 
-![User activities](images/ReactionOnACheep.png)
+![User activities7](images/ReactionOnACheep.png)
 
 After reacting to the cheep, the user now wants to follow the user that posted it. This is easily done by pressing the ‘Follow’ button, which is seen to the right of the reactions. After pressing the ‘Follow’ button it changes to ‘Unfollow’ as seen image XXXX below.
 
-![User activities](images/FollowAUser.png)
+![User activities8](images/FollowAUser.png)
 
 The final act of the user will be deleting the cheep they posting in the beginning. On cheeps posted by the user, a ‘delete’ button can be found where the ‘Follow’ button would be, if it was a cheep of another user. Clicking the ‘delete’ button result in the cheep being deleted.
 
-![User activities](images/CheepWithDeleteButton.png)
+![User activities9](images/CheepWithDeleteButton.png)
 
 ‘My Timeline’, other user’s timeline and deleting profile - a user story
 
 The user starts their journey by viewing ‘My Timeline’. The link to this page is found in the navigation bar. Here the user can see the cheeps they have posted, and the cheeps of the users they are following.
 
-![User activities](images/TimelineOfTheUser.png)
+![User activities10](images/TimelineOfTheUser.png)
 
 After viewing the ‘My Timeline’ page, the user wants to see the timeline of another user, so they click on the username of the user who’s timeline they want to view.
 
-![User activities](images/TimelineOfTheUser.png)
+![User activities11](images/TimelineOfTheUser.png)
 
 The final act of the user is to delete their profile. They do this by going to the ‘About Me’ page. This page is seen in image X.
 
-![User activities](images/AboutMePage.png)
+![User activities12](images/AboutMePage.png)
 
 On the ‘About Me’ page the user, can see information about themselves, as well as see the cheeps they have posted. A button with red text saying ‘Forget Me!’ can be seen below the cheeps. By pressing this button, all the user’s information will be deleted, and their cheeps as well. All reaction they have left on other users’ posts will be delete and their following of other users will also be deleted. Lastly the user will be unauthenticated and redirected to the ‘Public Timeline’.
 
