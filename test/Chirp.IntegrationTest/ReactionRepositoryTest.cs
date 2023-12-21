@@ -1,5 +1,8 @@
 namespace Chirp.IntegrationTest;
 
+/// <summary>
+/// Integration test for ReactionRepository
+/// </summary>
 
 public class ReactionRepositoryTest
 {
