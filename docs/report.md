@@ -164,9 +164,11 @@ On the ‘About Me’ page the user, can see information about themselves, as we
 
 ## Sequence of functionality/calls trough _Chirp!_
 
+
 ![sequence_of_functionality](images/sequence.png)
 
 The UML-sequence-diagram above showcases the sequence of actions between User, Web page, Database and a Github Open Endpoint. When a user (client) tries to access the webpage, their computer sends a HTTP GET-request, and when the Azure Web page receives the request, it calls the c# method GetCheep, which returns a list of CheepDTO's (Cheep Data Transfer Objects). Then the Web Page will access an open-end github endpoint made up by www.GitHub.com/.png, where the NameOfAuthor is gotten from the CheepDTO. This returns the image and 200 OK. At last, the Web Page formats and displays the cheeps.
+
 
 # Process
 
