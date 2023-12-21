@@ -225,7 +225,7 @@ First clone the repository into a local file structure on the computer with the 
 
 Git clone https://github.com/ITU-BDSA23-GROUP25/Chirp.git
 
-Then navigate to the directory Chirp\src\Chirp.Web. Then run 1 of the following commands to start the program:
+Then navigate to the directory Chirp/src/Chirp.Web. Then run 1 of the following commands to start the program:
 
 dotnet run or dotnet watch
 
@@ -253,7 +253,7 @@ Note that if you are on a Mac or linux computer remeber that the install command
 
 
 ## To running test suit 
-In order to run the test suit locally navigate to \chirp and run the following command:
+In order to run the test suit locally navigate to /chirp and run the following command:
 
 dotnet test
 
