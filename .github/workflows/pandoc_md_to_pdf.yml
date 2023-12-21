@@ -3,7 +3,7 @@ name: Generate PDF from Markdown
 on:
   push:
     branches:
-      - raport
+      - Report
 
 jobs:
   build:
@@ -34,4 +34,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Generated PDF
-          path: docs/report.pdf
+          path: docs/2023_itubdsa_group_25_report.pdf
+          
