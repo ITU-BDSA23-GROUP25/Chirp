@@ -214,6 +214,11 @@ The below image shows the flow of events from creation of issue to resolved issu
 
 ![IssueFlowChart](images/IssueFlowChart.png)
 
+When a new feature is to be implemented, or a bug is to be fixed, we make an issue, and attach it to our project board. When we write an issue, we make sure to write it as a user journey, where we highlight who would be interested in having what implemented, with what purpose.
+
+As soon as an issue is written, it is dropped to the ’New’ column in our project board. When it is agreed upon, that it is an appropriate time to implement it, we move it to the ‘Ready’ column. In due time, a group member will move it to the ‘In Progress’ and start working on it. When done, he drops it in the ‘In review’ column, where we wait to get a second pair of eyes on it. If everything is as it’s supposed to be, it will be approved, merged and the issue moved to ‘done’. 
+
+Sometimes there are features that we would have wanted to implement, but for various reasons didn’t get around to, and at some point had to abandon all together. These issues are placed in the ’Things we havent done from earlier weeks’ co
 
 ## How to make _Chirp!_ work locally
 
@@ -298,9 +303,3 @@ The license can be found on our [Github repository](https://github.com/ITU-BDSA2
 ## LLMs, ChatGPT, CoPilot, and others
 
 As of the use of LLM's, the group haven't used CoPilot, but have used ChatGPT throughout the course of developing Chirp!. We have used ChatGPT to help with debugging and css styling. The overall gain from using such LLM is varying, but for the most part, ChatGPT took of in wrong directions. Despite the limited use, we still regretfully acknowlegde that we haven't appropriately attributed ChatGPT as a co-author in our commits. 
-
-<!-- Denne sektion er ikke en del af template -->
-# Perspektivering, eller overvejelser, eller noter, eller fri leg?
-Den her sektion er ikke en del af templatet, men jeg tænker her kan vi skrive nogle overvejelser som vi har gjort og som vi måske/måske ikke vil have med i rapporten.
-
-**Overvejelse:** Bør followers i class diagrammet være en association class?
